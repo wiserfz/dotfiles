@@ -10,8 +10,7 @@ ENV_DIR="$HOME/workspace/github/env_conf"
 
 Black=$'\e[0;30m'; Red=$'\e[0;31m'; Green=$'\e[0;32m'; Orange=$'\e[0;33m'; Blue=$'\e[0;34m'; Purple=$'\e[0;35m'; Cyan=$'\e[0;36m'; LightGray=$'\e[0;37m'
 DarkGray=$'\e[1;30m'; LightRed=$'\e[1;31m'; LightGreen=$'\e[1;32m'; Yellow=$'\e[1;33m'; LightBlue=$'\e[1;34m'; LightPurple=$'\e[1;35m'; LightCyan=$'\e[1;36m'
-#White="1;37"
-NC=$'\e[0m'
+White=$'\e[1;37m'; NC=$'\e[0m'
 
 function exist() {
     command -v $1 >/dev/null 2>&1
@@ -87,7 +86,7 @@ select a function code:
 【 3 】 Install powerline fonts
 【 4 】 Init environment
 【 0 】 Install all
-【 * 】 Exit
+【 e 】 Exit
 ===============================
 EOF
 
@@ -104,5 +103,5 @@ case $choice in
     3) install_powerline_fonts;;
     4) init_env;;
     0) install_all;;
-    *) echo 'Bye' && exit;;
+    e) echo "${LightGreen}Bye, Bye.${NC}" && exit;;
 esac
