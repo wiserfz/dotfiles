@@ -8,6 +8,11 @@ POWERLINE_FONTS_URL="https://github.com/powerline/fonts.git"
 ENV_URL="https://github.com/Gitfz810/env_conf.git"
 ENV_DIR="$HOME/workspace/github/env_conf"
 
+Black=$'\e[0;30m'; Red=$'\e[0;31m'; Green=$'\e[0;32m'; Orange=$'\e[0;33m'; Blue=$'\e[0;34m'; Purple=$'\e[0;35m'; Cyan=$'\e[0;36m'; LightGray=$'\e[0;37m'
+DarkGray=$'\e[1;30m'; LightRed=$'\e[1;31m'; LightGreen=$'\e[1;32m'; Yellow=$'\e[1;33m'; LightBlue=$'\e[1;34m'; LightPurple=$'\e[1;35m'; LightCyan=$'\e[1;36m'
+#White="1;37"
+NC=$'\e[0m'
+
 function exist() {
     command -v $1 >/dev/null 2>&1
     return $?
@@ -20,9 +25,9 @@ function clone_env() {
 }
 
 function install_brew() {
-    echo "exec install brew..."
+    echo "${LightGreen}execute install brew...${NC}"
 
-    if [[ `uname` == "Darwin" ]] && ! `exist brew` then
+    if [[ `uname` == "Darwin" ]] && ! `exist brew`; then
         xcode-select --install
         ruby -e "$(curl -fsSL $BREW_URL)"
     fi
@@ -30,11 +35,11 @@ function install_brew() {
 
 
 function install_brew_pkg() {
-    echo "exec install brew package..."
+    echo "${LightGreen}execute install brew package...${NC}"
 
     for item in `cat $ENV_DIR/packages/brew-pkg`
     do
-        read -p "Do you want to install '$item'? (y/n) " confirm
+        read -p "${LightRed}Do you want to install '$item'? (y/n) ${NC}" confirm
         if [[ confirm == "y" ]]; then
             brew install $item
             brew cleanup $item
@@ -43,7 +48,7 @@ function install_brew_pkg() {
 }
 
 function install_powerline_fonts() {
-    echo "exec install powerline fonts..."
+    echo "${LightGreen}execute install powerline fonts...${NC}"
 
     if [[ ! -d $HOME/.powerline-fonts ]]; then
         git clone --depth=1 $POWERLINE_FONTS_URL $HOME/.powerline-fonts
@@ -52,7 +57,7 @@ function install_powerline_fonts() {
 }
 
 function init_env() {
-    echo "exec init environment..."
+    echo "${LightGreen}execute init environment...${NC}"
 
     clone_env
 
@@ -60,6 +65,7 @@ function init_env() {
     ln -sfv $ENV_DIR/gitconfig .gitconfig
     ln -sfv $ENV_DIR/tmux.conf .tmux.conf
     ln -sfv $ENV_DIR/vimrc .vimrc
+    ln -sfv $ENV_DIR/vim_dir .vim
     ln -sfv $ENV_DIR/fish .config/fish
     cd $CURRENT_DIR
 }
@@ -81,15 +87,15 @@ select a function code:
 【 3 】 Install powerline fonts
 【 4 】 Init environment
 【 0 】 Install all
-【 e 】 Exit
+【 * 】 Exit
 ===============================
 EOF
 
 if [[ -n $1 ]]; then
     choice=$1
-    echo "execute: $1"
+    echo "${LightGreen}execute: $1 ${NC}"
 else
-    read -p "select: " choice
+    read -p $"${Orange}select: ${NC}" choice
 fi
 
 case $choice in
@@ -98,5 +104,5 @@ case $choice in
     3) install_powerline_fonts;;
     4) init_env;;
     0) install_all;;
-    e) echo 'Bye' && exit;;
+    *) echo 'Bye' && exit;;
 esac
