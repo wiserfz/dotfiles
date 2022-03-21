@@ -46,6 +46,19 @@ function install_brew_pkg() {
     done
 }
 
+function install_cask_pkg() {
+    echo "${LightGreen}execute install cask package...${NC}"
+
+    for item in `cat $ENV_DIR/packages/cask-pkg`
+    do
+        read -p "${LightRed}Do you want to install '$item'? (y/n) ${NC}" confirm
+        if [[ confirm == "y" ]]; then
+            brew install --cask $item
+            brew cleanup $item
+        fi
+    done
+}
+
 function install_powerline_fonts() {
     echo "${LightGreen}execute install powerline fonts...${NC}"
 
@@ -73,6 +86,7 @@ function install_all() {
     clone_env
     install_brew
     install_brew_pkg
+    install_cask_pkg
     install_powerline_fonts
 
     init_env
@@ -83,8 +97,9 @@ select a function code:
 ===============================
 【 1 】 Install brew
 【 2 】 Install brew packages
-【 3 】 Install powerline fonts
-【 4 】 Init environment
+【 3 】 Install cask packages
+【 4 】 Install powerline fonts
+【 5 】 Init environment
 【 0 】 Install all
 【 e 】 Exit
 ===============================
@@ -100,8 +115,9 @@ fi
 case $choice in
     1) install_brew;;
     2) install_brew_pkg;;
-    3) install_powerline_fonts;;
-    4) init_env;;
+    3) install_cask_pkg;;
+    4) install_powerline_fonts;;
+    5) init_env;;
     0) install_all;;
     e) echo "${LightGreen}Bye, Bye.${NC}" && exit;;
 esac
