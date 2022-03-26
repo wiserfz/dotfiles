@@ -20,7 +20,7 @@ end
 set fish_greeting ""
 set -g fish_prompt_pwd_dir_length 0
 
-set -gx LC_ALL "zh_CN.UTF-8"
+set -gx LC_ALL "en_US.UTF-8"
 set -gx CLICOLOR 1
 set -gx GREP_COLOR "1;31"
 

@@ -32,7 +32,6 @@ function install_brew() {
     fi
 }
 
-
 function install_brew_pkg() {
     echo "${LightGreen}execute install brew package...${NC}"
 
