@@ -6,7 +6,7 @@ FISH_CONFIG="$HOEM/.config/fish"
 BREW_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 POWERLINE_FONTS_URL="https://github.com/powerline/fonts.git"
 ENV_URL="https://github.com/Gitfz810/env_conf.git"
-ENV_DIR="$HOME/workspace/github/env_conf"
+ENV_DIR="$HOME/workspace/env_conf"
 
 Black=$'\e[0;30m'; Red=$'\e[0;31m'; Green=$'\e[0;32m'; Orange=$'\e[0;33m'; Blue=$'\e[0;34m'; Purple=$'\e[0;35m'; Cyan=$'\e[0;36m'; LightGray=$'\e[0;37m'
 DarkGray=$'\e[1;30m'; LightRed=$'\e[1;31m'; LightGreen=$'\e[1;32m'; Yellow=$'\e[1;33m'; LightBlue=$'\e[1;34m'; LightPurple=$'\e[1;35m'; LightCyan=$'\e[1;36m'
@@ -38,7 +38,7 @@ function install_brew_pkg() {
     for item in `cat $ENV_DIR/packages/brew-pkg`
     do
         read -p "${LightRed}Do you want to install '$item'? (y/n) ${NC}" confirm
-        if [[ confirm == "y" ]]; then
+        if [[ $confirm == "y" ]]; then
             brew install $item
             brew cleanup $item
         fi
@@ -51,7 +51,7 @@ function install_cask_pkg() {
     for item in `cat $ENV_DIR/packages/cask-pkg`
     do
         read -p "${LightRed}Do you want to install '$item'? (y/n) ${NC}" confirm
-        if [[ confirm == "y" ]]; then
+        if [[ $confirm == "y" ]]; then
             brew install --cask $item
             brew cleanup $item
         fi

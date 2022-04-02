@@ -26,7 +26,6 @@ end
 
 # Git alias
 alias gst='git status -sb'
-alias gdf='git difftool'
 alias glg='git log --stat --graph --max-count=20'
 alias gco='git checkout'
 

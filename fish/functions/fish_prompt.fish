@@ -63,14 +63,14 @@ function fish_prompt
     set -l blue (set_color -o blue)
     set -l normal (set_color normal)
 
-    set -l arrow_color "$red"
+    set -l dollar_color "$green"
     if test $__last_command_exit_status != 0
-        set arrow_color "$red"
+        set dollar_color "$red"
     end
 
-    set -l arrow "$arrow_color\$ "
+    set -l dollar "$dollar_color\$ "
     if fish_is_root_user
-        set arrow "$arrow_color# "
+        set dollar "$dollor_color# "
     end
 
     set -l cwd $yellow(prompt_pwd)
@@ -86,5 +86,5 @@ function fish_prompt
         end
     end
 
-    echo -n -s ''$cwd $repo_info $normal \n''$arrow''
+    echo -n -s ''$cwd $repo_info $normal \n''$dollar''
 end
