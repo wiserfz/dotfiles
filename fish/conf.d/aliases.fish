@@ -12,7 +12,7 @@ alias ping='ping -i 0.2 -c 30'
 alias ip4="ifconfig | grep -w inet | awk '{print \$2}'| sort"
 alias ip6="ifconfig | grep -w inet6 | awk '{print \$2}'| sort"
 alias tailf='tail -F'
-alias cat='bat'
+alias cat='bat -p'
 
 # macOS alias
 if test (uname) = "Darwin"
@@ -26,7 +26,7 @@ end
 
 # Git alias
 alias gst='git status -sb'
-alias glg='git log --stat --graph --max-count=20'
+alias glg='git log --stat --graph --all --max-count=20 --show-signature'
 alias gco='git checkout'
 
 # brew

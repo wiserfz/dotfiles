@@ -53,6 +53,7 @@ set foldopen-=search    "搜索时不打开折叠
 set foldopen-=undo      "撤销时不打开折叠
 set updatecount=0       "不使用交换文件
 set magic               "使用正则时，除了$ . * ^以外的元字符都要加反斜线
+set re=0                "使用新的正则表达式
 
 "缩进定义
 set shiftwidth=4

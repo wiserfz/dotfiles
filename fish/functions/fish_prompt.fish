@@ -77,11 +77,11 @@ function fish_prompt
 
     set -l repo_info
     if set -l repo_type (_repo_type)
-        set -l repo_branch $red(_repo_branch_name $repo_type)
+        set -l repo_branch $cyan(_repo_branch_name $repo_type)
         set repo_info "$blue $repo_type:($repo_branch$blue)"
 
         if _is_repo_dirty $repo_type
-            set -l dirty "$yellow ✗"
+            set -l dirty "$red ✗"
             set repo_info "$repo_info$dirty"
         end
     end

@@ -1,6 +1,7 @@
 [user]
 	name = wiser-fz
 	email = mailfz810@163.com
+	signingKey = 09562B59D4303F61
 
 [color]
     ui = true
@@ -16,6 +17,12 @@
 
 [merge]
     conflictstyle = diff3
+
+[commit]
+	gpgsign = true
+
+[includeIf "gitdir:~/workspace/gitlab/"]
+    path = .gitconfig-tuya
 
 [diff]
     colorMoved = default
@@ -49,3 +56,8 @@
     minus-emph-style = syntax bold red
     plus-emph-style = syntax bold green
     whitespace-error-style = purple bold
+
+[gpg]
+    program = /opt/homebrew/bin/gpg
+[tag]
+	forceSignAnnotated = false
