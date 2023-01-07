@@ -8,6 +8,7 @@
 
 [core]
     pager = delta
+	excludesfile = /Users/wiser/.gitignore
 
 [interactive]
     diffFilter = delta --color-only
@@ -59,5 +60,13 @@
 
 [gpg]
     program = /opt/homebrew/bin/gpg
+
 [tag]
 	forceSignAnnotated = false
+
+[merge]
+    tool = code
+
+[mergetool "code"]
+    cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+

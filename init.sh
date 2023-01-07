@@ -78,6 +78,8 @@ function init_env() {
     ln -sfv $ENV_DIR/vimrc .vimrc
     ln -sfv $ENV_DIR/vim_dir .vim
     ln -sfv $ENV_DIR/fish .config/fish
+    ln -sfv $ENV_DIR/neovim/lua .config/nvim/lua
+    ln -sfv $ENV_DIR/neovim/init.lua .config/nvim/init.lua
     cd $CURRENT_DIR
 }
 

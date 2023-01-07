@@ -56,12 +56,18 @@ function fish_prompt
         end
     end
 
+    set -l black (set_color -o black)
+    set -l white (set_color -o white)
     set -l cyan (set_color -o cyan)
     set -l yellow (set_color -o yellow)
     set -l red (set_color -o red)
     set -l green (set_color -o green)
     set -l blue (set_color -o blue)
+    set -l magenta (set_color -o magenta)
     set -l normal (set_color normal)
+
+    set -l time (date +%H:%M:%S)
+    set time "$magenta$time "
 
     set -l dollar_color "$green"
     if test $__last_command_exit_status != 0
@@ -86,5 +92,5 @@ function fish_prompt
         end
     end
 
-    echo -n -s ''$cwd $repo_info $normal \n''$dollar''
+    echo -n -s ''$time $cwd $repo_info $normal \n''$dollar''
 end
