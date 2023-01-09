@@ -1,8 +1,17 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export CLICOLOR:1
+SETUVAR --export --path GOPATH:/Users/wiser/workspace/go
 SETUVAR --export GREP_COLOR:1\x3b31
-SETUVAR --export LC_ALL:zh_CN\x2eUTF\x2d8
+SETUVAR --export LC_ALL:en_US\x2eUTF\x2d8
 SETUVAR --export LC_CTYPE:zh_CN\x2eUTF\x2d8
+SETUVAR --export LESS_TERMCAP_mb:\x1b\x5b01\x3b31m
+SETUVAR --export LESS_TERMCAP_md:\x1b\x5b01\x3b38\x3b5\x3b74m
+SETUVAR --export LESS_TERMCAP_me:\x1b\x5b0m
+SETUVAR --export LESS_TERMCAP_se:\x1b\x5b0m
+SETUVAR --export LESS_TERMCAP_so:\x1b\x5b38\x3b5\x3b016m\x5cE\x5b48\x3b5\x3b220m
+SETUVAR --export LESS_TERMCAP_ue:\x1b\x5b0m
+SETUVAR --export LESS_TERMCAP_us:\x1b\x5b04\x3b38\x3b5\x3b146m
 SETUVAR --export --path PATH:/usr/bin\x1e/bin\x1e/usr/local/bin\x1e/usr/local/bin\x1e/Users/wiser/\x2ecargo/bin
 SETUVAR __fish_initialized:3400
 SETUVAR fish_color_autosuggestion:707A8C
@@ -34,4 +43,5 @@ SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
+SETUVAR --export fish_prompt_pwd_dir_length:0
 SETUVAR fish_user_paths:/usr/local/bin

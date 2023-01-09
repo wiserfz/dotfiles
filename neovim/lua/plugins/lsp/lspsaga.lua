@@ -1,18 +1,22 @@
 -- import lspsaga safely
-local saga_status, saga = pcall(require, "lspsaga")
-if not saga_status then
+local status, saga = pcall(require, "lspsaga")
+if not status then
   return
 end
 
-saga.init_lsp_saga({
+saga.setup({
   -- keybinds for navigation in lspsaga window
-  move_in_saga = { prev = "<C-k>", next = "<C-j>" },
-  -- use enter to open file with finder
-  finder_action_keys = {
-    open = "<CR>",
+  scroll_preview = { scroll_up = "<C-k>", scroll_down = "<C-j>" },
+  -- when there has code action it will show a lightbulb
+  lightbulb = {
+    enable = false,
   },
-  -- use enter to open file with definition preview
-  definition_action_keys = {
-    edit = "<CR>",
+  ui = {
+    colors = {
+      --float window normal bakcground color
+      normal_bg = "#1c1c19",
+      --title background color
+      title_bg = "#afd700",
+    },
   },
 })

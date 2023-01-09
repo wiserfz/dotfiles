@@ -40,6 +40,11 @@ function install_brew_pkg() {
         read -p "${LightRed}Do you want to install '$item'? (y/n) ${NC}" confirm
         if [[ $confirm == "y" ]]; then
             brew install $item
+			if [[ $item == "go" ]]; then
+				go env -w GOPATH="$HOME/workspace/go"
+				go env -w GOPROXY="https://goproxy.cn,direct"
+				go env -w GO111MODULE="on"
+			fi
             brew cleanup $item
         fi
     done

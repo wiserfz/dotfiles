@@ -1,11 +1,14 @@
 -- import null-ls plugin safely
 local setup, null_ls = pcall(require, "null-ls")
 if not setup then
+  vim.notify("null-ls not found")
   return
 end
 
 -- for conciseness
 local formatting = null_ls.builtins.formatting -- to setup formatters
+-- local code_actions = null_ls.builtins.code_actions -- to setup code actions
+-- local completion = null_ls.builtins.completion -- to setup completion
 local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 
 -- to setup format on save
@@ -13,12 +16,28 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 -- configure null_ls
 null_ls.setup({
-  -- setup formatters & linters
+  -- debug = true, -- enable debug mode and get debug output
+  -- setup builtins sources for null-ls
   sources = {
-    --  to disable file types use
-    --  "formatting.prettier.with({disabled_filetypes: {}})" (see null-ls docs)
+    -- to disable file types use
+    -- "formatting.prettier.with({disabled_filetypes = {}})" (see null-ls docs)
+    formatting.goimports, -- golang imports
+    formatting.gofumpt, -- golang formatter
     formatting.stylua, -- lua formatter
-	diagnostics.staticcheck -- golang linter
+    formatting.buf, -- protocol buffer formatter
+    -- formatting.yamlfmt, -- yaml formatter
+    formatting.sql_formatter, -- sql formatter
+    formatting.jq, -- json formatter
+    -- code_actions.cspell, -- spell checker
+    -- diagnostics.cspell, -- spell checker
+    diagnostics.shellcheck, -- shell script static analysis tool
+    -- a tool to verify with .editorconfig, need install ec command
+    -- see release: https://github.com/editorconfig-checker/editorconfig-checker/releases
+    diagnostics.editorconfig_checker.with({
+      disabled_filetypes = { "erlang" }, -- disable in erlang file
+    }),
+    diagnostics.yamllint, -- yaml linter
+    diagnostics.buf, -- working with Protocol Buffers
   },
   -- configure format on save
   on_attach = function(current_client, bufnr)

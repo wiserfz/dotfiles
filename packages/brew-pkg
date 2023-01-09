@@ -4,6 +4,9 @@ go
 jq
 tree
 bat
+ripgrep
+fzf
 node
 git-delta
 neovim
+lua-language-server
