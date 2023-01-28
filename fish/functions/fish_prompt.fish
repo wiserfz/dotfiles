@@ -5,16 +5,45 @@ function fish_prompt
         set -g __fish_arrow_functions_defined
         function _git_branch_name
             set -l branch (git symbolic-ref --quiet HEAD 2>/dev/null)
+            set -l branch_name
             if set -q branch[1]
-                echo (string replace -r '^refs/heads/' '' $branch)
+                set branch_name (string replace -r '^refs/heads/' '' $branch)
             else
-                echo (git rev-parse --short HEAD 2>/dev/null)
+                set branch_name (git rev-parse --short HEAD 2>/dev/null)
             end
+
+            echo $branch_name
         end
 
         function _is_git_dirty
             not command git diff-index --cached --quiet HEAD -- &>/dev/null
             or not command git diff --no-ext-diff --quiet --exit-code &>/dev/null
+        end
+
+        function _git_show_ahead
+            set -l ahead
+
+            set -l ahead_mark "↑"
+            set -l ahead_count (git rev-list origin/$argv[1]..HEAD --count 2>/dev/null)
+
+            if test $status -eq 0
+                and test $ahead_count -gt 0
+                set ahead " $ahead_mark$ahead_count"
+            end
+            echo $ahead
+        end
+
+        function _git_show_behind
+            set -l behind
+
+            set -l behind_mark "↓"
+            set -l behind_count (git rev-list HEAD..origin/$argv[1] --count 2>/dev/null)
+
+            if test $status -eq 0
+                and test $behind_count -gt 0
+                set behind " $behind_mark$behind_count"
+            end
+            echo $behind
         end
 
         function _is_git_repo
@@ -32,6 +61,15 @@ function fish_prompt
             test -n "$stat"
         end
 
+        # TODO: show upstream for hg
+        function _hg_show_ahead
+            return 0
+        end
+
+        function _hg_show_behind
+            return 0
+        end
+
         function _is_hg_repo
             fish_print_hg_root >/dev/null
         end
@@ -42,6 +80,14 @@ function fish_prompt
 
         function _is_repo_dirty
             _is_$argv[1]_dirty
+        end
+
+        function _show_ahead
+            _$argv[1]_show_ahead $argv[2]
+        end
+
+        function _show_behind
+            _$argv[1]_show_behind $argv[2]
         end
 
         function _repo_type
@@ -83,8 +129,11 @@ function fish_prompt
 
     set -l repo_info
     if set -l repo_type (_repo_type)
-        set -l repo_branch $cyan(_repo_branch_name $repo_type)
-        set repo_info "$blue $repo_type:($repo_branch$blue)"
+        set -l repo_branch (_repo_branch_name $repo_type)
+        set -l repo_ahead (_show_ahead $repo_type $repo_branch)
+        set -l repo_behind (_show_behind $repo_type $repo_branch)
+
+        set repo_info "$blue $repo_type:($cyan$repo_branch$green$repo_ahead$red$repo_behind$blue)"
 
         if _is_repo_dirty $repo_type
             set -l dirty "$red ✗"
