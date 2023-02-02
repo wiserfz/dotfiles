@@ -9,7 +9,7 @@ saga.setup({
   scroll_preview = { scroll_up = "<C-k>", scroll_down = "<C-j>" },
   -- when there has code action it will show a lightbulb
   lightbulb = {
-    enable = false,
+    sign = false,
   },
   ui = {
     colors = {
@@ -18,5 +18,8 @@ saga.setup({
       --title background color
       title_bg = "#afd700",
     },
+  },
+  beacon = {
+    enable = false,
   },
 })
