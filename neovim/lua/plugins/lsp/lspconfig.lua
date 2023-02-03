@@ -23,8 +23,6 @@ local on_attach = function(client, bufnr)
   -- set keybinds
   map("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts) -- show definition, references
   map("n", "gd", "<cmd>Lspsaga goto_definition<CR>", opts) -- goto definition by lspsaga
-  map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts) -- goto definition by vim.lsp API
-  map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts) -- go to declaration, gopls and sumneko_lua lsp not support
   map("n", "gD", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
   map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
   map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
@@ -52,7 +50,12 @@ end
 -- configure lua server (with special settings)
 lspconfig["sumneko_lua"].setup({
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+
+    map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = bufnr })
+    map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = bufnr })
+  end,
   settings = { -- custom settings for lua
     Lua = {
       runtime = {
@@ -80,7 +83,12 @@ lspconfig["sumneko_lua"].setup({
 -- configure erlangls server
 lspconfig["erlangls"].setup({
   capabilities = capabilities,
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+
+    map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = bufnr })
+    map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = bufnr })
+  end,
 })
 
 -- debugging rust by codelldb
@@ -96,7 +104,13 @@ if rt_status then
   rt.setup({
     server = {
       capabilities = capabilities,
-      on_attach = on_attach,
+      on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        -- Hover actions
+        map("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
+        -- Code action groups
+        map("n", "<Leader>ca", rt.code_action_group.code_action_group, { buffer = bufnr })
+      end,
       standalone = true,
       settings = {
         ["rust-analyzer"] = {
@@ -162,7 +176,12 @@ if go_status then
     -- if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
     -- lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
     lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
-    lsp_on_attach = on_attach, -- nil: use on_attach function defined in go/lsp.lua,
+    lsp_on_attach = function(client, bufnr)
+      on_attach(client, bufnr)
+
+      map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = bufnr })
+      map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = bufnr })
+    end, -- nil: use on_attach function defined in go/lsp.lua,
     -- when lsp_cfg is true
     -- if lsp_on_attach is a function: use this function as on_attach function for gopls
     lsp_codelens = true, -- set to false to disable codelens, true by default

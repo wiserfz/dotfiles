@@ -26,6 +26,10 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 tree.setup({
   sort_by = "case_sensitive",
+  hijack_cursor = true,
+  system_open = {
+    cmd = "open",
+  },
   view = {
     adaptive_size = false,
     mappings = {
@@ -37,15 +41,23 @@ tree.setup({
   renderer = {
     group_empty = true,
     icons = {
+      show = {
+        git = true,
+        file = false,
+        folder = false,
+        folder_arrow = true,
+      },
       git_placement = "after",
       glyphs = {
+        bookmark = "🔖",
         git = {
-          unstaged = "-",
-          staged = "s",
-          untracked = "u",
-          renamed = "r",
-          deleted = "d",
-          ignored = "i",
+          unstaged = "✗",
+          staged = "✓",
+          unmerged = "⌥",
+          renamed = "➜",
+          untracked = "★",
+          deleted = "⊖",
+          ignored = "◌",
         },
       },
     },

@@ -4,6 +4,7 @@ go
 jq
 tree
 bat
+fd
 ripgrep
 fzf
 node
