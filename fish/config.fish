@@ -15,6 +15,10 @@ if status is-interactive
         fish_add_path -g /opt/homebrew/bin
     end
 
+    if test -d /opt/homebrew/sbin
+        fish_add_path -g /opt/homebrew/sbin
+    end
+
     set go_path (go env GOPATH)
     set -Ux GOPATH $go_path
     if test -d "$GOPATH"/bin

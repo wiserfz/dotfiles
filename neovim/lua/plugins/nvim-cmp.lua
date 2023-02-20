@@ -17,7 +17,7 @@ if not lspkind_status then
 end
 
 -- load vs-code like snippets from plugins (e.g. friendly-snippets)
-require("luasnip/loaders/from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").lazy_load()
 
 vim.opt.completeopt = "menu,menuone,noselect"
 vim.opt.shortmess = vim.opt.shortmess + { c = true }
@@ -45,7 +45,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = "path" }, -- file system paths
     { name = "nvim_lsp", keyword_length = 1, priority = 10 }, -- lsp
-    { name = "luasnip", keyword_length = 1, priority = 7 }, -- snippets
+    { name = "luasnip", option = { use_show_condition = false, show_autosnippets = false } }, -- snippets
     { name = "nvim_lsp_signature_help", priority = 8 }, -- display function signatures with current parameter emphasized
     { name = "nvim_lua", keyword_length = 1, priority = 8 }, -- complete neovim's Lua runtime API such vim.lsp.*
     { name = "buffer", keyword_length = 1, priority = 5 }, -- text within current buffer
