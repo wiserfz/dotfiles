@@ -14,6 +14,18 @@ autopairs.setup({
     javascript = { "template_string" }, -- don't add pairs in javscript template_string treesitter nodes
     java = false, -- don't check treesitter on java
   },
+  -- disable_filetype = { "TelescopePrompt", "spectre_panel" },
+  -- fast_wrap = {
+  --   map = "<M-e>",
+  --   chars = { "{", "[", "(", '"', "'" },
+  --   pattern = [=[[%'%"%>%]%)%}%,]]=],
+  --   offset = 0, -- Offset from pattern match
+  --   end_key = "$",
+  --   keys = "qwertyuiopzxcvbnmasdfghjkl",
+  --   check_comma = true,
+  --   highlight = "Search",
+  --   highlight_grey = "Comment",
+  -- },
 })
 
 -- import nvim-autopairs completion functionality safely

@@ -170,6 +170,14 @@ return packer.startup({
       requires = "kevinhwang91/promise-async",
     })
 
+    use({
+      "andymass/vim-matchup",
+      setup = function()
+        -- may set any options here
+        vim.g.matchup_matchparen_offscreen = { method = "popup" }
+      end,
+    })
+
     -- Automatically set up configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then

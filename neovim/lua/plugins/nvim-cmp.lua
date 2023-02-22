@@ -23,6 +23,36 @@ vim.opt.completeopt = "menu,menuone,noselect"
 vim.opt.shortmess = vim.opt.shortmess + { c = true }
 vim.api.nvim_set_option("updatetime", 300)
 
+--   פּ ﯟ   some other good icons
+local kind_icons = {
+  Text = "",
+  Method = "m",
+  Function = "",
+  Constructor = "",
+  Field = "",
+  Variable = "",
+  Class = "",
+  Interface = "",
+  Module = "",
+  Property = "",
+  Unit = "",
+  Value = "",
+  Enum = "",
+  Keyword = "",
+  Snippet = "",
+  Color = "",
+  File = "",
+  Reference = "",
+  Folder = "",
+  EnumMember = "",
+  Constant = "",
+  Struct = "",
+  Event = "",
+  Operator = "",
+  TypeParameter = "",
+}
+-- find more here: https://www.nerdfonts.com/cheat-sheet
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -44,11 +74,11 @@ cmp.setup({
   -- sources for autocompletion
   sources = cmp.config.sources({
     { name = "path" }, -- file system paths
-    { name = "nvim_lsp", keyword_length = 1, priority = 10 }, -- lsp
+    { name = "nvim_lsp" }, -- lsp
     { name = "luasnip", option = { use_show_condition = false, show_autosnippets = false } }, -- snippets
-    { name = "nvim_lsp_signature_help", priority = 8 }, -- display function signatures with current parameter emphasized
-    { name = "nvim_lua", keyword_length = 1, priority = 8 }, -- complete neovim's Lua runtime API such vim.lsp.*
-    { name = "buffer", keyword_length = 1, priority = 5 }, -- text within current buffer
+    { name = "nvim_lsp_signature_help" }, -- display function signatures with current parameter emphasized
+    { name = "nvim_lua" }, -- complete neovim's Lua runtime API such vim.lsp.*
+    { name = "buffer" }, -- text within current buffer
   }),
   window = {
     completion = {
@@ -60,6 +90,7 @@ cmp.setup({
   },
   -- configure lspkind for vs-code like icons
   formatting = {
+    fields = { "kind", "abbr", "menu" },
     format = lspkind.cmp_format({
       mode = "symbol_text", -- show only symbol annotations
       maxwidth = 50,
@@ -67,4 +98,8 @@ cmp.setup({
     }),
   },
   preselect = cmp.PreselectMode.None,
+  experimental = {
+    ghost_text = false,
+    native_menu = false,
+  },
 })

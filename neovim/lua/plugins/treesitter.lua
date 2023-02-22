@@ -8,7 +8,7 @@ end
 treesitter.setup({
   -- enable syntax highlighting
   highlight = {
-    enable = true,
+    enable = true, -- false will disable the whole extension
   },
   -- enable indentation
   indent = { enable = true },
@@ -38,5 +38,9 @@ treesitter.setup({
     enable = true,
     extended_mode = true,
     max_file_lines = nil,
+  },
+  matchup = {
+    enable = true, -- mandatory, false will disable the whole extension
+    disable = {}, -- optional, list of language that will be disabled
   },
 })
