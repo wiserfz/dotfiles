@@ -91,6 +91,17 @@ lspconfig["erlangls"].setup({
   end,
 })
 
+-- configure pyright server
+lspconfig["pyright"].setup({
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+
+    map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = bufnr })
+    map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = bufnr })
+  end,
+})
+
 -- debugging rust by codelldb
 -- NOTE: Must install CodeLLDB
 -- See https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(via--codelldb)

@@ -178,6 +178,11 @@ return packer.startup({
       end,
     })
 
+    -- Jedi is a static analysis tool for Python
+    use("zchee/deoplete-jedi")
+    -- leetcode for neovim
+    use("mbledkowski/neuleetcode.vim")
+
     -- Automatically set up configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then

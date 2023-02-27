@@ -33,7 +33,8 @@ mason_lspconfig.setup({
     "erlangls", -- erlang
     "gopls", -- golang
     "rust_analyzer", -- rust
-    "lua_ls", --lua
+    "lua_ls", -- lua
+    "pyright", -- python
   },
   -- auto-install configured servers (with lspconfig)
   automatic_installation = true, -- not the same as ensure_installed

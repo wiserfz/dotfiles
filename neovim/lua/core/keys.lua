@@ -68,3 +68,9 @@ map(
 
 map("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<CR>", { desc = "Toggle debug UI" })
 map("n", "<leader>de", "<cmd>lua require'dapui'.eval()<CR>", { desc = "Evaluate under cursor" })
+
+-- leetcode
+map("n", "<leader>ll", "<cmd>LeetCodeList<CR>")
+map("n", "<leader>lt", "<cmd>LeetCodeTest<CR>")
+map("n", "<leader>ls", "<cmd>LeetCodeSubmit<CR>")
+map("n", "<leader>li", "<cmd>LeetCodeSignIn<CR>")

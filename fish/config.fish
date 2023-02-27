@@ -19,6 +19,10 @@ if status is-interactive
         fish_add_path -g /opt/homebrew/sbin
     end
 
+    if test -d $HOME/.pyenv/bin
+        fish_add_path -g $HOME/.pyenv/bin
+    end
+
     set go_path (go env GOPATH)
     set -Ux GOPATH $go_path
     if test -d "$GOPATH"/bin
