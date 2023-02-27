@@ -150,7 +150,7 @@ return packer.startup({
     })
     use("nvim-telescope/telescope-dap.nvim")
 
-    use("p00f/nvim-ts-rainbow") -- rainbow parentheses
+    use("HiPhish/nvim-ts-rainbow2") -- rainbow parentheses
     use("lukas-reineke/indent-blankline.nvim") -- indent blankline
 
     use("RRethy/vim-illuminate") -- highlight other uses of word under cursor

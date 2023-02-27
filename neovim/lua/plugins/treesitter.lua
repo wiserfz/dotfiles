@@ -28,15 +28,20 @@ treesitter.setup({
     "fish",
     "go",
     "gomod",
+    "gosum",
     "rust",
     "sql",
     "toml",
+    "ini",
+    "proto",
+    "python",
+    "sql",
   },
   -- auto install above language parsers
   auto_install = true,
   rainbow = {
     enable = true,
-    extended_mode = true,
+    query = "rainbow-parens",
     max_file_lines = nil,
   },
   matchup = {
