@@ -11,3 +11,6 @@ node
 git-delta
 neovim
 lua-language-server
+tokei
+shellcheck
+yamllint

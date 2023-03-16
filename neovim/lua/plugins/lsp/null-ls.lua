@@ -36,8 +36,10 @@ null_ls.setup({
     diagnostics.editorconfig_checker.with({
       disabled_filetypes = { "erlang" }, -- disable in erlang file
     }),
+    -- configuration of yamllint: https://yamllint.readthedocs.io/en/stable/configuration.html
     diagnostics.yamllint, -- yaml linter
     diagnostics.buf, -- working with Protocol Buffers
+    diagnostics.fish, -- basic linting is available for fish scripts
   },
   -- configure format on save
   on_attach = function(current_client, bufnr)

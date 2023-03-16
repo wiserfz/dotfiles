@@ -22,8 +22,6 @@ local on_attach = function(client, bufnr)
 
   -- set keybinds
   map("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts) -- show definition, references
-  map("n", "gd", "<cmd>Lspsaga goto_definition<CR>", opts) -- goto definition by lspsaga
-  map("n", "gD", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
   map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
   map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
   map("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
@@ -117,6 +115,9 @@ if rt_status then
       capabilities = capabilities,
       on_attach = function(client, bufnr)
         on_attach(client, bufnr)
+
+        map("n", "gd", "<cmd>Lspsaga goto_definition<CR>", { buffer = bufnr }) -- goto definition by lspsaga
+        map("n", "gD", "<cmd>Lspsaga peek_definition<CR>", { buffer = bufnr }) -- see definition and make edits in window
         -- Hover actions
         map("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
         -- Code action groups
