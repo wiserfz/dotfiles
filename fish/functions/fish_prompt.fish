@@ -141,5 +141,11 @@ function fish_prompt
         end
     end
 
-    echo -n -s ''$time $cwd $repo_info $normal \n''$dollar''
+    set -l env_name
+    if set -q VIRTUAL_ENV
+        set -l name (basename "$VIRTUAL_ENV")
+        set env_name "$green($name) "
+    end
+
+    echo -n -s ''$env_name $time $cwd $repo_info $normal \n''$dollar''
 end

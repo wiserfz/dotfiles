@@ -12,15 +12,16 @@ saga.setup({
     enable_in_insert = true,
     sign = false,
   },
-  ui = {
-    colors = {
-      --float window normal bakcground color
-      normal_bg = "#1c1c19",
-      --title background color
-      title_bg = "#afd700",
-    },
-  },
   beacon = {
     enable = false,
+  },
+  finder = {
+    keys = {
+      edit = "<CR>",
+    },
+  },
+  rename = {
+    quit = "<ESC>",
+    in_select = false,
   },
 })

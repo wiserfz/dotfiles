@@ -28,6 +28,15 @@ if status is-interactive
     if test -d "$GOPATH"/bin
         fish_add_path -g $GOPATH/bin
     end
+
+    # pyenv
+    if command -v pyenv >/dev/null 2>&1
+        # NOTE: disable pyenv prompt
+        # see https://github.com/pyenv/pyenv-virtualenv/issues/385
+        set -gx PYENV_VIRTUALENV_DISABLE_PROMPT 1
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+    end
 end
 
 # delete welcome message of fish shell

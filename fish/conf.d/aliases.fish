@@ -37,4 +37,3 @@ if command -v brew >/dev/null 2>&1
     set -gx CPPFLAGS "-I$BREWHOME/include"
     set -gx PKG_CONFIG_PATH "$BREWHOME/lib/pkgconfig"
 end
-
