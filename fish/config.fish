@@ -56,3 +56,5 @@ set -Ux LESS_TERMCAP_so \e'[38;5;016m\E[48;5;220m'    # begin standout-mode - in
 set -Ux LESS_TERMCAP_ue \e'[0m'           # end underline
 set -Ux LESS_TERMCAP_us \e'[04;38;5;146m' # begin underline
 
+# setup with zoxide
+zoxide init fish | source

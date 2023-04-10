@@ -104,6 +104,7 @@ function init_env() {
 
     cd "$HOME" || return
     ln -sfv "$ENV_DIR"/gitconfig .gitconfig
+    ln -sfv "$ENV_DIR"/gitignore-glob .gitignore
     ln -sfv "$ENV_DIR"/tmux.conf .tmux.conf
     ln -sfv "$ENV_DIR"/vimrc .vimrc
     ln -sfv "$ENV_DIR"/vim_dir .vim
