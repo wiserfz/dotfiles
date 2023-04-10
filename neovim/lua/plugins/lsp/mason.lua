@@ -35,6 +35,7 @@ mason_lspconfig.setup({
     "rust_analyzer", -- rust
     "lua_ls", -- lua
     "pyright", -- python
+    "bashls", -- bash
   },
   -- auto-install configured servers (with lspconfig)
   automatic_installation = true, -- not the same as ensure_installed

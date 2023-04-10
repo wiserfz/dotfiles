@@ -20,6 +20,7 @@ treesitter.setup({
     "json",
     "yaml",
     "markdown",
+    "markdown_inline",
     "bash",
     "lua",
     "vim",

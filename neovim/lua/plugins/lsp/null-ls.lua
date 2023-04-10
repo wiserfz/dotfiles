@@ -28,6 +28,9 @@ null_ls.setup({
     -- formatting.yamlfmt, -- yaml formatter
     formatting.sql_formatter, -- sql formatter
     formatting.jq, -- json formatter
+    formatting.beautysh, -- shell formatter
+    formatting.erlfmt, -- erlang formatter
+    -- formatting.rustfmt, -- rust formatter
     -- code_actions.cspell, -- spell checker
     -- diagnostics.cspell, -- spell checker
     diagnostics.shellcheck, -- shell script static analysis tool

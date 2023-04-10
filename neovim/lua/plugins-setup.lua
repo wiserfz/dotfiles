@@ -167,7 +167,10 @@ return packer.startup({
     -- good folding
     use({
       "kevinhwang91/nvim-ufo",
-      requires = "kevinhwang91/promise-async",
+      requires = {
+        "kevinhwang91/promise-async",
+        "luukvbaal/statuscol.nvim",
+      },
     })
 
     use({

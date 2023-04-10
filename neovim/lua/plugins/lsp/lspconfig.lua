@@ -45,6 +45,17 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
+-- configure bash language server
+lspconfig["bashls"].setup({
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+
+    map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = bufnr })
+    map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = bufnr })
+  end,
+})
+
 -- configure lua server (with special settings)
 lspconfig["lua_ls"].setup({
   capabilities = capabilities,

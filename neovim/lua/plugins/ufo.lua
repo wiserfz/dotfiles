@@ -2,9 +2,23 @@
 -- Nvim UFO - GOOD FOLDING      ----
 ------------------------------------
 
-local status, ufo = pcall(require, "ufo")
+local col_status, col = pcall(require, "statuscol")
+if not col_status then
+  return
+end
 
-if not status then
+local builtin = require("statuscol.builtin")
+col.setup({
+  relculright = true,
+  segments = {
+    { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+    { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+    { text = { "%s" }, click = "v:lua.ScSa" },
+  },
+})
+
+local ufo_status, ufo = pcall(require, "ufo")
+if not ufo_status then
   return
 end
 
@@ -13,12 +27,12 @@ vim.keymap.set("n", "zR", ufo.openAllFolds)
 
 -- Hide foldcolumn for transparency
 -- See https://github.com/kevinhwang91/nvim-ufo/issues/4
-vim.o.foldcolumn = "0"
+vim.o.foldcolumn = "1"
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-vim.cmd([[ highlight FoldColumn guifg=white ]])
+vim.cmd([[ highlight FoldColumn guifg=gray ]])
 
 -- treesitter as a main provider instead
 -- Only depend on `nvim-treesitter/queries/filetype/folds.scm`,
