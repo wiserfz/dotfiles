@@ -136,6 +136,14 @@ return packer.startup({
 
     -- rust
     use("simrat39/rust-tools.nvim") -- tools to automatically set up lspconfig for rust-analyzer
+    use({
+      "saecki/crates.nvim", -- manager crates.io dependencies
+      tag = "v0.3.0",
+      requires = { "nvim-lua/plenary.nvim" },
+      config = function()
+        require("crates").setup()
+      end,
+    })
 
     -- golang
     use({

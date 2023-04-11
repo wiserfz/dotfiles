@@ -79,6 +79,7 @@ cmp.setup({
     { name = "nvim_lsp_signature_help" }, -- display function signatures with current parameter emphasized
     { name = "nvim_lua" }, -- complete neovim's Lua runtime API such vim.lsp.*
     { name = "buffer" }, -- text within current buffer
+    { name = "crates" }, -- manager crate.io dependencies
   }),
   window = {
     completion = {
