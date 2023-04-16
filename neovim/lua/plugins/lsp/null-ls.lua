@@ -21,8 +21,6 @@ null_ls.setup({
   sources = {
     -- to disable file types use
     -- "formatting.prettier.with({disabled_filetypes = {}})" (see null-ls docs)
-    formatting.goimports, -- golang imports
-    formatting.gofumpt, -- golang formatter
     formatting.stylua, -- lua formatter
     formatting.buf, -- protocol buffer formatter
     -- formatting.yamlfmt, -- yaml formatter
@@ -30,6 +28,8 @@ null_ls.setup({
     formatting.jq, -- json formatter
     formatting.beautysh, -- shell formatter
     formatting.erlfmt, -- erlang formatter
+    -- formatting.black, -- more popular python formatter
+    formatting.autopep8, -- python formatter
     -- formatting.rustfmt, -- rust formatter
     -- code_actions.cspell, -- spell checker
     -- diagnostics.cspell, -- spell checker
@@ -37,12 +37,13 @@ null_ls.setup({
     -- a tool to verify with .editorconfig, need install ec command
     -- see release: https://github.com/editorconfig-checker/editorconfig-checker/releases
     diagnostics.editorconfig_checker.with({
-      disabled_filetypes = { "erlang" }, -- disable in erlang file
+      disabled_filetypes = { "erlang", "markdown", "python" }, -- disable editorconfig checker
     }),
     -- configuration of yamllint: https://yamllint.readthedocs.io/en/stable/configuration.html
     diagnostics.yamllint, -- yaml linter
     diagnostics.buf, -- working with Protocol Buffers
     diagnostics.fish, -- basic linting is available for fish scripts
+    diagnostics.pylint, -- static code analysis for python
   },
   -- configure format on save
   on_attach = function(current_client, bufnr)

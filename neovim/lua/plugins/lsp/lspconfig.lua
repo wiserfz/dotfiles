@@ -13,7 +13,7 @@ end
 local map = vim.keymap.set
 
 -- enable keybinds only for when lsp server available
-local on_attach = function(client, bufnr)
+local function on_attach(client, bufnr)
   -- disable formatting for LSP clients as this is handled by null-ls
   client.server_capabilities.documentFormattingProvider = false
   client.server_capabilities.documentRangeFormattingProvider = false
