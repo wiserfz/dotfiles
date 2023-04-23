@@ -34,7 +34,8 @@ mason_lspconfig.setup({
     "gopls", -- golang
     "rust_analyzer", -- rust
     "lua_ls", -- lua
-    "pyright", -- python
+    -- "pyright", -- python
+    "pylsp", -- python
     "bashls", -- bash
   },
   -- auto-install configured servers (with lspconfig)

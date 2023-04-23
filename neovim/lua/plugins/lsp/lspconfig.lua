@@ -49,7 +49,8 @@ local servers = {
   "bashls",
   "lua_ls",
   "erlangls",
-  "pyright",
+  -- "pyright",
+  "pylsp",
   "rust_analyzer",
   "gopls",
 }
@@ -172,6 +173,24 @@ for _, server in pairs(servers) do
           -- Do not send telemetry data containing a randomized but unique identifier
           telemetry = {
             enable = false,
+          },
+        },
+      },
+    })
+  elseif server == "pylsp" then
+    lspconfig["pylsp"].setup({
+      capabilities = capabilities,
+      on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+
+        map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = bufnr })
+        map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = bufnr })
+      end,
+      settings = {
+        pylsp = {
+          plugins = {
+            pycodestyle = { enabled = false },
+            pyflakes = { enabled = false },
           },
         },
       },

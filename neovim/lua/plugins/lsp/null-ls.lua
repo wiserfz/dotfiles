@@ -41,7 +41,7 @@ null_ls.setup({
     diagnostics.yamllint, -- yaml linter
     diagnostics.buf, -- working with Protocol Buffers
     diagnostics.fish, -- basic linting is available for fish scripts
-    diagnostics.pylint, -- static code analysis for python
+    diagnostics.ruff, -- python linter written by rust
   },
   -- configure format on save
   on_attach = function(current_client, bufnr)
