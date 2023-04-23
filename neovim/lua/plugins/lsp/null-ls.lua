@@ -34,9 +34,7 @@ null_ls.setup({
     -- code_actions.cspell, -- spell checker
     -- diagnostics.cspell, -- spell checker
     diagnostics.shellcheck, -- shell script static analysis tool
-    -- a tool to verify with .editorconfig, need install ec command
-    -- see release: https://github.com/editorconfig-checker/editorconfig-checker/releases
-    diagnostics.editorconfig_checker.with({
+    diagnostics.editorconfig_checker.with({ -- a tool to verify with .editorconfig
       disabled_filetypes = { "erlang", "markdown", "python" }, -- disable editorconfig checker
     }),
     -- configuration of yamllint: https://yamllint.readthedocs.io/en/stable/configuration.html

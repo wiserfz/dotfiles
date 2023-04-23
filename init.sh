@@ -9,6 +9,7 @@ PYTHON_VERSION="3.11.2"
 PYENV_URL="https://pyenv.run"
 ENV_URL="https://github.com/Gitfz810/env_conf.git"
 ENV_DIR="$HOME/workspace/env_conf"
+CODELLDB_DIR="$HOME/.local/codelldb"
 
 # Black=$'\e[0;30m'
 Red=$'\e[0;31m'
@@ -154,10 +155,30 @@ function install_nerd_fonts() {
     fi
 
     brew tap homebrew/cask-fonts
-    read -rp "${White}Enter fonts name which should be installed, suggest ${LightRed}'font-jetbrains-mono-nerd-font': ${NC}" confirm
-    brew install "${confirm}"
+    read -rp "${White}Enter fonts name which should be installed, suggest ${LightRed}'font-jetbrains-mono-nerd-font': ${NC}" font
+    brew install "${font}"
 
-    echo "${LightGreen}Install nerd fonts ${LightRed}$confirm ${LightGreen}over.${NC}"
+    echo "${LightGreen}Install nerd fonts ${LightRed}$font ${LightGreen}over.${NC}"
+}
+
+function install_codelldb() {
+    read -rp "${Yellow}Do you want to install codelldb(debug plugin)? (y/n): ${NC}" confirm
+    if [[ $confirm == "n" ]]; then
+        return
+    fi
+
+    read -rp "${Yellow}Please enter install version of codelldb(e.g. v1.9.0): ${NC}" version
+
+    url=$(printf 'https://github.com/vadimcn/codelldb/releases/download/%s/codelldb-aarch64-darwin.vsix' "$version")
+    echo "$url"
+
+    if [[ ! -d "$CODELLDB_DIR/extension" ]]; then
+        curl --location --remote-name -s "$url" -o codelldb-aarch64-darwin.vsix
+        unzip -qo codelldb-aarch64-darwin.vsix -d "$CODELLDB_DIR/"
+        rm -f codelldb-aarch64-darwin.vsix
+    fi
+
+    echo "${LightGreen}Install codelldb version $version over.${NC}"
 }
 
 function init_env() {
@@ -207,6 +228,7 @@ function install_all() {
     install_python_pkg
     install_powerline_fonts
     install_nerd_fonts
+    install_codelldb
 
     init_env
 }
@@ -221,7 +243,8 @@ ${Cyan}select a function code:
 【 5 】 Install python packages
 【 6 】 Install powerline fonts
 【 7 】 Install nerd fonts
-【 8 】 Init environment
+【 8 】 Install codelldb
+【 9 】 Init environment
 【 0 】 Install all
 【 e 】 Exit
 ===============================${NC}
@@ -242,7 +265,8 @@ case $choice in
     5) install_python_pkg;;
     6) install_powerline_fonts;;
     7) install_nerd_fonts;;
-    8) init_env;;
+    8) install_codelldb;;
+    9) init_env;;
     0) install_all;;
     e) echo "${LightGreen}Bye, Bye.${NC}" && exit;;
 esac
