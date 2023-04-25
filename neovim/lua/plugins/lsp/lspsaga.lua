@@ -21,7 +21,6 @@ saga.setup({
     },
   },
   rename = {
-    quit = "<ESC>",
     in_select = false,
   },
 })

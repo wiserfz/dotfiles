@@ -58,6 +58,12 @@ lualine.setup({
     disabled_filetypes = { "packer", "NvimTree" }, -- disable status line
   },
   sections = {
+    lualine_c = {
+      {
+        "filename",
+        path = 3, -- 0: Just the filename; 3: Absolute path, with tilde as the home directory
+      },
+    },
     lualine_x = { indent, "encoding", "fileformat", "filetype" },
   },
 })
