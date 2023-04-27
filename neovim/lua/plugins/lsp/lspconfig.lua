@@ -141,7 +141,7 @@ for _, server in pairs(servers) do
         dap_debug_gui = true, -- bool|table put your dap-ui setup here, set to false to disable
         dap_port = -1, -- can be set to a number, if set to -1 go.nvim will pickup a random port
         trouble = true,
-        luasnip = true,
+        -- luasnip = true,
       })
     end
   elseif server == "lua_ls" then

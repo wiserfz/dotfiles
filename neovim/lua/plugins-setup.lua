@@ -64,6 +64,16 @@ return packer.startup({
     use("tpope/vim-surround") -- add, delete, change surroundings (it's awesome)
     use("inkarkat/vim-ReplaceWithRegister") -- replace with register contents using motion (gr + motion)
 
+    -- fancy start screen
+    use({
+      "glepnir/dashboard-nvim",
+      event = "VimEnter",
+      config = function()
+        require("plugins.dashboard-nvim").setup()
+      end,
+      requires = { "nvim-tree/nvim-web-devicons" },
+    })
+
     -- commenting with gc
     use("numToStr/Comment.nvim")
 

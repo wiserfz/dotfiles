@@ -22,8 +22,8 @@ telescope.setup({
       },
     },
     file_ignore_patterns = {
-      "^./.git/",
-      "^./target/",
+      "^.git/",
+      "^target/",
       "LICENSE*",
     },
     layout_strategy = "vertical",
