@@ -49,8 +49,8 @@ local servers = {
   "bashls",
   "lua_ls",
   "erlangls",
-  -- "pyright",
-  "pylsp",
+  "pyright",
+  -- "pylsp",
   "rust_analyzer",
   "gopls",
 }

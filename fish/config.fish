@@ -1,41 +1,38 @@
 if status is-interactive
     if test (uname) = "Darwin"
-        fish_add_path -g /usr/local/bin
+        fish_add_path /usr/local/bin
     end
 
     if test -d $HOME/.local/bin
-        fish_add_path -g $HOME/.local/bin
+        fish_add_path $HOME/.local/bin
     end
 
     if test -d $HOME/.cargo/bin
-        fish_add_path -g $HOME/.cargo/bin
+        fish_add_path $HOME/.cargo/bin
     end
 
     if test -d /opt/homebrew/bin
-        fish_add_path -g /opt/homebrew/bin
+        fish_add_path /opt/homebrew/bin
     end
 
     if test -d /opt/homebrew/sbin
-        fish_add_path -g /opt/homebrew/sbin
+        fish_add_path /opt/homebrew/sbin
     end
 
-    if test -d $HOME/.pyenv/bin
-        fish_add_path -g $HOME/.pyenv/bin
+    if test -d $HOME/.pyenv
+        set -Ux PYENV_ROOT $HOME/.pyenv
+
+        # NOTE: disable pyenv prompt
+        # see https://github.com/pyenv/pyenv-virtualenv/issues/385
+        set -gx PYENV_VIRTUALENV_DISABLE_PROMPT 1
+        pyenv init - | source
+        pyenv virtualenv-init - | source
     end
 
     set go_path (go env GOPATH)
     set -Ux GOPATH $go_path
     if test -d "$GOPATH"/bin
         fish_add_path -g $GOPATH/bin
-    end
-
-    # pyenv
-    if command -v pyenv >/dev/null 2>&1
-        # NOTE: disable pyenv prompt
-        # see https://github.com/pyenv/pyenv-virtualenv/issues/385
-        set -gx PYENV_VIRTUALENV_DISABLE_PROMPT 1
-        eval "$(pyenv init -)"
-        eval "$(pyenv virtualenv-init -)"
     end
 end
 

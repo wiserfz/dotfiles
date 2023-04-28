@@ -6,7 +6,6 @@ CURRENT_DIR=$PWD
 BREW_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 POWERLINE_FONTS_URL="https://github.com/powerline/fonts.git"
 PYTHON_VERSION="3.11.2"
-PYENV_URL="https://pyenv.run"
 ENV_URL="https://github.com/Gitfz810/env_conf.git"
 ENV_DIR="$HOME/workspace/env_conf"
 CODELLDB_DIR="$HOME/.local/codelldb"
@@ -97,24 +96,6 @@ function install_cask_pkg() {
     done
 
     echo "${LightGreen}Install cask packages over.${NC}"
-}
-
-function install_pyenv() {
-    read -rp "${Yellow}Do you want to install pyenv? (y/n): ${NC}" confirm
-    if [[ $confirm == "n" ]]; then
-        return
-    fi
-
-    if [[ ! -d "$HOME/.pyenv" ]]; then
-        curl "$PYENV_URL" | bash
-        eval "$HOME/.pyenv/bin/pyenv init -"
-        eval "$HOME/.pyenv/bin/pyenv virtualenv-init -"
-        "$HOME/.pyenv/bin/pyenv" update
-
-        echo "${LightGreen}Install pyenv over.${NC}"
-    else
-        echo "${LightGreen}Pyenv is already installed.${NC}"
-    fi
 }
 
 function install_python_pkg() {
@@ -239,12 +220,11 @@ ${Cyan}select a function code:
 【 1 】 Install brew
 【 2 】 Install brew packages
 【 3 】 Install cask packages
-【 4 】 Install pyenv
-【 5 】 Install python packages
-【 6 】 Install powerline fonts
-【 7 】 Install nerd fonts
-【 8 】 Install codelldb
-【 9 】 Init environment
+【 4 】 Install python packages
+【 5 】 Install powerline fonts
+【 6 】 Install nerd fonts
+【 7 】 Install codelldb
+【 8 】 Init environment
 【 0 】 Install all
 【 e 】 Exit
 ===============================${NC}
@@ -261,12 +241,11 @@ case $choice in
     1) install_brew;;
     2) install_brew_pkg;;
     3) install_cask_pkg;;
-    4) install_pyenv;;
-    5) install_python_pkg;;
-    6) install_powerline_fonts;;
-    7) install_nerd_fonts;;
-    8) install_codelldb;;
-    9) init_env;;
+    4) install_python_pkg;;
+    5) install_powerline_fonts;;
+    6) install_nerd_fonts;;
+    7) install_codelldb;;
+    8) init_env;;
     0) install_all;;
     e) echo "${LightGreen}Bye, Bye.${NC}" && exit;;
 esac

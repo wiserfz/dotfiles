@@ -14,3 +14,5 @@ tokei
 shellcheck
 yamllint
 zoxide
+pyenv
+pyenv-virtualenv

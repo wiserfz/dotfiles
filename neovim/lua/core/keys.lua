@@ -25,6 +25,7 @@ map("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
 map("n", "<leader>fe", ":NvimTreeToggle<CR>") -- toggle file explorer
 -- plugin key maps
 map("n", "<leader>sz", ":MaximizerToggle<CR>") -- toggle split window maximization
+map("n", "<leader>szz", ":MaximizerToggle!<CR>") -- toggle split window maximization
 
 -- telescope
 map("n", "<leader>ff", "<cmd>Telescope find_files hidden=true<cr>") -- find files within current working directory, respects .gitignore
