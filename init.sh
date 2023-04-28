@@ -6,8 +6,8 @@ CURRENT_DIR=$PWD
 BREW_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 POWERLINE_FONTS_URL="https://github.com/powerline/fonts.git"
 PYTHON_VERSION="3.11.2"
-ENV_URL="https://github.com/Gitfz810/env_conf.git"
-ENV_DIR="$HOME/workspace/env_conf"
+ENV_URL="https://github.com/Gitfz810/dotfiles.git"
+ENV_DIR="$HOME/workspace/dotfiles"
 CODELLDB_DIR="$HOME/.local/codelldb"
 
 # Black=$'\e[0;30m'

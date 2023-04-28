@@ -7,5 +7,5 @@ Init environment configuration for new device.
 
 ### install
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/Gitfz810/env_conf/master/init.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/Gitfz810/dotfiles/master/init.sh)"
 ```
