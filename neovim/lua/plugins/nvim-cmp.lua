@@ -23,35 +23,53 @@ vim.opt.completeopt = "menu,menuone,noselect"
 vim.opt.shortmess = vim.opt.shortmess + { c = true }
 vim.api.nvim_set_option("updatetime", 300)
 
---   פּ ﯟ   some other good icons
-local kind_icons = {
-  Text = "",
-  Method = "m",
-  Function = "",
-  Constructor = "",
-  Field = "",
-  Variable = "",
-  Class = "",
-  Interface = "",
-  Module = "",
-  Property = "",
-  Unit = "",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
-  File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "",
-  Event = "",
-  Operator = "",
-  TypeParameter = "",
-}
+-- local kind_icons = {
+--   Text = "",
+--   Method = "󰆧",
+--   Function = "󰊕",
+--   Constructor = "",
+--   Field = "󰇽",
+--   Variable = "󰂡",
+--   Class = "󰠱",
+--   Interface = "",
+--   Module = "",
+--   Property = "󰜢",
+--   Unit = "",
+--   Value = "󰎠",
+--   Enum = "",
+--   Keyword = "󰌋",
+--   Snippet = "",
+--   Color = "󰏘",
+--   File = "󰈙",
+--   Reference = "",
+--   Folder = "󰉋",
+--   EnumMember = "",
+--   Constant = "󰏿",
+--   Struct = "",
+--   Event = "",
+--   Operator = "󰆕",
+--   TypeParameter = "󰅲",
+-- }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
+
+vim.cmd([[
+  " gray
+  highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
+  " blue
+  highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
+  highlight! link CmpItemAbbrMatchFuzzy CmpItemAbbrMatch
+  " light blue
+  highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
+  highlight! link CmpItemKindInterface CmpItemKindVariable
+  highlight! link CmpItemKindText CmpItemKindVariable
+  " pink
+  highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
+  highlight! link CmpItemKindMethod CmpItemKindFunction
+  " front
+  highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
+  highlight! link CmpItemKindProperty CmpItemKindKeyword
+  highlight! link CmpItemKindUnit CmpItemKindKeyword
+]])
 
 cmp.setup({
   snippet = {
@@ -82,11 +100,10 @@ cmp.setup({
     { name = "crates" }, -- manager crate.io dependencies
   }),
   window = {
-    completion = {
-      cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered({
       col_offset = 3,
       side_padding = 1,
-    },
+    }),
     documentation = cmp.config.window.bordered(),
   },
   -- configure lspkind for vs-code like icons
@@ -98,9 +115,7 @@ cmp.setup({
       ellipsis_char = "...",
     }),
   },
-  preselect = cmp.PreselectMode.None,
-  experimental = {
-    ghost_text = false,
-    native_menu = false,
+  view = {
+    entries = "custom",
   },
 })
