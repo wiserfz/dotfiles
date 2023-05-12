@@ -9,7 +9,6 @@ saga.setup({
   scroll_preview = { scroll_up = "<C-k>", scroll_down = "<C-j>" },
   -- when there has code action it will show a lightbulb
   lightbulb = {
-    enable_in_insert = true,
     sign = false,
   },
   beacon = {
@@ -23,4 +22,9 @@ saga.setup({
   rename = {
     in_select = false,
   },
+  -- ui = {
+  --   kind = {
+  --     Function = { " ", "Function" },
+  --   },
+  -- },
 })

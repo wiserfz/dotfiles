@@ -8,26 +8,20 @@ end
 -- get lualine theme
 -- local lualine_theme = require("lualine.themes.onedark")
 
--- new colors for theme
--- local new_colors = {
--- 	blue = "#65D1FF",
--- 	green = "#3EFFDC",
--- 	violet = "#FF61EF",
--- 	yellow = "#FFDA7B",
--- 	black = "#000000",
--- }
-
--- change tokyonight theme colors
--- lualine_theme.normal.a.bg = new_colors.blue
--- lualine_theme.insert.a.bg = new_colors.green
--- lualine_theme.visual.a.bg = new_colors.violet
--- lualine_theme.command = {
--- 	a = {
--- 		gui = "bold",
--- 		bg = new_colors.yellow,
--- 		fg = new_colors.black,
--- 	},
--- }
+local colors = {
+  black = "#282828",
+  white = "#ebdbb2",
+  red = "#fb4934",
+  green = "#b8bb26",
+  blue = "#83a598",
+  yellow = "#fe8019",
+  gray = "#a89984",
+  darkgray = "#3c3836",
+  lightgray = "#504945",
+  inactivegray = "#7c6f64",
+  darkblue = "#112233",
+  lightgreen = "#83AA81",
+}
 
 local indent = {
   function()
@@ -48,10 +42,23 @@ local indent = {
   end,
 }
 
+local custom_gruvbox = require("lualine.themes.gruvbox")
+
+-- Change the background of lualine_c section for normal mode
+custom_gruvbox.normal.c.bg = colors.darkblue
+custom_gruvbox.insert.c.bg = colors.darkblue
+custom_gruvbox.insert.c.fg = colors.lightgreen
+custom_gruvbox.visual.c.fg = colors.yellow
+custom_gruvbox.visual.c.bg = colors.darkblue
+custom_gruvbox.command.c.fg = colors.green
+custom_gruvbox.command.c.bg = colors.darkblue
+-- custom_gruvbox.visual.c.gui = "bold" 加粗
+custom_gruvbox.replace.c.fg = colors.red
+
 -- configure lualine with modified theme
 lualine.setup({
   options = {
-    theme = "kanagawa",
+    theme = custom_gruvbox,
     -- fmt = string.lower,
     component_separators = { left = "", right = "" },
     section_separators = { left = "", right = "" },
