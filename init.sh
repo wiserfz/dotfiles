@@ -6,8 +6,8 @@ CURRENT_DIR=$PWD
 BREW_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 POWERLINE_FONTS_URL="https://github.com/powerline/fonts.git"
 PYTHON_VERSION="3.11.2"
-ENV_URL="https://github.com/Gitfz810/dotfiles.git"
-ENV_DIR="$HOME/workspace/dotfiles"
+PRJ_URL="https://github.com/Gitfz810/dotfiles.git"
+PRJ_DIR="$HOME/workspace/dotfiles"
 CODELLDB_DIR="$HOME/.local/codelldb"
 
 # Black=$'\e[0;30m'
@@ -34,8 +34,8 @@ function exist() {
 }
 
 function clone_env() {
-    if [[ ! -d $ENV_DIR ]]; then
-        git clone "$ENV_URL" "$ENV_DIR"
+    if [[ ! -d $PRJ_DIR ]]; then
+        git clone "$PRJ_URL" "$PRJ_DIR"
     fi
 }
 
@@ -60,7 +60,7 @@ function install_brew_pkg() {
         return
     fi
 
-    for item in $(cat "$ENV_DIR/packages/brew-pkg"); do
+    for item in $(cat "$PRJ_DIR/packages/brew-pkg"); do
         read -rp "${Blue}Do you want to install ${Red}'$item'${Blue}? (y/n): ${NC}" confirm
         if [[ $confirm == "y" ]]
         then
@@ -85,7 +85,7 @@ function install_cask_pkg() {
         return
     fi
 
-    for item in $(cat "$ENV_DIR/packages/cask-pkg"); do
+    for item in $(cat "$PRJ_DIR/packages/cask-pkg"); do
         read -rp "${Blue}Do you want to install ${Red}'$item'${Blue}? (y/n): ${NC}" confirm
         if [[ $confirm == "y" ]]
         then
@@ -105,7 +105,7 @@ function install_python_pkg() {
     fi
 
     pyenv global "$PYTHON_VERSION"
-    pip install -r "$ENV_DIR/packages/python-pkg"
+    pip install -r "$PRJ_DIR/packages/python-pkg"
 
     echo "${LightGreen}Python packages are installed over.${NC}"
 }
@@ -172,28 +172,31 @@ function init_env() {
 
     cd "$HOME" || return
     rm -rf .gitconfig
-    ln -sfv "$ENV_DIR"/gitconfig .gitconfig
+    ln -sfv "$PRJ_DIR"/gitconfig .gitconfig
 
     rm -rf .gitignore
-    ln -sfv "$ENV_DIR"/gitignore-glob .gitignore
+    ln -sfv "$PRJ_DIR"/gitignore-glob .gitignore
 
     rm -rf .tmux.conf
-    ln -sfv "$ENV_DIR"/tmux.conf .tmux.conf
+    ln -sfv "$PRJ_DIR"/tmux.conf .tmux.conf
 
     rm -rf .vimrc
-    ln -sfv "$ENV_DIR"/vimrc .vimrc
+    ln -sfv "$PRJ_DIR"/vimrc .vimrc
 
     rm -rf .vim
-    ln -sfv "$ENV_DIR"/vim_dir .vim
+    ln -sfv "$PRJ_DIR"/vim_dir .vim
 
     rm -rf .config/fish
-    ln -sfv "$ENV_DIR"/fish .config/fish
+    ln -sfv "$PRJ_DIR"/fish .config/fish
 
     rm -rf .config/nvim/lua
-    ln -sfv "$ENV_DIR"/neovim/lua .config/nvim/lua
+    ln -sfv "$PRJ_DIR"/neovim/lua .config/nvim/lua
 
     rm -rf .config/nvim/init.lua
-    ln -sfv "$ENV_DIR"/neovim/init.lua .config/nvim/init.lua
+    ln -sfv "$PRJ_DIR"/neovim/init.lua .config/nvim/init.lua
+
+    rm -rf .config/yamllint
+    ln -sfv "$PRJ_DIR"/config/yamllint .config/yamllint
 
     cd "$CURRENT_DIR" || return
 
