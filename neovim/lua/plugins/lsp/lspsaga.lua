@@ -16,7 +16,9 @@ saga.setup({
   },
   finder = {
     keys = {
-      edit = "<CR>",
+      toggle_or_open = "<CR>",
+      quit = "q",
+      close = "<ESC>",
     },
   },
   rename = {

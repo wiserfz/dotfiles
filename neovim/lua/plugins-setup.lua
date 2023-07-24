@@ -173,7 +173,7 @@ return packer.startup({
 
     use("RRethy/vim-illuminate") -- highlight other uses of word under cursor
 
-    use("m-demare/hlargs.nvim") -- leverage Tree-sitter and highlight argument definitions
+    -- use("m-demare/hlargs.nvim") -- leverage Tree-sitter and highlight argument definitions
 
     use("j-hui/fidget.nvim") -- provide a UI for nvim-lsp's progress handler
 

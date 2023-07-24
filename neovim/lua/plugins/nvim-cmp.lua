@@ -99,13 +99,13 @@ cmp.setup({
     { name = "buffer" }, -- text within current buffer
     { name = "crates" }, -- manager crate.io dependencies
   }),
-  window = {
-    completion = cmp.config.window.bordered({
-      col_offset = 3,
-      side_padding = 1,
-    }),
-    documentation = cmp.config.window.bordered(),
-  },
+  -- window = {
+  --   completion = cmp.config.window.bordered({
+  --     col_offset = 3,
+  --     side_padding = 1,
+  --   }),
+  --   documentation = cmp.config.window.bordered(),
+  -- },
   -- configure lspkind for vs-code like icons
   formatting = {
     fields = { "kind", "abbr", "menu" },

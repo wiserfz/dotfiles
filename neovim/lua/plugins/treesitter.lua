@@ -44,7 +44,7 @@ treesitter.setup({
   rainbow = {
     enable = true,
     query = "rainbow-parens",
-    max_file_lines = nil,
+    strategy = require("ts-rainbow").strategy.global,
   },
   matchup = {
     enable = true, -- mandatory, false will disable the whole extension

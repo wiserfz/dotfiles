@@ -28,6 +28,15 @@ autopairs.setup({
   -- },
 })
 
+local Rule = require("nvim-autopairs.rule")
+local cond = require("nvim-autopairs.conds")
+
+autopairs.add_rules({
+  Rule("<", ">", "rust"):with_pair(cond.before_regex("%a+")):with_move(function(opts)
+    return opts.char == ">"
+  end),
+})
+
 -- import nvim-autopairs completion functionality safely
 local cmp_autopairs_setup, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")
 if not cmp_autopairs_setup then

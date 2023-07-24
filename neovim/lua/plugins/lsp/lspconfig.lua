@@ -21,7 +21,7 @@ local function on_attach(client, bufnr)
   local opts = { noremap = true, silent = true, buffer = bufnr }
 
   -- set keybinds
-  map("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts) -- show definition, references
+  map("n", "gf", "<cmd>Lspsaga finder def+ref<CR>", opts) -- show definition, references
   map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
   map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
   map("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
