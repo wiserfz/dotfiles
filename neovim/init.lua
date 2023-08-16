@@ -29,7 +29,6 @@ require("plugins.nvim-cmp")
 -- LSP plugins
 require("plugins.lsp.lspconfig")
 require("plugins.lsp.mason")
-require("plugins.lsp.lspsaga")
 require("plugins.lsp.null-ls")
 require("plugins.lsp.lsp-colors")
 

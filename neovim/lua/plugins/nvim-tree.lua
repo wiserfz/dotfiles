@@ -44,14 +44,6 @@ tree.setup({
   system_open = {
     cmd = "open",
   },
-  view = {
-    adaptive_size = false,
-    mappings = {
-      list = {
-        { key = "u", action = "dir_up" },
-      },
-    },
-  },
   renderer = {
     group_empty = true,
     icons = {
