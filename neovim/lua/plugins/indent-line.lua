@@ -1,53 +1,50 @@
 -- indent blankline
 
-local status, indent_line = pcall(require, "indent_blankline")
+local status, indent_line = pcall(require, "ibl")
 if not status then
   return
 end
 
--- Ident Lines
-vim.cmd([[highlight IndentBlanklineIndent1 guifg=#2d3033 gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineIndent2 guifg=#2d3033 gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineIndent3 guifg=#2d3033 gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineIndent4 guifg=#2d3033 gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineIndent5 guifg=#2d3033 gui=nocombine]])
-vim.cmd([[highlight IndentBlanklineIndent6 guifg=#2d3033 gui=nocombine]])
+-- multiple indent colors
+-- local highlight = {
+--   "RainbowRed",
+--   "RainbowYellow",
+--   "RainbowBlue",
+--   "RainbowOrange",
+--   "RainbowGreen",
+--   "RainbowViolet",
+--   "RainbowCyan",
+-- }
+
+-- local hooks = require("ibl.hooks")
+-- hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+--   vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+--   vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+--   vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+--   vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+--   vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+--   vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+--   vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+-- end)
 
 indent_line.setup({
-  char = "┊",
-  -- char = " ",
-  filetype_exclude = {
-    "help",
-    "dashboard",
-    "packer",
-    "NvimTree",
+  indent = {
+    char = "┊",
+    priority = 2,
   },
-  context_patterns = {
-    "return",
-    "^func",
-    "fn",
-    "^if",
-    "^while",
-    "^for",
-    "block",
-    "arguments",
-    "if_statement",
-    "else_clause",
-    "try_statement",
-    "catch_clause",
-    "import_statement",
-    "operation_type",
+  scope = {
+    enabled = false,
   },
-  use_treesitter = true,
-  use_treesitter_scope = true,
-  show_first_indent_level = true,
-  space_char_blankline = " ",
-  char_highlight_list = {
-    "IndentBlanklineIndent1",
-    "IndentBlanklineIndent2",
-    "IndentBlanklineIndent3",
-    "IndentBlanklineIndent4",
-    "IndentBlanklineIndent5",
-    "IndentBlanklineIndent6",
+  exclude = {
+    filetypes = {
+      "lspinfo",
+      "packer",
+      "checkhealth",
+      "help",
+      "man",
+      "TelescopePrompt",
+      "TelescopeResults",
+      "dashboard",
+    },
   },
 })
