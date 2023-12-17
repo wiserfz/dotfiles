@@ -189,6 +189,11 @@ function init_env() {
     rm -rf .config/fish
     ln -sfv "$PRJ_DIR"/fish .config/fish
 
+    dir="$HOME/.config/nvim"
+    if [[ ! -d "$dir" ]]; then
+        mkdir -p "$dir"
+    fi
+
     rm -rf .config/nvim/lua
     ln -sfv "$PRJ_DIR"/neovim/lua .config/nvim/lua
 

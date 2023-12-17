@@ -16,3 +16,4 @@ yamllint
 zoxide
 pyenv
 pyenv-virtualenv
+gnupg

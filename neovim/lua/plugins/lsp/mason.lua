@@ -30,7 +30,7 @@ mason.setup({
 mason_lspconfig.setup({
   -- list of servers for mason to install
   ensure_installed = {
-    "erlangls", -- erlang
+    -- "erlangls", -- erlang
     "gopls", -- golang
     "rust_analyzer", -- rust
     "lua_ls", -- lua
