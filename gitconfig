@@ -13,7 +13,7 @@
     features = custom
 [commit]
 	gpgsign = true
-[includeIf "gitdir:~/workspace/gitlab/"]
+[includeIf "gitdir:~/workspace/tuya/"]
     path = .gitconfig-tuya
 [diff]
     colorMoved = default
