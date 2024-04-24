@@ -34,6 +34,9 @@ local function on_attach(client, bufnr)
   map({ "n", "t" }, "<A-d>", "<cmd>Lspsaga term_toggle<CR>") -- float terminal option-d
 end
 
+-- disable lsp log
+vim.lsp.set_log_level("off")
+
 -- used to enable autocompletion (assign to every lsp server config)
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
@@ -112,38 +115,38 @@ for _, server in pairs(servers) do
         },
       })
     end
-  elseif server == "gopls" then
-    -- configure golang server
-    local go_status, go = pcall(require, "go")
-    if go_status then
-      go.setup({
-        --[[
-            true: use non-default gopls setup specified in go/lsp.lua
-            false: do nothing
-            if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
-            lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
-        --]]
-        lsp_cfg = {
-          capabilities = capabilities,
-        },
-        --[[
-            nil: use on_attach function defined in go/lsp.lua,
-            when lsp_cfg is true
-            if lsp_on_attach is a function: use this function as on_attach function for gopls
-        --]]
-        lsp_on_attach = function(client, bufnr)
-          on_attach(client, bufnr)
-
-          map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = bufnr })
-          map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = bufnr })
-        end,
-        lsp_diag_update_in_insert = true,
-        dap_debug_gui = true, -- bool|table put your dap-ui setup here, set to false to disable
-        dap_port = -1, -- can be set to a number, if set to -1 go.nvim will pickup a random port
-        trouble = true,
-        -- luasnip = true,
-      })
-    end
+  -- elseif server == "gopls" then
+  --   -- configure golang server
+  --   local go_status, go = pcall(require, "go")
+  --   if go_status then
+  --     go.setup({
+  --       --[[
+  --           true: use non-default gopls setup specified in go/lsp.lua
+  --           false: do nothing
+  --           if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
+  --           lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}}
+  --       --]]
+  --       lsp_cfg = {
+  --         capabilities = capabilities,
+  --       },
+  --       --[[
+  --           nil: use on_attach function defined in go/lsp.lua,
+  --           when lsp_cfg is true
+  --           if lsp_on_attach is a function: use this function as on_attach function for gopls
+  --       --]]
+  --       lsp_on_attach = function(client, bufnr)
+  --         on_attach(client, bufnr)
+  --
+  --         map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = bufnr })
+  --         map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = bufnr })
+  --       end,
+  --       lsp_diag_update_in_insert = true,
+  --       dap_debug_gui = true, -- bool|table put your dap-ui setup here, set to false to disable
+  --       dap_port = -1, -- can be set to a number, if set to -1 go.nvim will pickup a random port
+  --       trouble = true,
+  --       -- luasnip = true,
+  --     })
+  --   end
   elseif server == "lua_ls" then
     -- configure lua server (with special settings)
     lspconfig["lua_ls"].setup({

@@ -161,6 +161,11 @@ return packer.startup({
     use({
       "ray-x/go.nvim",
       requires = "ray-x/guihua.lua", -- floating window support
+      config = function()
+        require("go").setup({
+          lsp_config = true,
+        })
+      end,
     })
 
     -- debugging
