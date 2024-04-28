@@ -13,7 +13,3 @@ g.loaded_netrwPlugin = 1
 g.leetcode_china = 1
 g.leetcode_solution_filetype = "golang"
 g.leetcode_browser = "chrome"
-
--- Update the packpath
-local packer_path = vim.fn.stdpath("config") .. "/site"
-vim.o.packpath = vim.o.packpath .. "," .. packer_path

@@ -1,10 +1,5 @@
 -- indent blankline
 
-local status, indent_line = pcall(require, "ibl")
-if not status then
-  return
-end
-
 -- multiple indent colors
 -- local highlight = {
 --   "RainbowRed",
@@ -27,24 +22,35 @@ end
 --   vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
 -- end)
 
-indent_line.setup({
-  indent = {
-    char = "┊",
-    priority = 2,
-  },
-  scope = {
-    enabled = false,
-  },
-  exclude = {
-    filetypes = {
-      "lspinfo",
-      "packer",
-      "checkhealth",
-      "help",
-      "man",
-      "TelescopePrompt",
-      "TelescopeResults",
-      "dashboard",
-    },
-  },
-})
+return {
+  "lukas-reineke/indent-blankline.nvim",
+  event = { "BufReadPre", "BufNewFile" },
+  main = "ibl",
+  config = function()
+    local status, indent_line = pcall(require, "ibl")
+    if not status then
+      return
+    end
+    indent_line.setup({
+      indent = {
+        char = "┊",
+        priority = 2,
+      },
+      scope = {
+        enabled = false,
+      },
+      exclude = {
+        filetypes = {
+          "lspinfo",
+          "packer",
+          "checkhealth",
+          "help",
+          "man",
+          "TelescopePrompt",
+          "TelescopeResults",
+          "dashboard",
+        },
+      },
+    })
+  end,
+}

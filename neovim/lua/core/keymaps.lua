@@ -21,23 +21,6 @@ map("n", "<leader>tx", ":tabclose<CR>") -- close current tab
 map("n", "<leader>tn", ":tabn<CR>") --  go to next tab
 map("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
 
--- Toggle nvim-tree
-map("n", "<leader>fe", ":NvimTreeToggle<CR>") -- toggle file explorer
--- plugin key maps
-map("n", "<leader>sz", ":MaximizerToggle<CR>") -- toggle split window maximization
-map("n", "<leader>szz", ":MaximizerToggle!<CR>") -- toggle split window maximization
-
--- telescope
-map("n", "<leader>ff", "<cmd>Telescope find_files hidden=true<cr>") -- find files within current working directory, respects .gitignore
-map("n", "<leader>fs", "<cmd>Telescope live_grep<cr>") -- find string in current working directory as you type
-map("n", "<leader>fc", "<cmd>Telescope grep_string<cr>") -- find string under cursor in current working directory
-map("n", "<leader>fb", "<cmd>Telescope buffers<cr>") -- list open buffers in current neovim instance
-map("n", "<leader>fh", "<cmd>Telescope help_tags<cr>") -- list available help tags
-
--- bufferline
-map("n", "]b", "<cmd>BufferLineCycleNext<cr>") -- move to next tab buffer
-map("n", "[b", "<cmd>BufferLineCyclePrev<cr>") -- move to previous tab buffer
-
 -- debugging with DAP
 map("n", "<F5>", "<cmd>lua require'dap'.continue()<CR>")
 map("n", "<F10>", "<cmd>lua require'dap'.step_over()<CR>")

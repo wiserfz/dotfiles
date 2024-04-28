@@ -1,25 +1,30 @@
-local status, todo = pcall(require, "todo-comments")
+return {
+  "folke/todo-comments.nvim",
+  event = { "BufReadPre", "BufNewFile" },
+  dependencies = { "nvim-lua/plenary.nvim" },
+  config = function()
+    local status, todo = pcall(require, "todo-comments")
+    if not status then
+      return
+    end
 
-if not status then
-  return
-end
+    todo.setup({
+      colors = {
+        error = { "DiagnosticError", "ErrorMsg", "#de5d68" },
+        warning = { "DiagnosticWarning", "WarningMsg", "#eeb927" },
+        info = { "DiagnosticInfo", "#57a5e5" },
+        hint = { "DiagnosticHint", "#bb70d2" },
+        default = { "Identifier", "#de5d68" },
+      },
+    })
 
-local map = vim.keymap
+    local keymap = vim.keymap
+    keymap.set("n", "<leader>]t", function()
+      todo.jump_next()
+    end, { desc = "Next todo comment" })
 
-map.set("n", "<leader>]t", function()
-  require("todo-comments").jump_next()
-end, { desc = "Next todo comment" })
-
-map.set("n", "<leader>[t", function()
-  require("todo-comments").jump_prev()
-end, { desc = "Previous todo comment" })
-
-todo.setup({
-  colors = {
-    error = { "DiagnosticError", "ErrorMsg", "#de5d68" },
-    warning = { "DiagnosticWarning", "WarningMsg", "#eeb927" },
-    info = { "DiagnosticInfo", "#57a5e5" },
-    hint = { "DiagnosticHint", "#bb70d2" },
-    default = { "Identifier", "#de5d68" },
-  },
-})
+    keymap.set("n", "<leader>[t", function()
+      todo.jump_prev()
+    end, { desc = "Previous todo comment" })
+  end,
+}

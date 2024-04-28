@@ -2,17 +2,19 @@
 local opt = vim.opt
 
 -- context
+opt.number = true -- bool: Show line numbers
+opt.relativenumber = true -- bool: Show relative line numbers
+
+opt.cursorline = true -- bool: Current line highlight
+opt.cursorlineopt = "number"
+
 -- opt.colorcolumn = '90'           -- str: Show col for max line length
 opt.mouse = "a" -- str: Enable mouse mode
 opt.mousemoveevent = true
 opt.wrap = true
 opt.linebreak = true
 opt.breakindent = true
-opt.number = true -- bool: Show line numbers
-opt.relativenumber = true -- bool: Show relative line numbers
 opt.scrolloff = 4 -- int: Min num lines of context
-opt.cursorline = true -- bool: Current line highlight
-opt.cursorlineopt = "number"
 opt.iskeyword:append("-") -- Make 'a-b' as a word
 opt.pumheight = 10 -- maximum number of items to show in the popup window
 
