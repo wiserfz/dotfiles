@@ -29,6 +29,10 @@ if status is-interactive
         pyenv virtualenv-init - | source
     end
 
+    if test -d $HOME/.local/share/nvim/mason/bin
+        fish_add_path $HOME/.local/share/nvim/mason/bin
+    end
+
     set go_path (go env GOPATH)
     set -Ux GOPATH $go_path
     if test -d "$GOPATH"/bin

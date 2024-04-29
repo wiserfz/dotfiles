@@ -49,6 +49,8 @@ opt.backspace = "indent,eol,start"
 -- setting indentation by filetype
 -- lua
 vim.cmd("autocmd FileType lua setlocal tabstop=2 shiftwidth=2 softtabstop=2")
+-- yaml
+vim.cmd("autocmd FileType yaml,yml setlocal tabstop=2 shiftwidth=2 softtabstop=2")
 -- go
 vim.cmd("autocmd FileType go setlocal noexpandtab")
 

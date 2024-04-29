@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ","
 vim.g.localleader = "\\"
 
--- Remove trailing spaces
+-- trim trailing spaces
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   pattern = { "*" },
   command = [[%s/\s\+$//e]],
@@ -31,14 +31,8 @@ require("lazy").setup({
   {
     "RRethy/vim-illuminate", -- highlight other uses of word under cursor
   },
-  {
-    "j-hui/fidget.nvim", -- provide a UI for nvim-lsp's progress handler
-  },
-  {
-    "mbledkowski/neuleetcode.vim",
-  },
-  { import = "plugins" },
   { import = "plugins.lsp" },
+  { import = "plugins" },
 }, {
   checker = {
     enabled = true,

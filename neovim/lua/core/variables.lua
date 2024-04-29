@@ -8,8 +8,3 @@ g.background = "dark"
 -- recommended settings from nvim-tree documentation
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
-
--- leetcode
-g.leetcode_china = 1
-g.leetcode_solution_filetype = "golang"
-g.leetcode_browser = "chrome"

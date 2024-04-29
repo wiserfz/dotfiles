@@ -10,6 +10,7 @@ return {
   build = function()
     require("nvim-treesitter.install").update({ with_sync = true })()
   end,
+  event = "VeryLazy",
   config = function()
     -- import nvim-treesitter plugin safely
     local status, treesitter = pcall(require, "nvim-treesitter.configs")
@@ -61,7 +62,8 @@ return {
       },
       matchup = {
         enable = true, -- mandatory, false will disable the whole extension
-        disable = {}, -- optional, list of language that will be disabled
+        disable_virtual_text = true,
+        include_match_words = true,
       },
     })
 

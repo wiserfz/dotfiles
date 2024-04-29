@@ -1,4 +1,5 @@
 tmux
+go
 fish
 jq
 tree
@@ -10,8 +11,6 @@ node
 git-delta
 neovim
 tokei
-shellcheck
-yamllint
 zoxide
 pyenv
 pyenv-virtualenv

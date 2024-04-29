@@ -1,5 +1,10 @@
 return {
   "nvimdev/lspsaga.nvim",
+  event = "LspAttach",
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter", -- optional
+    "nvim-tree/nvim-web-devicons", -- optional
+  },
   config = function()
     local setup, saga = pcall(require, "lspsaga")
     if not setup then
@@ -18,22 +23,19 @@ return {
       finder = {
         keys = {
           toggle_or_open = "<CR>",
-          quit = "q",
-          close = "<ESC>",
         },
       },
       rename = {
         in_select = false,
-      },
-      definition = {
         keys = {
-          tabnew = "<C-c>n",
+          quit = "<ESC>",
+        },
+      },
+      outline = {
+        keys = {
+          jump = "<CR>",
         },
       },
     })
   end,
-  dependencies = {
-    "nvim-treesitter/nvim-treesitter", -- optional
-    "nvim-tree/nvim-web-devicons", -- optional
-  },
 }

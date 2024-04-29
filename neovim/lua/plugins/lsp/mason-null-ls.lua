@@ -14,10 +14,9 @@ return {
     end
 
     mason_null_ls.setup({
-      ensure_installedd = nil,
+      ensure_installed = nil,
       -- auto-install configured formatters & linters (with null-ls)
       automatic_installation = true,
-      automatic_setup = false,
     })
   end,
 }

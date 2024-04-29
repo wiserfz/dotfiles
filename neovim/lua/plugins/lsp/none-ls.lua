@@ -1,6 +1,10 @@
 -- formatting & linting
 return {
   "nvimtools/none-ls.nvim",
+  dependencies = {
+    "nvimtools/none-ls-extras.nvim",
+    "gbprod/none-ls-shellcheck.nvim",
+  },
   config = function()
     -- import null-ls plugin safely
     local setup, null_ls = pcall(require, "null-ls")
@@ -21,31 +25,35 @@ return {
     -- configure null_ls
     null_ls.setup({
       -- debug = true, -- enable debug mode and get debug output
-      -- setup builtins sources for null-ls
       sources = {
         -- to disable file types use
         -- "formatting.prettier.with({disabled_filetypes = {}})" (see null-ls docs)
-        formatting.stylua, -- lua formatter
         formatting.buf, -- protocol buffer formatter
-        -- formatting.yamlfmt, -- yaml formatter
-        formatting.sql_formatter, -- sql formatter
-        -- formatting.jq, -- json formatter
-        -- formatting.beautysh, -- shell formatter
-        formatting.erlfmt, -- erlang formatter
-        -- formatting.black, -- more popular python formatter
-        -- formatting.autopep8, -- python formatter
-        -- formatting.rustfmt, -- rust formatter
-        -- code_actions.cspell, -- spell checker
-        -- diagnostics.cspell, -- spell checker
-        -- diagnostics.shellcheck, -- shell script static analysis tool
+        diagnostics.buf, -- protocol buffer linter
+
+        formatting.yamlfmt, -- yaml formatter configuration of yamlfmt: https://github.com/google/yamlfmt/blob/main/docs/config-file.md
+        diagnostics.yamllint, -- yaml linter configuration of yamllint: https://yamllint.readthedocs.io/en/stable/configuration.html
+
+        require("none-ls-shellcheck.diagnostics"), -- shell linter
+        require("none-ls-shellcheck.code_actions"), -- shell code action
+
+        require("none-ls.formatting.ruff_format"), -- python formatter
+        require("none-ls.diagnostics.ruff"), -- python linter
+
+        formatting.stylua, -- lua formatter
+        -- diagnostics.selene, -- lua linter
+
         diagnostics.editorconfig_checker.with({ -- a tool to verify with .editorconfig
           disabled_filetypes = { "erlang", "markdown", "python" }, -- disable editorconfig checker
         }),
-        -- configuration of yamllint: https://yamllint.readthedocs.io/en/stable/configuration.html
-        diagnostics.yamllint, -- yaml linter
-        diagnostics.buf, -- working with Protocol Buffers
-        diagnostics.fish, -- basic linting is available for fish scripts
-        -- diagnostics.ruff, -- python linter written by rust
+
+        diagnostics.hadolint, -- dockerfile linter
+
+        -- diagnostics.fish, -- basic linting is available for fish scripts
+
+        -- formatting.erlfmt, -- erlang formatter
+
+        require("none-ls.formatting.jq"), -- json formatter
       },
       -- configure format on save
       on_attach = function(current_client, bufnr)

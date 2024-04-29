@@ -50,12 +50,12 @@ return {
         shortcut = {
           {
             icon = "  ",
-            desc = "Update Packer Plugins",
-            action = "PackerUpdate",
+            desc = "Update Lazy Plugins",
+            action = "Lazy update",
             key = "U",
           },
           {
-            icon = " ",
+            icon = "󰘘 ",
             desc = "Display Mason Info",
             group = "@property",
             action = "Mason",
@@ -69,7 +69,7 @@ return {
             key = ".",
           },
           {
-            icon = " ",
+            icon = "󰈆 ",
             desc = "Quit Neovim",
             group = "DiagnosticError",
             action = "qa",
@@ -77,7 +77,7 @@ return {
           },
         },
         project = { limit = 5, action = "Telescope find_files hidden=true cwd=" },
-        mru = { limit = 10 },
+        mru = { limit = 5 },
       },
     })
   end,
