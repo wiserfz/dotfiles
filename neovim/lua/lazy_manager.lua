@@ -12,12 +12,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- LEADER
--- These keybindings need to be defined before the first /
--- is called; otherwise, it will default to "\"
-vim.g.mapleader = ","
-vim.g.localleader = "\\"
-
 -- trim trailing spaces
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   pattern = { "*" },

@@ -17,7 +17,9 @@ alias cat='bat -p'
 # macOS alias
 if test (uname) = "Darwin"
     set -gx HOMEBREW_NO_AUTO_UPDATE true  # disable homebrew auto update
-    set -gx HOMEBREW_BOTTLE_DOMAIN "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
+    # set -gx HOMEBREW_BOTTLE_DOMAIN "https://mirrors.ustc.edu.cn/homebrew-bottles"
+    # setup homebrew mirror
+    set -Ux HOMEBREW_BREW_GIT_REMOTE "https://mirrors.ustc.edu.cn/brew.git"
     alias rmds='find . -type f -name .DS_Store -delete'
     alias showfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
     alias hidefiles="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"

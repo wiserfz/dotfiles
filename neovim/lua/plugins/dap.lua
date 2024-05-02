@@ -12,13 +12,13 @@ return {
     -- vim.api.nvim_set_hl(0, "yellow", { fg = "#FFFF00" })
     -- vim.api.nvim_set_hl(0, "orange", { fg = "#f09000" })
     vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "red", linehl = "", numhl = "" })
-
+    local codelldb_dir = os.getenv("HOME") .. "/.local/codelldb/extension/adapter/codelldb"
     dap.adapters.codelldb = {
       type = "server",
       port = "${port}",
       executable = {
         -- CHANGE THIS to your path!
-        command = "/Users/wiser/.local/codelldb/extension/adapter/codelldb",
+        command = codelldb_dir,
         args = { "--port", "${port}" },
       },
     }

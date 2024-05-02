@@ -178,7 +178,7 @@ return {
           },
         },
       },
-      erlangls = {},
+      -- erlangls = {},
     }
 
     local disable = function() end

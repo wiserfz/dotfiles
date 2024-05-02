@@ -9,6 +9,7 @@ PYTHON_VERSION="3.11.2"
 PRJ_URL="https://github.com/Gitfz810/dotfiles.git"
 PRJ_DIR="$HOME/workspace/dotfiles"
 CODELLDB_DIR="$HOME/.local/codelldb"
+ARCH=$(uname -m)
 
 # Black=$'\e[0;30m'
 Red=$'\e[0;31m'
@@ -67,9 +68,14 @@ function install_brew_pkg() {
             brew install "$item"
             if [[ $item == "go" ]]
             then
-                go env -w GOPATH="$HOME/workspace/go"
+                # go env -w GOPATH="$HOME/go"
                 go env -w GOPROXY="https://goproxy.cn,direct"
                 go env -w GO111MODULE="on"
+            elif [[ $item == "tmux" ]]
+            then
+                if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
+                    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+                fi
             fi
             brew cleanup "$item"
             echo "${Green}Install ${Red}$item ${Blue}over.${NC}"
@@ -150,13 +156,19 @@ function install_codelldb() {
 
     read -rp "${Yellow}Please enter install version of codelldb(e.g. v1.9.0): ${NC}" version
 
-    url=$(printf 'https://github.com/vadimcn/codelldb/releases/download/%s/codelldb-aarch64-darwin.vsix' "$version")
+    arch=$ARCH
+    if [[ "$ARCH" == "arm64" ]]; then
+        arch="aarch64"
+    fi
+
+    url=$(printf "https://github.com/vadimcn/codelldb/releases/download/%s/codelldb-${arch}-darwin.vsix" "$version")
     echo "$url"
 
     if [[ ! -d "$CODELLDB_DIR/extension" ]]; then
-        curl --location --remote-name -s "$url" -o codelldb-aarch64-darwin.vsix
-        unzip -qo codelldb-aarch64-darwin.vsix -d "$CODELLDB_DIR/"
-        rm -f codelldb-aarch64-darwin.vsix
+        filename="codelldb-${arch}-darwin.vsix"
+        curl --location --remote-name -s "$url" -o "$filename"
+        unzip -qo "$filename" -d "$CODELLDB_DIR/"
+        rm -f "$filename"
     fi
 
     echo "${LightGreen}Install codelldb version $version over.${NC}"

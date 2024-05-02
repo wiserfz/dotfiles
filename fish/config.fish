@@ -48,9 +48,6 @@ set -Ux LC_ALL "en_US.UTF-8"
 set -Ux CLICOLOR 1
 set -Ux GREP_COLOR "1;31"
 
-# setup homebrew mirror
-set -Ux HOMEBREW_BREW_GIT_REMOTE "https://mirrors.ustc.edu.cn/brew.git"
-
 # customize colors for commands output
 set -Ux LESS_TERMCAP_mb \e'[01;31m'       # begin blinking
 set -Ux LESS_TERMCAP_md \e'[01;38;5;74m'  # begin bold
