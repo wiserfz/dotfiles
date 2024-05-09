@@ -15,7 +15,7 @@ return {
         enabled = true,
       },
       storage = {
-        home = os.getenv("HOME") .. "/workspace/my-go",
+        home = os.getenv("HOME") .. "/workspace/leetcode",
       },
     },
     config = function(_, opts)
