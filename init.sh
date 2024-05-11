@@ -224,6 +224,9 @@ function init_env() {
     rm -rf .config/hadolint.yaml
     ln -sfv "$PRJ_DIR"/config/hadolint.yaml .config/hadolint.yaml
 
+    rm -rf .config/gitstatus.py
+    ln -sfv "$PRJ_DIR"/gitstatus.py .config/gitstatus.py
+
     cd "$CURRENT_DIR" || return
 
     echo "${LightGreen}Init environment finished.${NC}"
