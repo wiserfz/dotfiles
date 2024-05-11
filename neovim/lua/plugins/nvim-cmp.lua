@@ -117,7 +117,14 @@ return {
       -- sources for autocompletion
       sources = cmp.config.sources({
         { name = "path" }, -- file system paths
-        { name = "nvim_lsp" }, -- lsp
+        {
+          name = "nvim_lsp",
+          option = {
+            markdown_oxide = {
+              keyword_pattern = [[\(\k\| \|\/\|#\)\+]],
+            },
+          },
+        },
         { name = "luasnip", option = { use_show_condition = false, show_autosnippets = false } }, -- snippets
         { name = "nvim_lsp_signature_help" }, -- display function signatures with current parameter emphasized
         -- { name = "nvim_lua" }, -- complete neovim's Lua runtime API such vim.lsp.*

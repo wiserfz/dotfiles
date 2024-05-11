@@ -26,8 +26,11 @@ return {
     null_ls.setup({
       -- debug = true, -- enable debug mode and get debug output
       sources = {
-        -- to disable file types use
-        -- "formatting.prettier.with({disabled_filetypes = {}})" (see null-ls docs)
+        diagnostics.alex, -- markdown written
+        diagnostics.codespell.with({ -- common misspellings checker
+          extra_args = { "-L", "crate" }, -- comma separated list of words to ignore
+        }),
+
         formatting.buf, -- protocol buffer formatter
         diagnostics.buf, -- protocol buffer linter
 

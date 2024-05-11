@@ -22,6 +22,15 @@ local function on_attach(client, bufnr)
   keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
   keymap.set("n", "<leader>o", "<cmd>Lspsaga outline<CR>", opts) -- see outline on right hand side
   keymap.set({ "n", "t" }, "<A-d>", "<cmd>Lspsaga term_toggle<CR>") -- float terminal option-d
+
+  -- refresh codelens on TextChanged and InsertLeave as well
+  vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave", "LspAttach" }, {
+    buffer = bufnr,
+    callback = vim.lsp.codelens.refresh,
+  })
+
+  -- trigger codelens refresh
+  vim.api.nvim_exec_autocmds("User", { pattern = "LspAttached" })
 end
 
 return {
@@ -178,6 +187,8 @@ return {
           },
         },
       },
+      -- dockerls = {},
+      markdown_oxide = {},
       -- erlangls = {},
     }
 
@@ -195,6 +206,13 @@ return {
       lineFoldingOnly = true,
     }
     local capabilities = vim.tbl_deep_extend("force", cap, require("cmp_nvim_lsp").default_capabilities())
+    -- Ensure that dynamicRegistration is enabled! This allows the LS to take into account actions like the
+    -- Create Unresolved File code action, resolving completions for unindexed code blocks, ...
+    capabilities.workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      },
+    }
 
     --------------------
     -- Set up servers --

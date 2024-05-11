@@ -221,6 +221,9 @@ function init_env() {
     rm -rf .config/yamlfmt
     ln -sfv "$PRJ_DIR"/config/yamlfmt .config/yamlfmt
 
+    rm -rf .config/hadolint.yaml
+    ln -sfv "$PRJ_DIR"/config/hadolint.yaml .config/hadolint.yaml
+
     cd "$CURRENT_DIR" || return
 
     echo "${LightGreen}Init environment finished.${NC}"
