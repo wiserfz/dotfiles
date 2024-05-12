@@ -6,7 +6,7 @@
     ui = true
 [core]
     pager = delta
-	excludesfile = /Users/wiser/.gitignore
+	excludesfile = ~/.gitignore
 [interactive]
     diffFilter = delta --color-only
 [delta]

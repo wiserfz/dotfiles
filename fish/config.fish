@@ -21,6 +21,7 @@ if status is-interactive
 
     if test -d $HOME/.pyenv
         set -Ux PYENV_ROOT $HOME/.pyenv
+        set -U fish_user_paths $PYENV_ROOT/bin $fish_user_paths
 
         # NOTE: disable pyenv prompt
         # see https://github.com/pyenv/pyenv-virtualenv/issues/385
@@ -34,7 +35,7 @@ if status is-interactive
     end
 
     set go_path (go env GOPATH)
-    set -Ux GOPATH $go_path
+    set -x -U GOPATH $go_path
     if test -d "$GOPATH"/bin
         fish_add_path -g $GOPATH/bin
     end
