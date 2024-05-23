@@ -3,3 +3,4 @@
 *.sublime-*
 .null-ls*
 .ecrc
+.codespellrc
