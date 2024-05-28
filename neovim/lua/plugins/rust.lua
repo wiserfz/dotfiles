@@ -8,6 +8,15 @@ return {
   lazy = false, -- This plugin is already lazy
   ft = { "rust" },
   config = function()
+    local format_sync_grp = vim.api.nvim_create_augroup("RustaceanFormat", {})
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = "*.rs",
+      callback = function()
+        vim.lsp.buf.format()
+      end,
+      group = format_sync_grp,
+    })
+
     -- debugging rust by codelldb
     -- NOTE: Must install CodeLLDB
     -- See https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(via--codelldb)
