@@ -18,11 +18,10 @@ return {
     })
 
     -- debugging rust by codelldb
-    -- NOTE: Must install CodeLLDB
-    -- See https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(via--codelldb)
-    local extension_path = vim.env.HOME .. "/.local/codelldb/extension"
-    local codelldb_path = extension_path .. "adapter/codelldb"
-    local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+    -- NOTE: install CodeLLDB via Mason, MasonInstall codelldb
+    local mason_path = os.getenv("HOME") .. "/.local/share/nvim/mason/packages/"
+    local codelldb_path = mason_path .. "codelldb/extension/adapter/codelldb"
+    local liblldb_path = mason_path .. "codelldb/extension/lldb/lib/liblldb.dylib"
 
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     -- used to enable autocompletion (assign to every lsp server config)
