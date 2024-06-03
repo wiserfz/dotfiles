@@ -64,15 +64,14 @@ return {
         end,
         default_settings = {
           ["rust-analyzer"] = {
-            assist = {
-              importGranularity = "module",
-              importPrefix = "by_self",
+            imports = {
+              granularity = {
+                group = "module",
+              },
+              prefix = "self",
             },
-            cargo = {
-              loadOutDirsFromCheck = true,
-              -- features = "all",
-            },
-            checkOnSave = {
+            checkOnSave = true,
+            check = {
               command = "clippy",
             },
             procMacro = {
