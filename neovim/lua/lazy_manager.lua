@@ -25,6 +25,9 @@ require("lazy").setup({
   {
     "RRethy/vim-illuminate", -- highlight other uses of word under cursor
   },
+  {
+    "HiPhish/rainbow-delimiters.nvim", -- rainbow parentheses
+  },
   { import = "plugins.lsp" },
   { import = "plugins" },
 }, {

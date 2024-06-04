@@ -2,7 +2,7 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   dependencies = {
-    "HiPhish/nvim-ts-rainbow2", -- rainbow parentheses
+    -- "nvim-treesitter/nvim-treesitter-context",
     "andymass/vim-matchup",
     "windwp/nvim-ts-autotag",
   },
@@ -55,16 +55,15 @@ return {
       },
       -- auto install above language parsers
       auto_install = true,
-      rainbow = {
-        enable = true,
-        query = "rainbow-parens",
-        strategy = require("ts-rainbow").strategy.global,
-      },
       matchup = {
         enable = true, -- mandatory, false will disable the whole extension
         disable_virtual_text = true,
         include_match_words = true,
       },
+      -- context = {
+      --   enable = true,
+      --   min_window_height = 4,
+      -- },
     })
 
     vim.g.matchup_matchparen_offscreen = { method = "popup" }
