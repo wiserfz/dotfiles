@@ -48,6 +48,9 @@ return {
         keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- code action for diagnostic
         keymap.set("n", "<leader>o", "<cmd>Lspsaga outline<CR>", opts) -- see outline on right hand side
       end,
+      lsp_inlay_hints = {
+        enable = false,
+      },
     })
   end,
 }
