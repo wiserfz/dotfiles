@@ -237,11 +237,9 @@ function install_all() {
     install_brew
     install_brew_pkg
     install_cask_pkg
-    install_pyenv
     install_python_pkg
     install_powerline_fonts
     install_nerd_fonts
-    install_codelldb
 
     init_env
 }
@@ -255,8 +253,7 @@ ${Cyan}select a function code:
 【 4 】 Install python packages
 【 5 】 Install powerline fonts
 【 6 】 Install nerd fonts
-【 7 】 Install codelldb
-【 8 】 Init environment
+【 7 】 Init environment
 【 0 】 Install all
 【 e 】 Exit
 ===============================${NC}
@@ -276,8 +273,7 @@ case $choice in
     4) install_python_pkg;;
     5) install_powerline_fonts;;
     6) install_nerd_fonts;;
-    7) install_codelldb;;
-    8) init_env;;
+    7) init_env;;
     0) install_all;;
     e) echo "${LightGreen}Bye, Bye.${NC}" && exit;;
 esac

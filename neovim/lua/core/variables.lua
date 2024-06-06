@@ -8,3 +8,6 @@ g.background = "dark"
 -- recommended settings from nvim-tree documentation
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
+
+-- provider.python for nvim
+-- g.python3_host_prog = "$PYENV_ROOT/versions/nvim3/bin/python"
