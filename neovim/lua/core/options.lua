@@ -20,9 +20,9 @@ opt.pumheight = 10 -- maximum number of items to show in the popup window
 
 -- file
 opt.undofile = true -- bool: Save undo history
-opt.encoding = "utf8" -- str:  String encoding to use
+opt.encoding = "utf-8" -- str:  String encoding to use
 -- opt.ambiwidth = "double"
-opt.fileencoding = "utf8" -- str:  File encoding to use
+opt.fileencoding = "utf-8" -- str:  File encoding to use
 opt.fileformat = "unix" -- str:  Line breaks use unix
 
 -- appearance

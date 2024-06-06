@@ -1,4 +1,6 @@
 function fish_prompt
+    set -l __last_command_exit_status $status
+
     if not set -q __CONFIG_DIR
         set __CONFIG_DIR ~/.config
     end
@@ -10,10 +12,14 @@ function fish_prompt
     set Red (set_color red)                 # Red
     set Yellow (set_color yellow);          # Yellow
     set Blue (set_color blue)               # Blue
-    set WHITE (set_color white)
+    set White (set_color white)
+    set Green (set_color green)
 
     # Bold
+    set BRed (set_color -o red)
     set BGreen (set_color -o green)         # Green
+    set BWhite (set_color -o white)
+    set BBlue (set_color -o blue)
 
     # High Intensty
     set IBlack (set_color -o black)         # Black
@@ -21,25 +27,57 @@ function fish_prompt
     # Bold High Intensty
     set Magenta (set_color -o purple)       # Purple
 
+    set BCyan (set_color -o cyan)
+
+    # rust
+    set BOrange (set_color -o F05A1B)
+    # go
+    set BBrBlue (set_color -o 4DD1FF)
+    # python
+    set BBrGreen (set_color -o BFD55D)
+
     # Default values for the appearance of the prompt. Configure at will.
-    set GIT_PROMPT_PREFIX "["
-    set GIT_PROMPT_SUFFIX "]"
-    set GIT_PROMPT_SEPARATOR "|"
-    set GIT_PROMPT_BRANCH "$Magenta"
-    set GIT_PROMPT_STAGED "$Red● "
-    set GIT_PROMPT_CONFLICTS "$Red✖ "
-    set GIT_PROMPT_CHANGED "$Blue✚ "
-    set GIT_PROMPT_REMOTE " "
-    set GIT_PROMPT_UNTRACKED "…"
-    set GIT_PROMPT_STASHED "⚑ "
-    set GIT_PROMPT_CLEAN "$BGreen✔"
+    set PROMPT_PREFIX "["
+    set PROMPT_SUFFIX "]"
+    set PROMPT_SEPARATOR "|"
+    set PROMPT_
 
     # Various variables you might want for your PS1 prompt instead
     # set Time (date +%R)
     set PathShort (pwd|sed "s=$HOME=~=")
 
     set PROMPT_START "$Yellow$PathShort$ResetColor"
-    set PROMPT_END " \n$WHITE$ResetColor\$ "
+    set PROMPT_END " \n$BWhite\$ $ResetColor"
+    if test $__last_command_exit_status != 0
+        set PROMPT_END " \n$BRed\$ $ResetColor"
+    end
+
+    # pyenv
+    set PROMPT_PYENV ""
+    set py_env $VIRTUAL_ENV
+    if test -n "$py_env"
+        set PYTHON "🐍"
+        set PYTHON_VERSION (pyenv version-name)
+        set PROMPT_PYENV " $PYTHON $BBrGreen$PYTHON_VERSION$ResetColor"
+    end
+
+    # rust
+    set PROMPT_RUST ""
+    set CARGO_CONFIG "Cargo.toml"
+    if test -f "$CARGO_CONFIG"
+        set RUST "🦀"
+        set RUST_VERSION (rustc --version | string split ' ' -f 2)
+        set PROMPT_RUST " $RUST $BOrange$RUST_VERSION$ResetColor"
+    end
+
+    # go
+    set PROMPT_GO ""
+    set GO_CONFIG "go.mod"
+    if test -f "$GO_CONFIG"
+        set GO "ʕ◔ϖ◔ʔ"
+        set GO_VERSION (go version | string split ' ' -f 3 | string trim -c "go")
+        set PROMPT_GO " $BBrBlue$GO $GO_VERSION$ResetColor"
+    end
 
     set -e __CURRENT_GIT_STATUS
     set gitstatus "$__CONFIG_DIR/gitstatus.py"
@@ -48,6 +86,15 @@ function fish_prompt
     set __CURRENT_GIT_STATUS $_GIT_STATUS
 
     set __CURRENT_GIT_STATUS_PARAM_COUNT (count $__CURRENT_GIT_STATUS)
+
+    set GIT_PROMPT_BRANCH "$Magenta"
+    set GIT_PROMPT_STAGED "$Red● "
+    set GIT_PROMPT_CONFLICTS "$Red✖ "
+    set GIT_PROMPT_CHANGED "$Blue✚ "
+    set GIT_PROMPT_REMOTE " "
+    set GIT_PROMPT_UNTRACKED "…"
+    set GIT_PROMPT_STASHED "⚑ "
+    set GIT_PROMPT_CLEAN "$BGreen✔"
 
     if not test "0" -eq $__CURRENT_GIT_STATUS_PARAM_COUNT
         set GIT_BRANCH $__CURRENT_GIT_STATUS[1]
@@ -64,13 +111,13 @@ function fish_prompt
     end
 
     if test -n "$__CURRENT_GIT_STATUS"
-        set STATUS " $GIT_PROMPT_PREFIX$GIT_PROMPT_BRANCH$GIT_BRANCH$ResetColor"
+        set STATUS " $PROMPT_PREFIX$GIT_PROMPT_BRANCH$GIT_BRANCH$ResetColor"
 
         if set -q GIT_REMOTE
             set STATUS "$STATUS$GIT_PROMPT_REMOTE$GIT_REMOTE$ResetColor"
         end
 
-        set STATUS "$STATUS$GIT_PROMPT_SEPARATOR"
+        set STATUS "$STATUS$PROMPT_SEPARATOR"
 
         if [ $GIT_STAGED != "0" ]
             set STATUS "$STATUS$GIT_PROMPT_STAGED$GIT_STAGED$ResetColor"
@@ -96,11 +143,11 @@ function fish_prompt
             set STATUS "$STATUS$GIT_PROMPT_CLEAN"
         end
 
-        set STATUS "$STATUS$ResetColor$GIT_PROMPT_SUFFIX"
+        set STATUS "$STATUS$ResetColor$PROMPT_SUFFIX"
 
-        set PS1 "$PROMPT_START$STATUS$PROMPT_END"
+        set PS1 "$PROMPT_START$STATUS$PROMPT_PYENV$PROMPT_GO$PROMPT_RUST$PROMPT_END"
     else
-        set PS1 "$PROMPT_START$PROMPT_END"
+        set PS1 "$PROMPT_START$PROMPT_PYENV$PROMPT_GO$PROMPT_RUST$PROMPT_END"
     end
 
     echo -e $PS1
