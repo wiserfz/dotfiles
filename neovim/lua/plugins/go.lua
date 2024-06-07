@@ -34,7 +34,6 @@ return {
       lsp_cfg = {
         capabilities = capabilities,
       },
-      lsp_keymaps = false,
       lsp_on_attach = function(_, bufnr)
         -- keybind options
         local opts = { noremap = true, silent = true, buffer = bufnr }
@@ -42,7 +41,6 @@ return {
         keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
         keymap.set("n", "gf", "<cmd>Lspsaga finder def+ref<CR>", opts) -- show definition, references
         keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
-        keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
         keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
         keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
         keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- code action for diagnostic
