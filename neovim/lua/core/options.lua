@@ -8,7 +8,7 @@ opt.relativenumber = true -- bool: Show relative line numbers
 opt.cursorline = true -- bool: Current line highlight
 opt.cursorlineopt = "number"
 
--- opt.colorcolumn = '90'           -- str: Show col for max line length
+opt.colorcolumn = "100" -- str: Show col for max line length
 opt.mouse = "a" -- str: Enable mouse mode
 opt.mousemoveevent = true
 opt.wrap = true

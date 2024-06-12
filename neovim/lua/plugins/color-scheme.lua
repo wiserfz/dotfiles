@@ -53,7 +53,7 @@ return {
       hi GitSignsAdd guibg=#193549 guifg=#3ad900
       hi GitSignsChange guibg=#193549 guifg=#ffc600
       hi GitSignsDelete guibg=#193549 guifg=#ff2600
-      hi ColorColumn guifg=NONE guibg=#204563 gui=NONE
+      " hi ColorColumn guifg=NONE guibg=#204563 gui=NONE
       hi MatchParen cterm=bold gui=bold guifg=#FD9F4E guibg=#7B7C7C
     ]])
   end,
