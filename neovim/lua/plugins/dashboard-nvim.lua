@@ -7,7 +7,20 @@
 --   " ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝",
 -- }
 
+-- local startify_ascii_header = {
+--   "                                        ▟▙            ",
+--   "                                        ▝▘            ",
+--   "██▃▅▇█▆▖  ▗▟████▙▖   ▄████▄   ██▄  ▄██  ██  ▗▟█▆▄▄▆█▙▖",
+--   "██▛▔ ▝██  ██▄▄▄▄██  ██▛▔▔▜██  ▝██  ██▘  ██  ██▛▜██▛▜██",
+--   "██    ██  ██▀▀▀▀▀▘  ██▖  ▗██   ▜█▙▟█▛   ██  ██  ██  ██",
+--   "██    ██  ▜█▙▄▄▄▟▊  ▀██▙▟██▀   ▝████▘   ██  ██  ██  ██",
+--   "▀▀    ▀▀   ▝▀▀▀▀▀     ▀▀▀▀       ▀▀     ▀▀  ▀▀  ▀▀  ▀▀",
+--   "",
+-- }
+
 local bloody = {
+  "                                                     ",
+  "                                                     ",
   "                                                     ",
   "                                                     ",
   "                                                     ",
@@ -30,7 +43,7 @@ local bloody = {
 
 -- fancy start screen
 return {
-  "glepnir/dashboard-nvim",
+  "nvimdev/dashboard-nvim",
   event = "VimEnter",
   dependencies = {
     "nvim-tree/nvim-web-devicons",
@@ -49,21 +62,21 @@ return {
         header = bloody,
         shortcut = {
           {
-            icon = "  ",
-            desc = "Update Lazy Plugins",
-            action = "Lazy update",
-            key = "U",
+            icon = " ",
+            desc = "Lazy Manager",
+            action = "Lazy",
+            key = "L",
           },
           {
-            icon = "󰘘 ",
-            desc = "Display Mason Info",
+            icon = " ",
+            desc = "Mason Manager",
             group = "@property",
             action = "Mason",
             key = "M",
           },
           {
             icon = " ",
-            desc = "Edit nvim settings",
+            desc = "Dotfiles project",
             group = "Number",
             action = ":e ~/workspace/dotfiles/",
             key = ".",
@@ -76,8 +89,14 @@ return {
             key = "q",
           },
         },
-        project = { limit = 5, action = "Telescope find_files hidden=true cwd=" },
-        mru = { limit = 5 },
+        project = {
+          -- enable = false,
+          limit = 5,
+          action = "Telescope find_files hidden=true cwd=",
+        },
+        mru = {
+          limit = 5,
+        },
       },
     })
   end,

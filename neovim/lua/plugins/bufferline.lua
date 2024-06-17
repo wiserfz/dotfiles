@@ -11,9 +11,9 @@ return {
       options = {
         separator_style = "thin",
         -- underline indicator
-        indicator = {
-          style = "underline",
-        },
+        -- indicator = {
+        --   style = "underline",
+        -- },
         -- sidebar offset
         offsets = {
           {

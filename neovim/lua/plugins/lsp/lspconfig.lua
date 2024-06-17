@@ -42,11 +42,10 @@ return {
   config = function()
     local lspconfig = require("lspconfig")
 
-    -- disable lsp log
-    vim.lsp.set_log_level("off")
+    -- set lsp log level to error
+    vim.lsp.set_log_level("ERROR")
 
     -- Change the Diagnostic symbols in the sign column (gutter)
-    -- (not in youtube nvim video)
     local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
     for type, icon in pairs(signs) do
       local hl = "DiagnosticSign" .. type
