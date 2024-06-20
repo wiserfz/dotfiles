@@ -4,6 +4,7 @@ return {
     "mfussenegger/nvim-dap",
     "nvim-neotest/nvim-nio",
   },
+  event = "VeryLazy",
   config = function()
     local status, ui = pcall(require, "dapui")
     if not status then

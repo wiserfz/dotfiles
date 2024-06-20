@@ -1,8 +1,6 @@
--- vim.opt.completeopt = "menu,menuone,noselect"
--- vim.opt.shortmess = vim.opt.shortmess + { c = true }
--- vim.api.nvim_set_option("updatetime", 300)
-
 -- local kind_icons = {
+--   Boolean = "",
+--   Character = "",
 --   Text = "",
 --   Method = "󰆧",
 --   Function = "󰊕",
@@ -28,27 +26,12 @@
 --   Event = "",
 --   Operator = "󰆕",
 --   TypeParameter = "󰅲",
+--   Copilot = "",
+--   Number = "",
+--   Parameter = "",
+--   String = "󰅳",
 -- }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
-
--- vim.cmd([[
---   " gray
---   highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
---   " blue
---   highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
---   highlight! link CmpItemAbbrMatchFuzzy CmpItemAbbrMatch
---   " light blue
---   highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
---   highlight! link CmpItemKindInterface CmpItemKindVariable
---   highlight! link CmpItemKindText CmpItemKindVariable
---   " pink
---   highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
---   highlight! link CmpItemKindMethod CmpItemKindFunction
---   " front
---   highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
---   highlight! link CmpItemKindProperty CmpItemKindKeyword
---   highlight! link CmpItemKindUnit CmpItemKindKeyword
--- ]])
 
 -- autocompletion
 return {
@@ -92,6 +75,15 @@ return {
 
     -- load vs-code like snippets from plugins (e.g. friendly-snippets)
     require("luasnip.loaders.from_vscode").lazy_load()
+    local copilot_cmp = require("copilot_cmp.comparators")
+
+    local has_words_before = function()
+      if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
+        return false
+      end
+      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+      return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+    end
 
     cmp.setup({
       completion = {
@@ -107,16 +99,36 @@ return {
         ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-        ["<C-e>"] = cmp.mapping.abort(), -- close completion window
+        ["<C-s>"] = cmp.mapping.complete({ -- show completion suggestions
+          config = {
+            sources = {
+              { name = "copilot" },
+            },
+          },
+        }),
+        ["<C-e>"] = cmp.mapping.close(), -- close completion window
         ["<CR>"] = cmp.mapping.confirm({
           behavior = cmp.ConfirmBehavior.Insert,
-          select = true,
+          -- select = false,
         }),
+        ["<Tab>"] = function(fallback)
+          if cmp.visible() and has_words_before() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            fallback()
+          end
+        end,
+        ["<S-Tab>"] = vim.schedule_wrap(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            fallback()
+          end
+        end),
       }),
       -- sources for autocompletion
       sources = cmp.config.sources({
-        { name = "path" }, -- file system paths
+        { name = "copilot", group_index = 2 },
         {
           name = "nvim_lsp",
           option = {
@@ -124,11 +136,17 @@ return {
               keyword_pattern = [[\(\k\| \|\/\|#\)\+]],
             },
           },
+          group_index = 2,
         },
-        { name = "luasnip", option = { use_show_condition = false, show_autosnippets = false } }, -- snippets
-        { name = "nvim_lsp_signature_help" }, -- display function signatures with current parameter emphasized
-        -- { name = "nvim_lua" }, -- complete neovim's Lua runtime API such vim.lsp.*
-        { name = "buffer" }, -- text within current buffer
+        { name = "nvim_lsp_signature_help", group_index = 3 }, -- display function signatures with current parameter emphasized
+        { name = "path", group_index = 3 }, -- file system paths
+        {
+          name = "luasnip", -- snippets
+          option = { use_show_condition = false, show_autosnippets = false },
+          group_index = 3,
+        },
+        { name = "buffer", group_index = 3 }, -- text within current buffer
+        -- { name = "nvim_lua", group_index = 3 }, -- complete neovim's Lua runtime API such vim.lsp.*
       }),
       -- configure lspkind for vs-code like icons
       formatting = {
@@ -136,13 +154,37 @@ return {
         format = lspkind.cmp_format({
           mode = "symbol", -- show only symbol annotations
           maxwidth = 50,
-          ellipsis_char = "...",
+          ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+          show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+          symbol_map = { Copilot = "" },
         }),
       },
       view = {
-        entries = "custom",
+        entries = { name = "custom", selection_order = "near_cursor" },
+      },
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          copilot_cmp.prioritize,
+          copilot_cmp.score,
+
+          -- Below is the default comparator list and order for nvim-cmp
+          cmp.config.compare.offset,
+          -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+          cmp.config.compare.exact,
+          cmp.config.compare.score,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.locality,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
+        },
       },
     })
+
+    -- set copilot symbol color
+    vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#7539DE" })
 
     -- manager crate.io dependencies
     vim.api.nvim_create_autocmd("BufRead", {
