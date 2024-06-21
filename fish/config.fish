@@ -35,7 +35,7 @@ if status is-interactive
     end
 
     set go_path (go env GOPATH)
-    set -x -U GOPATH $go_path
+    set -Ux GOPATH $go_path
     if test -d "$GOPATH"/bin
         fish_add_path -g $GOPATH/bin
     end
@@ -47,16 +47,25 @@ set -Ux fish_prompt_pwd_dir_length 0
 
 set -Ux LC_ALL "en_US.UTF-8"
 set -Ux CLICOLOR 1
-set -Ux GREP_COLOR "1;31"
 
-# customize colors for commands output
-set -Ux LESS_TERMCAP_mb \e'[01;31m'       # begin blinking
-set -Ux LESS_TERMCAP_md \e'[01;38;5;74m'  # begin bold
-set -Ux LESS_TERMCAP_me \e'[0m'           # end mode
-set -Ux LESS_TERMCAP_se \e'[0m'           # end standout-mode
-set -Ux LESS_TERMCAP_so \e'[38;5;016m\E[48;5;220m'    # begin standout-mode - info box
-set -Ux LESS_TERMCAP_ue \e'[0m'           # end underline
-set -Ux LESS_TERMCAP_us \e'[04;38;5;146m' # begin underline
+# colorizing pager for man, using bat
+set -x MANPAGER "sh -c 'col -bx | bat -l man -p --theme \"Monokai Extended\"'"
+# customize colored man pages
+# set -x LESS_TERMCAP_mb (printf "\033[01;31m") # begin blinking
+# set -x LESS_TERMCAP_md (printf "\033[01;31m") # begin bold
+# set -x LESS_TERMCAP_me (printf "\033[0m")     # end mode
+# set -x LESS_TERMCAP_se (printf "\033[0m")     # end standout-mode
+# set -x LESS_TERMCAP_so (printf "\033[01;44;33m")  # begin standout-mode - info box
+# set -x LESS_TERMCAP_ue (printf "\033[0m")     # end underline
+# set -x LESS_TERMCAP_us (printf "\033[01;32m") # begin underline
+
+# brew
+if command -v brew >/dev/null 2>&1
+    set -Ux HOMEBREW_NO_AUTO_UPDATE true  # disable homebrew auto update
+    # setup homebrew mirror
+    set -Ux HOMEBREW_BREW_GIT_REMOTE "https://mirrors.ustc.edu.cn/brew.git"
+    set -Ux HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS 7
+end
 
 # setup with zoxide
 zoxide init fish | source
