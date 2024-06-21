@@ -23,14 +23,16 @@ return {
     local codelldb_path = mason_path .. "codelldb/extension/adapter/codelldb"
     local liblldb_path = mason_path .. "codelldb/extension/lldb/lib/liblldb.dylib"
 
-    local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    local lsp_status = require("lsp-status")
     -- used to enable autocompletion (assign to every lsp server config)
-    local cap = vim.lsp.protocol.make_client_capabilities()
-    cap.textDocument.foldingRange = {
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.foldingRange = {
       dynamicRegistration = false,
       lineFoldingOnly = true,
     }
-    local capabilities = cmp_nvim_lsp.default_capabilities(cap)
+    -- Add lsp_status capabilities
+    capabilities = vim.tbl_extend("keep", capabilities, lsp_status.capabilities)
+    capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
     local keymap = vim.keymap
     vim.g.rustaceanvim = {
@@ -42,7 +44,8 @@ return {
       },
       server = {
         capabilities = capabilities,
-        on_attach = function(_, bufnr)
+        on_attach = function(client, bufnr)
+          lsp_status.on_attach(client, bufnr)
           -- keybind options
           local opts = { noremap = true, silent = true, buffer = bufnr }
 

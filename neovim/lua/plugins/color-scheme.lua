@@ -1,7 +1,5 @@
 -- color theme
 return {
-  -- "folke/tokyonight.nvim"
-  -- "navarasu/onedark.nvim"
   "rebelot/kanagawa.nvim",
   lazy = false, -- make sure we load this during startup if it is your main colorscheme
   priority = 1000, -- make sure to load this before all the other start plugins
@@ -11,17 +9,6 @@ return {
       print("Colorscheme of kanagawa not found!")
       return
     end
-
-    -- for onedark color scheme
-    -- scheme.setup({
-    --   style = "darker",
-    --   term_colors = true, -- Change terminal color as per the selected theme style
-    --   lualine = {
-    --     transparent = true, -- lualine center bar transparency
-    --   },
-    -- })
-
-    -- scheme.load()
 
     scheme.setup({
       keywordStyle = { italic = false, bold = true },
@@ -48,8 +35,8 @@ return {
 
     -- Highlight colors
     vim.cmd([[
-      hi CursorLineNr guifg=#7e9cd8
-      hi FoldColumn guifg=#29292c guibg=#26292c
+      " hi CursorLineNr guifg=#7e9cd8
+      " hi FoldColumn guifg=#29292c guibg=#26292c
       hi GitSignsAdd guibg=#193549 guifg=#3ad900
       hi GitSignsChange guibg=#193549 guifg=#ffc600
       hi GitSignsDelete guibg=#193549 guifg=#ff2600

@@ -38,12 +38,14 @@ return {
         library = { plugins = { "neotest", "nvim-dap-ui" }, types = true },
       },
     },
+    "nvim-lua/lsp-status.nvim",
   },
   config = function()
-    local lspconfig = require("lspconfig")
-
     -- set lsp log level to error
     vim.lsp.set_log_level("ERROR")
+
+    local lspconfig = require("lspconfig")
+    local lsp_status = require("lsp-status")
 
     -- Change the Diagnostic symbols in the sign column (gutter)
     local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -51,6 +53,16 @@ return {
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
+    -- Status config
+    lsp_status.config({
+      status_symbol = "  LSP:",
+      indicator_errors = signs.Error,
+      indicator_warnings = signs.Warn,
+      indicator_info = signs.Info,
+      indicator_hint = signs.Hint,
+      indicator_ok = "",
+      current_function = false,
+    })
 
     -- Neovim Lua API completions/documentation
     require("neodev").setup({
@@ -64,46 +76,6 @@ return {
     -- list of servers for mason to install
     local server_configs = {
       lua_ls = {
-        -- on_init = function(client)
-        --   local path = client.workspace_folders and client.workspace_folders[1].name
-        --   -- if not has_file(path, { '.luarc.json', '.luarc.jsonc' }) then
-        --   client.config.settings = vim.tbl_deep_extend("force", client.config.settings, {
-        --     Lua = {
-        --       completion = {
-        --         callSnippet = "Replace",
-        --         autoRequire = true,
-        --       },
-        --       format = {
-        --         enable = true,
-        --         defaultConfig = {
-        --           indent_style = "space",
-        --           indent_size = "2",
-        --           max_line_length = "100",
-        --           trailing_table_separator = "smart",
-        --         },
-        --       },
-        --       diagnostics = {
-        --         globals = { "vim", "it", "describe", "before_each", "are" },
-        --       },
-        --       hint = {
-        --         enable = true,
-        --         arrayIndex = "Disable",
-        --       },
-        --       workspace = {
-        --         checkThirdParty = false,
-        --       },
-        --       telemetry = {
-        --         enable = false,
-        --       },
-        --     },
-        --   })
-        --
-        --   client.notify("workspace/didChangeConfiguration", {
-        --     settings = client.config.settings,
-        --   })
-        --   -- end
-        --   return true
-        -- end,
         settings = { -- custom settings for lua
           Lua = {
             runtime = {
@@ -111,7 +83,20 @@ return {
             },
             -- make the language server recognize "vim" global
             diagnostics = {
-              globals = { "vim" },
+              enable = true,
+              globals = {
+                "vim",
+                "Color",
+                "c",
+                "Group",
+                "g",
+                "s",
+                "describe",
+                "it",
+                "before_each",
+                "after_each",
+                "use",
+              },
             },
             workspace = {
               -- make language server aware of runtime files
@@ -123,6 +108,9 @@ return {
             -- Do not send telemetry data containing a randomized but unique identifier
             telemetry = {
               enable = false,
+            },
+            hint = {
+              enable = true,
             },
           },
         },
@@ -190,12 +178,11 @@ return {
     }
 
     -- used to enable autocompletion (assign to every lsp server config)
-    local cap = vim.lsp.protocol.make_client_capabilities()
-    cap.textDocument.foldingRange = {
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.foldingRange = {
       dynamicRegistration = false,
       lineFoldingOnly = true,
     }
-    local capabilities = vim.tbl_deep_extend("force", cap, require("cmp_nvim_lsp").default_capabilities())
     -- Ensure that dynamicRegistration is enabled! This allows the LS to take into account actions like the
     -- Create Unresolved File code action, resolving completions for unindexed code blocks, ...
     capabilities.workspace = {
@@ -203,6 +190,9 @@ return {
         dynamicRegistration = true,
       },
     }
+    -- Add lsp_status capabilities
+    capabilities = vim.tbl_extend("keep", capabilities, lsp_status.capabilities)
+    capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
     --------------------
     -- Set up servers --
@@ -218,6 +208,7 @@ return {
       local opts_with_capabilities = vim.tbl_deep_extend("force", opts, {
         capabilities = capabilities,
         on_attach = function(client, bufnr)
+          lsp_status.on_attach(client, bufnr)
           on_attach(client, bufnr)
           -- keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = bufnr })
           -- keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = bufnr })
