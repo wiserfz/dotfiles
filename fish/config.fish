@@ -1,3 +1,5 @@
+fish_config theme choose "Dracula Official"
+
 if status is-interactive
     if test (uname) = "Darwin"
         fish_add_path /usr/local/bin
