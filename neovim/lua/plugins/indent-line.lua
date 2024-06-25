@@ -42,7 +42,7 @@ return {
       exclude = {
         filetypes = {
           "lspinfo",
-          "packer",
+          "lazy",
           "checkhealth",
           "help",
           "man",

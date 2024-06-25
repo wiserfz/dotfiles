@@ -6,26 +6,26 @@ function fish_prompt
     end
     # Colors
     # Reset
-    set ResetColor (set_color normal)       # Text Reset
+    set ResetColor (set_color normal) # Text Reset
 
     # Regular Colors
-    set Red (set_color red)                 # Red
-    set Yellow (set_color yellow);          # Yellow
-    set Blue (set_color blue)               # Blue
+    set Red (set_color red) # Red
+    set Yellow (set_color yellow) # Yellow
+    set Blue (set_color blue) # Blue
     set White (set_color white)
     set Green (set_color green)
 
     # Bold
     set BRed (set_color -o red)
-    set BGreen (set_color -o green)         # Green
+    set BGreen (set_color -o green) # Green
     set BWhite (set_color -o white)
     set BBlue (set_color -o blue)
 
     # High Intensty
-    set IBlack (set_color -o black)         # Black
+    set IBlack (set_color -o black) # Black
 
     # Bold High Intensty
-    set Magenta (set_color -o purple)       # Purple
+    set Magenta (set_color -o purple) # Purple
 
     set BCyan (set_color -o cyan)
 
@@ -96,7 +96,7 @@ function fish_prompt
     set GIT_PROMPT_STASHED "⚑ "
     set GIT_PROMPT_CLEAN "$BGreen✔"
 
-    if not test "0" -eq $__CURRENT_GIT_STATUS_PARAM_COUNT
+    if not test 0 -eq $__CURRENT_GIT_STATUS_PARAM_COUNT
         set GIT_BRANCH $__CURRENT_GIT_STATUS[1]
         set GIT_REMOTE "$__CURRENT_GIT_STATUS[2]"
         if contains "." "$GIT_REMOTE"
@@ -119,27 +119,27 @@ function fish_prompt
 
         set STATUS "$STATUS$PROMPT_SEPARATOR"
 
-        if [ $GIT_STAGED != "0" ]
+        if [ $GIT_STAGED != 0 ]
             set STATUS "$STATUS$GIT_PROMPT_STAGED$GIT_STAGED$ResetColor"
         end
 
-        if [ $GIT_CONFLICTS != "0" ]
+        if [ $GIT_CONFLICTS != 0 ]
             set STATUS "$STATUS$GIT_PROMPT_CONFLICTS$GIT_CONFLICTS$ResetColor"
         end
 
-        if [ $GIT_CHANGED != "0" ]
+        if [ $GIT_CHANGED != 0 ]
             set STATUS "$STATUS$GIT_PROMPT_CHANGED$GIT_CHANGED$ResetColor"
         end
 
-        if [ "$GIT_UNTRACKED" != "0" ]
+        if [ "$GIT_UNTRACKED" != 0 ]
             set STATUS "$STATUS$GIT_PROMPT_UNTRACKED$GIT_UNTRACKED$ResetColor"
         end
 
-        if [ "$GIT_STASHED" != "0" ]
+        if [ "$GIT_STASHED" != 0 ]
             set STATUS "$STATUS$GIT_PROMPT_STASHED$GIT_STASHED$ResetColor"
         end
 
-        if [ "$GIT_CLEAN" = "1" ]
+        if [ "$GIT_CLEAN" = 1 ]
             set STATUS "$STATUS$GIT_PROMPT_CLEAN"
         end
 

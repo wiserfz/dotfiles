@@ -14,26 +14,13 @@ return {
 
     -- configure autopairs
     autopairs.setup({
+      disable_in_macro = false,
       enable_check_bracket_line = false, -- Don't add pairs if it already has a close pair in the same line
       ignored_next_char = "[%w%.]", -- will ignore alphanumeric and `.` symbol
       check_ts = true, -- enable treesitter
       ts_config = {
         lua = { "string" }, -- don't add pairs in lua string treesitter nodes
-        javascript = { "template_string" }, -- don't add pairs in javscript template_string treesitter nodes
-        java = false, -- don't check treesitter on java
       },
-      -- disable_filetype = { "TelescopePrompt", "spectre_panel" },
-      -- fast_wrap = {
-      --   map = "<M-e>",
-      --   chars = { "{", "[", "(", '"', "'" },
-      --   pattern = [=[[%'%"%>%]%)%}%,]]=],
-      --   offset = 0, -- Offset from pattern match
-      --   end_key = "$",
-      --   keys = "qwertyuiopzxcvbnmasdfghjkl",
-      --   check_comma = true,
-      --   highlight = "Search",
-      --   highlight_grey = "Comment",
-      -- },
     })
 
     local Rule = require("nvim-autopairs.rule")

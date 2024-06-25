@@ -37,7 +37,6 @@ return {
         "markdown_inline",
         "bash",
         "lua",
-        "vim",
         "dockerfile",
         "gitignore",
         "erlang",
@@ -52,8 +51,11 @@ return {
         "proto",
         "python",
         "sql",
+        "jq",
+        "printf",
+        "tmux",
       },
-      -- auto install above language parsers
+      -- Automatically install missing parsers when entering buffer
       auto_install = true,
       matchup = {
         enable = true, -- mandatory, false will disable the whole extension

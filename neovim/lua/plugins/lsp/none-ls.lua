@@ -39,12 +39,21 @@ return {
 
         require("none-ls-shellcheck.diagnostics"), -- shell linter
         require("none-ls-shellcheck.code_actions"), -- shell code action
+        formatting.shfmt, -- shell parser and formatter
 
         require("none-ls.formatting.ruff_format"), -- python formatter
         require("none-ls.diagnostics.ruff"), -- python linter
 
-        formatting.stylua, -- lua formatter
-        -- diagnostics.selene, -- lua linter
+        formatting.stylua.with({ -- lua formatter
+          condition = function(utils)
+            return utils.root_has_file({ "stylua.toml", ".stylua.toml" })
+          end,
+        }),
+        diagnostics.selene.with({ -- lua linter
+          condition = function(utils)
+            return utils.root_has_file({ "selene.toml" })
+          end,
+        }),
 
         diagnostics.editorconfig_checker.with({ -- a tool to verify with .editorconfig
           disabled_filetypes = { "erlang", "markdown", "python" }, -- disable editorconfig checker
@@ -52,7 +61,15 @@ return {
 
         diagnostics.hadolint, -- dockerfile linter
 
-        -- diagnostics.fish, -- basic linting is available for fish scripts
+        diagnostics.fish, -- basic linting is available for fish scripts
+        formatting.fish_indent, -- indenter and prettifier for fish code
+
+        -- diagnostics.sqlfluff.with({
+        --   extra_args = { "--dialect", "mysql" }, -- change to your dialect
+        -- }),
+        -- formatting.sqlfluff.with({
+        --   extra_args = { "--dialect", "mysql" }, -- change to your dialect
+        -- }),
 
         -- formatting.erlfmt, -- erlang formatter
 

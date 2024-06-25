@@ -40,7 +40,7 @@ return {
     keymap.set("v", "<leader>cU", crates.upgrade_crates, opts)
     keymap.set("n", "<leader>cA", crates.upgrade_all_crates, opts)
 
-    -- open offical homepage with brower
+    -- open official homepage with browser
     keymap.set("n", "<leader>cH", crates.open_homepage, opts)
     -- open github.com with browser
     keymap.set("n", "<leader>cR", crates.open_repository, opts)

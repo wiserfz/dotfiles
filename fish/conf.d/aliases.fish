@@ -16,7 +16,7 @@ alias cat="bat -p"
 alias tower="gittower"
 
 # macOS alias
-if test (uname) = "Darwin"
+if test (uname) = Darwin
     alias rmds="find . -type f -name .DS_Store -delete"
     alias showfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
     alias hidefiles="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
