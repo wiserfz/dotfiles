@@ -17,6 +17,19 @@ return {
     if not status then
       return
     end
+    vim.filetype.add({
+      extension = {
+        inc = ".gitconfig",
+      },
+      filename = {
+        ["gitconfig"] = ".gitconfig",
+        ["gitignore"] = ".gitignore",
+      },
+      pattern = {
+        [".*/\\.git/config"] = ".gitconfig",
+        [".*/\\.git/info/exclude"] = ".gitignore",
+      },
+    })
 
     -- configure treesitter
     treesitter.setup({
@@ -38,6 +51,7 @@ return {
         "bash",
         "lua",
         "dockerfile",
+        "git_config",
         "gitignore",
         "erlang",
         "fish",

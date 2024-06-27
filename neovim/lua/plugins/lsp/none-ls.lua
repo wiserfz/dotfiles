@@ -39,7 +39,9 @@ return {
 
         require("none-ls-shellcheck.diagnostics"), -- shell linter
         require("none-ls-shellcheck.code_actions"), -- shell code action
-        formatting.shfmt, -- shell parser and formatter
+        formatting.shfmt.with({ -- shell parser and formatter
+          extra_args = { "-i", "4", "-ci", "-sr" },
+        }),
 
         require("none-ls.formatting.ruff_format"), -- python formatter
         require("none-ls.diagnostics.ruff"), -- python linter

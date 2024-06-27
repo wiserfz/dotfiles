@@ -2,22 +2,22 @@
 	name = wiser-fz
 	email = mailfz810@163.com
 	signingkey = BAF752355EBF68C41137A5B909562B59D4303F61
+[commit]
+	gpgsign = true
+[gpg]
+	program = /opt/homebrew/bin/gpg
+	format = openpgp
+[includeIf "gitdir:~/workspace/tuya/"]
+    path = ~/.tuya.inc
 [color]
     ui = true
 [core]
     pager = delta
-	excludesfile = ~/.gitignore
+	excludesFile = ~/.gitignore
 [interactive]
     diffFilter = delta --color-only
 [delta]
     features = custom
-[commit]
-	gpgsign = true
-[includeIf "gitdir:~/workspace/tuya/"]
-    path = ~/.gitconfig-tuya
-[diff]
-    colorMoved = default
-	tool = Kaleidoscope
 [delta "custom"]
     dark = true
     side-by-side = true
@@ -49,20 +49,20 @@
     whitespace-error-style = purple bold
 [tag]
 	forceSignAnnotated = false
+[diff]
+    colorMoved = default
+	tool = Kaleidoscope
 [merge]
     conflictstyle = diff3
     tool = Kaleidoscope
 [mergetool "code"]
     cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+    cmd = ksdiff --partial-changeset --relative-path $MERGED -- $LOCAL $REMOTE
 [difftool]
 	prompt = false
 [mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	cmd = ksdiff --merge --output $MERGED --base $BASE -- $LOCAL --snapshot $REMOTE --snapshot
 	trustExitCode = true
 [mergetool]
     prompt = false
-[gpg]
-	program = /opt/homebrew/bin/gpg
-	format = openpgp

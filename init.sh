@@ -30,7 +30,7 @@ White=$'\e[1;37m'
 NC=$'\e[0m'
 
 function exist() {
-    command -v "$1" >/dev/null 2>&1
+    command -v "$1" > /dev/null 2>&1
     return $?
 }
 
@@ -46,8 +46,7 @@ function install_brew() {
         return
     fi
 
-    if [[ $(uname) == "Darwin" ]] && ! exist brew
-    then
+    if [[ $(uname) == "Darwin" ]] && ! exist brew; then
         xcode-select --install
         ruby -e "$(curl -fsSL $BREW_URL)"
     fi
@@ -63,16 +62,13 @@ function install_brew_pkg() {
 
     for item in $(cat "$PRJ_DIR/packages/brew-pkg"); do
         read -rp "${Blue}Do you want to install ${Red}'$item'${Blue}? (y/n): ${NC}" confirm
-        if [[ $confirm == "y" ]]
-        then
+        if [[ $confirm == "y" ]]; then
             brew install "$item"
-            if [[ $item == "go" ]]
-            then
+            if [[ $item == "go" ]]; then
                 # go env -w GOPATH="$HOME/go"
                 go env -w GOPROXY="https://goproxy.cn,direct"
                 go env -w GO111MODULE="on"
-            elif [[ $item == "tmux" ]]
-            then
+            elif [[ $item == "tmux" ]]; then
                 if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
                     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
                 fi
@@ -93,8 +89,7 @@ function install_cask_pkg() {
 
     for item in $(cat "$PRJ_DIR/packages/cask-pkg"); do
         read -rp "${Blue}Do you want to install ${Red}'$item'${Blue}? (y/n): ${NC}" confirm
-        if [[ $confirm == "y" ]]
-        then
+        if [[ $confirm == "y" ]]; then
             brew install --cask "$item"
             brew cleanup "$item"
             echo "${Blue}Install ${Red}$item ${Blue}over.${NC}"
@@ -187,7 +182,7 @@ function init_env() {
     ln -sfv "$PRJ_DIR"/gitconfig .gitconfig
 
     rm -rf .gitignore
-    ln -sfv "$PRJ_DIR"/gitignore-glob .gitignore
+    ln -sfv "$PRJ_DIR"/gitignore .gitignore
 
     rm -rf .tmux.conf
     ln -sfv "$PRJ_DIR"/tmux.conf .tmux.conf
@@ -267,13 +262,13 @@ else
 fi
 
 case $choice in
-    1) install_brew;;
-    2) install_brew_pkg;;
-    3) install_cask_pkg;;
-    4) install_python_pkg;;
-    5) install_powerline_fonts;;
-    6) install_nerd_fonts;;
-    7) init_env;;
-    0) install_all;;
-    e) echo "${LightGreen}Bye, Bye.${NC}" && exit;;
+    1) install_brew ;;
+    2) install_brew_pkg ;;
+    3) install_cask_pkg ;;
+    4) install_python_pkg ;;
+    5) install_powerline_fonts ;;
+    6) install_nerd_fonts ;;
+    7) init_env ;;
+    0) install_all ;;
+    e) echo "${LightGreen}Bye, Bye.${NC}" && exit ;;
 esac
