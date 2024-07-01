@@ -82,7 +82,8 @@ return {
         return false
       end
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-      return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+      return col ~= 0
+        and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
     end
 
     cmp.setup({
@@ -185,14 +186,5 @@ return {
 
     -- set copilot symbol color
     vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#7539DE" })
-
-    -- manager crate.io dependencies
-    vim.api.nvim_create_autocmd("BufRead", {
-      group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
-      pattern = "Cargo.toml",
-      callback = function()
-        cmp.setup.buffer({ sources = { { name = "crates" } } })
-      end,
-    })
   end,
 }

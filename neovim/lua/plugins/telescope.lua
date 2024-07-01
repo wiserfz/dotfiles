@@ -4,7 +4,10 @@ return {
   branch = "0.1.x",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- dependency for better sorting performance
+    {
+      "nvim-telescope/telescope-fzf-native.nvim", -- dependency for better sorting performance
+      build = "make",
+    },
     "nvim-tree/nvim-web-devicons",
     "nvim-telescope/telescope-media-files.nvim", -- image files preview in telescope
     "folke/todo-comments.nvim",
@@ -39,8 +42,11 @@ return {
           "^target/",
           "LICENSE*",
         },
-        layout_strategy = "vertical",
-        layout_config = { height = 0.95, width = 0.95 },
+        layout_config = {
+          vertical = {
+            width = 0.5,
+          },
+        },
       },
       extensions = {
         media_files = {
