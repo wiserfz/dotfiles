@@ -53,6 +53,13 @@ return {
     if not setup then
       return
     end
+    vim.cmd([[
+      hi DashboardHeader guifg=#CC484D
+      hi DashboardProjectTitle guifg=#CFCF9F
+      hi DashboardProjectIcon guifg=#d7b0ad
+      hi DashboardMruTitle guifg=#CFCF9F
+      hi DashboardFiles guifg=#aec6cf
+    ]])
 
     vim.g.dashboard_default_executive = "telescope"
 
@@ -64,6 +71,7 @@ return {
           {
             icon = " ",
             desc = "Lazy Manager",
+            group = "Function",
             action = "Lazy",
             key = "L",
           },

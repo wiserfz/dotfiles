@@ -11,7 +11,9 @@ return {
     end
 
     -- change color for arrows in tree to white
-    vim.cmd([[ highlight NvimTreeIndentMarker guifg=white ]])
+    vim.cmd([[
+      hi NvimTreeIndentMarker guifg=white
+    ]])
 
     local function open_nvim_tree(data)
       -- buffer is a directory
@@ -34,7 +36,13 @@ return {
       local api = require("nvim-tree.api")
 
       local function opts(desc)
-        return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        return {
+          desc = "nvim-tree: " .. desc,
+          buffer = bufnr,
+          noremap = true,
+          silent = true,
+          nowait = true,
+        }
       end
 
       api.config.mappings.default_on_attach(bufnr)

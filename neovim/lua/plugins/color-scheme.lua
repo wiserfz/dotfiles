@@ -1,9 +1,11 @@
 -- color theme
 return {
+  -- "tomasr/molokai",
   "rebelot/kanagawa.nvim",
   lazy = false, -- make sure we load this during startup if it is your main colorscheme
   priority = 1000, -- make sure to load this before all the other start plugins
   config = function()
+    -- vim.cmd([[colorscheme molokai]])
     local status, scheme = pcall(require, "kanagawa")
     if not status then
       print("Colorscheme of kanagawa not found!")
@@ -31,17 +33,23 @@ return {
         }
       end,
     })
-    vim.cmd("colorscheme kanagawa-wave")
+    scheme.load("wave")
 
-    -- Highlight colors
+    -- custom highlights
     vim.cmd([[
-      " hi CursorLineNr guifg=#7e9cd8
-      " hi FoldColumn guifg=#29292c guibg=#26292c
+      hi FoldColumn guifg=gray guibg=#232526
       hi GitSignsAdd guibg=#193549 guifg=#3ad900
       hi GitSignsChange guibg=#193549 guifg=#ffc600
       hi GitSignsDelete guibg=#193549 guifg=#ff2600
-      " hi ColorColumn guifg=NONE guibg=#204563 gui=NONE
-      hi MatchParen cterm=bold gui=bold guifg=#FD9F4E guibg=#7B7C7C
+      hi WinSeparator guifg=#272727
+      hi CurSearch guifg=#000000 guibg=#ffaf00
+      " hi DiffAdd guifg=#f0cdc9 guibg=#567c44
+      " hi DiffChange guifg=#fefefe guibg=#404ea4
+      " hi DiffDelete gui=bold guifg=#c3c3c3 guibg=#a22e26
+      " hi Normal guifg=#D4D4D4 guibg=#1E1E1E
+      " hi MatchParen cterm=reverse ctermbg=82 ctermfg=22
+      " hi Visual guibg=#403D3D ctermbg=238
+      " hi! link NormalFloat Normal
     ]])
   end,
 }

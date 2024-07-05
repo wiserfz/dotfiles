@@ -14,8 +14,38 @@ return {
           relculright = true,
           segments = {
             { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-            { text = { "%s" }, click = "v:lua.ScSa" },
+            {
+              sign = {
+                namespace = { "diagnostic" },
+                maxwidth = 1,
+                colwidth = 2,
+                auto = true,
+                foldclosed = true,
+              },
+              click = "v:lua.ScSa",
+            },
             { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+            {
+              sign = {
+                name = { ".*" },
+                text = { ".*" },
+                maxwidth = 2,
+                colwidth = 1,
+                auto = true,
+                foldclosed = true,
+              },
+              click = "v:lua.ScSa",
+            },
+            {
+              sign = {
+                namespace = { "gitsigns" },
+                maxwidth = 1,
+                colwidth = 1,
+                wrap = true,
+                foldclosed = true,
+              },
+              click = "v:lua.ScSa",
+            },
           },
         })
       end,
@@ -37,15 +67,6 @@ return {
     },
   },
   config = function(_, opts)
-    -- Hide foldcolumn for transparency
-    -- See https://github.com/kevinhwang91/nvim-ufo/issues/4
-    vim.o.foldcolumn = "1"
-    vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-    vim.o.foldlevelstart = 99
-    vim.o.foldenable = true
-    vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-    vim.cmd([[ highlight FoldColumn guifg=gray ]])
-
     -- treesitter as a main provider instead
     -- Only depend on `nvim-treesitter/queries/filetype/folds.scm`,
     -- performance and stability are better than `foldmethod=nvim_treesitter#foldexpr()`
@@ -73,6 +94,9 @@ return {
         end
         curWidth = curWidth + chunkWidth
       end
+      local rAlignAppndx =
+        math.max(math.min(vim.opt.textwidth["_value"], width - 1) - curWidth - sufWidth, 0)
+      suffix = (" "):rep(rAlignAppndx) .. suffix
       table.insert(newVirtText, { suffix, "MoreMsg" })
       return newVirtText
     end
@@ -99,5 +123,10 @@ return {
 
     opts["fold_virt_text_handler"] = handler
     ufo.setup(opts)
+
+    vim.cmd([[
+      " hi Folded guibg=#2e3440 guifg=#81a1c1
+      hi Folded guibg=NONE
+    ]])
   end,
 }

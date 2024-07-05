@@ -19,14 +19,14 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 require("lazy").setup({
+  "christoomey/vim-tmux-navigator", -- tmux & split window navigation
+  "RRethy/vim-illuminate", -- highlight other uses of word under cursor
+  "HiPhish/rainbow-delimiters.nvim", -- rainbow parentheses
   {
-    "christoomey/vim-tmux-navigator", -- tmux & split window navigation
-  },
-  {
-    "RRethy/vim-illuminate", -- highlight other uses of word under cursor
-  },
-  {
-    "HiPhish/rainbow-delimiters.nvim", -- rainbow parentheses
+    "norcalli/nvim-colorizer.lua", -- color highlighter
+    config = function()
+      require("colorizer").setup()
+    end,
   },
   { import = "plugins.lsp" },
   { import = "plugins" },

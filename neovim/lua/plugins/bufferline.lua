@@ -20,7 +20,7 @@ return {
             filetype = "NvimTree",
             text = "File Explorer",
             text_align = "center",
-            separator = true, -- use a "true" to enable the default, or set your own character
+            separator = "┃", -- use a "true" to enable the default, or set your own character
           },
         },
         -- lsp indicators
@@ -33,6 +33,11 @@ return {
           end
           return s
         end,
+      },
+      highlights = {
+        offset_separator = {
+          fg = "#272727",
+        },
       },
     })
 

@@ -13,7 +13,8 @@ return {
     -- vim.api.nvim_set_hl(0, "yellow", { fg = "#FFFF00" })
     -- vim.api.nvim_set_hl(0, "orange", { fg = "#f09000" })
     vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "red", linehl = "", numhl = "" })
-    local codelldb_path = os.getenv("HOME") .. "/.local/share/nvim/mason/packages/codelldb/extension/adapter/codelldb"
+    local codelldb_path = os.getenv("HOME")
+      .. "/.local/share/nvim/mason/packages/codelldb/extension/adapter/codelldb"
     dap.adapters.codelldb = {
       type = "server",
       port = "${port}",
@@ -60,7 +61,12 @@ return {
       { desc = "Log Breakpoint" }
     )
     keymap.set("n", "<leader>dr", "<cmd>lua require'dap'.repl.open()<CR>", { desc = "REPL" })
-    keymap.set("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<CR>", { desc = "Run Last Config" })
+    keymap.set(
+      "n",
+      "<leader>dl",
+      "<cmd>lua require'dap'.run_last()<CR>",
+      { desc = "Run Last Config" }
+    )
 
     keymap.set("n", "<leader>dT", "<cmd>lua require'dap'.terminate()<CR>", { desc = "Terminate" })
     keymap.set(
@@ -70,7 +76,17 @@ return {
       { desc = "Disconnect & Close" }
     )
 
-    keymap.set("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<CR>", { desc = "Toggle debug UI" })
-    keymap.set("n", "<leader>de", "<cmd>lua require'dapui'.eval()<CR>", { desc = "Evaluate under cursor" })
+    keymap.set(
+      "n",
+      "<leader>du",
+      "<cmd>lua require'dapui'.toggle()<CR>",
+      { desc = "Toggle debug UI" }
+    )
+    keymap.set(
+      "n",
+      "<leader>de",
+      "<cmd>lua require'dapui'.eval()<CR>",
+      { desc = "Evaluate under cursor" }
+    )
   end,
 }

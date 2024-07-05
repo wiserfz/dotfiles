@@ -6,7 +6,7 @@ opt.number = true -- bool: Show line numbers
 opt.relativenumber = true -- bool: Show relative line numbers
 
 opt.cursorline = true -- bool: Current line highlight
-opt.cursorlineopt = "number"
+opt.cursorlineopt = "both"
 
 opt.colorcolumn = "100" -- str: Show col for max line length
 opt.mouse = "a" -- str: Enable mouse mode
@@ -27,7 +27,7 @@ opt.fileformat = "unix" -- str:  Line breaks use unix
 
 -- appearance
 opt.signcolumn = "yes" -- str: 显示符号栏
-opt.syntax = "ON" -- str:  Allow syntax highlighting
+opt.syntax = "on" -- str:  Allow syntax highlighting
 opt.termguicolors = true -- bool: If term supports ui color then enable
 
 -- search
@@ -63,3 +63,25 @@ opt.clipboard:append("unnamedplus")
 
 -- statusline
 opt.laststatus = 3 -- show just one status line
+
+-- ufo
+-- Hide foldcolumn for transparency
+-- See https://github.com/kevinhwang91/nvim-ufo/issues/4
+opt.foldcolumn = "1"
+opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+opt.foldlevelstart = 99
+opt.foldenable = true
+opt.fillchars = {
+  eob = " ",
+  fold = " ",
+  foldopen = "",
+  foldsep = " ",
+  foldclose = "",
+  horiz = "━",
+  horizup = "┻",
+  horizdown = "┳",
+  vert = "┃",
+  vertleft = "┫",
+  vertright = "┣",
+  verthoriz = "╋",
+}
