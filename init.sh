@@ -201,14 +201,8 @@ function init_env() {
         mkdir -p "$dir"
     fi
 
-    rm -rf .config/nvim/lua
-    ln -sfv "$PRJ_DIR"/neovim/lua .config/nvim/lua
-
-    rm -rf .config/nvim/init.lua
-    ln -sfv "$PRJ_DIR"/neovim/init.lua .config/nvim/init.lua
-
-    rm -rf .config/nvim/lazy-lock.json
-    cp "$PRJ_DIR"/neovim/lazy-lock.json .config/nvim/lazy-lock.json
+    rm -rf .config/nvim
+    ln -sfv "$PRJ_DIR"/nvim .config/nvim
 
     rm -rf .config/yamllint
     ln -sfv "$PRJ_DIR"/config/yamllint .config/yamllint

@@ -24,18 +24,18 @@ return {
               },
               click = "v:lua.ScSa",
             },
-            { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
             {
               sign = {
                 name = { ".*" },
                 text = { ".*" },
                 maxwidth = 2,
-                colwidth = 1,
+                colwidth = 2,
                 auto = true,
                 foldclosed = true,
               },
               click = "v:lua.ScSa",
             },
+            { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
             {
               sign = {
                 namespace = { "gitsigns" },

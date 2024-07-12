@@ -165,7 +165,17 @@ return {
           },
         },
       },
-      -- dockerls = {},
+      dockerls = {
+        settings = {
+          docker = {
+            languageserver = {
+              formatter = {
+                ignoreMultilineInstructions = true,
+              },
+            },
+          },
+        },
+      },
       markdown_oxide = {},
       -- erlangls = {},
     }
@@ -192,7 +202,8 @@ return {
     }
     -- Add lsp_status capabilities
     capabilities = vim.tbl_extend("keep", capabilities, lsp_status.capabilities)
-    capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+    capabilities =
+      vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
     --------------------
     -- Set up servers --
@@ -218,7 +229,8 @@ return {
     end
 
     -- Ensure that servers mentioned above get installed
-    local ensure_installed = vim.list_extend(vim.tbl_keys(server_configs), vim.tbl_keys(special_servers))
+    local ensure_installed =
+      vim.list_extend(vim.tbl_keys(server_configs), vim.tbl_keys(special_servers))
 
     local mason_lspconfig = require("mason-lspconfig")
     mason_lspconfig.setup({

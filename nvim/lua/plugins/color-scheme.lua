@@ -14,6 +14,15 @@ return {
 
     scheme.setup({
       keywordStyle = { italic = false, bold = true },
+      colors = {
+        theme = {
+          all = {
+            ui = {
+              bg_gutter = "none",
+            },
+          },
+        },
+      },
       overrides = function(colors)
         local theme = colors.theme
         return {
@@ -30,6 +39,13 @@ return {
           -- set their background accordingly if you wish to keep them dark and borderless
           LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
           MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+
+          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
+          PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+          PmenuSbar = { bg = theme.ui.bg_m1 },
+          PmenuThumb = { bg = theme.ui.bg_p2 },
+
+          Visual = { bg = theme.ui.bg_p2 },
         }
       end,
     })
@@ -48,7 +64,6 @@ return {
       " hi DiffDelete gui=bold guifg=#c3c3c3 guibg=#a22e26
       " hi Normal guifg=#D4D4D4 guibg=#1E1E1E
       " hi MatchParen cterm=reverse ctermbg=82 ctermfg=22
-      " hi Visual guibg=#403D3D ctermbg=238
       " hi! link NormalFloat Normal
     ]])
   end,
