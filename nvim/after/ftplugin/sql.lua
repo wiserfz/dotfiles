@@ -1,0 +1,2 @@
+-- just type 'gq%' in normal mode to format the sql
+-- vim.opt_local.formatprg = "sql-formatter -l mysql"

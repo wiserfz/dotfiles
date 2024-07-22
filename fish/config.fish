@@ -1,7 +1,7 @@
 fish_config theme choose "Dracula Official"
 
 if status is-interactive
-    if test (uname) = "Darwin"
+    if test (uname) = Darwin
         fish_add_path /usr/local/bin
     end
 
@@ -63,11 +63,23 @@ set -x MANPAGER "sh -c 'col -bx | bat -l man -p --theme \"Monokai Extended\"'"
 
 # brew
 if command -v brew >/dev/null 2>&1
-    set -Ux HOMEBREW_NO_AUTO_UPDATE true  # disable homebrew auto update
+    # disable homebrew auto update
+    set -Ux HOMEBREW_NO_AUTO_UPDATE true
     # setup homebrew mirror
     set -Ux HOMEBREW_BREW_GIT_REMOTE "https://mirrors.ustc.edu.cn/brew.git"
     set -Ux HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS 7
 end
+
+# fzf
+set -Ux FZF_CTRL_T_OPTS "
+    --walker-skip .git,target
+    --preview 'bat -n --color=always {}'
+    --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+set -Ux FZF_CTRL_R_OPTS "
+    --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+    --color header:italic
+    --header 'Press CTRL-Y to copy command into clipboard'"
+fzf --fish | source
 
 # setup with zoxide
 zoxide init fish | source

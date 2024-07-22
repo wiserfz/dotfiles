@@ -1,6 +1,16 @@
 local null_ls = require("null-ls")
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
+local util = require("util")
+
+local function is_null_ls_formatting_enabled(bufnr)
+  local file_type = vim.api.nvim_buf_get_option(bufnr, "filetype")
+  local generators = require("null-ls.generators").get_available(
+    file_type,
+    require("null-ls.methods").internal.FORMATTING
+  )
+  return #generators > 0
+end
 
 local M = {}
 
@@ -55,16 +65,33 @@ function M.setup()
       -- diagnostics.sqlfluff.with({
       --   extra_args = { "--dialect", "mysql" }, -- change to your dialect
       -- }),
-      -- formatting.sqlfluff.with({
-      --   extra_args = { "--dialect", "mysql" }, -- change to your dialect
-      -- }),
+      formatting.sql_formatter.with({
+        extra_args = { "-l", "mysql" }, -- change to your dialect
+      }),
 
       -- formatting.erlfmt, -- erlang formatter
 
       require("none-ls.formatting.jq"), -- json formatter
     },
-    -- configure format on save
+    -- configure format
     on_attach = function(current_client, bufnr)
+      if current_client.server_capabilities.documentFormattingProvider then
+        if
+          current_client.name == "null-ls" and is_null_ls_formatting_enabled(bufnr)
+          or current_client.name ~= "null-ls"
+        then
+          vim.bo[bufnr].formatexpr = "v:lua.vim.lsp.formatexpr()"
+          util.map(
+            "n",
+            "<leader>gq",
+            "<cmd>lua vim.lsp.buf.format({ async = false })<CR>",
+            { buffer = bufnr }
+          )
+        else
+          vim.bo[bufnr].formatexpr = nil
+        end
+      end
+
       if current_client.supports_method("textDocument/formatting") then
         vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
         vim.api.nvim_create_autocmd("BufWritePre", {
