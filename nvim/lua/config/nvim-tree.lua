@@ -47,7 +47,9 @@ function M.setup()
     hi NvimTreeSpecialFile guifg=#CC484D gui=bold
     hi NvimTreeSymLink guifg=#C23BC4 gui=italic
     hi Directory guifg=#6A7C93 gui=bold
-    hi NvimTreeGitDirty guifg=#6f99de gui=bold
+    hi NvimTreeGitDirty guifg=#e9934d gui=bold cterm=bold
+    hi NvimTreeGitNew guifg=#6f99de  gui=bold
+    hi link NvimTreeHiddenIcon Comment
   ]])
 
   vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
@@ -65,6 +67,7 @@ function M.setup()
     },
     renderer = {
       group_empty = true,
+      highlight_hidden = "name",
       special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md", "go.mod" },
       highlight_git = "name",
       icons = {
@@ -73,6 +76,7 @@ function M.setup()
           file = true,
           folder = true,
           folder_arrow = true,
+          hidden = false,
         },
         git_placement = "after",
         glyphs = {
