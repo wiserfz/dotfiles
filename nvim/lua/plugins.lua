@@ -241,6 +241,7 @@ function M.setup()
         storage = {
           home = os.getenv("HOME") .. "/workspace/leetcode",
         },
+        logging = false,
         arg = "leetcode.nvim",
       },
       keys = {
