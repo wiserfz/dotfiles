@@ -1,0 +1,2 @@
+-- -- just type 'gq%' in normal mode to format the json
+-- vim.opt_local.formatprg = "jq --indent 2"
