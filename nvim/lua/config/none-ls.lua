@@ -54,7 +54,7 @@ function M.setup()
       }),
 
       diagnostics.editorconfig_checker.with({ -- a tool to verify with .editorconfig
-        disabled_filetypes = { "erlang", "markdown", "python" }, -- disable editorconfig checker
+        disabled_filetypes = { "erlang", "markdown", "python", "go" }, -- disable editorconfig checker
       }),
 
       diagnostics.hadolint, -- dockerfile linter
