@@ -4,3 +4,5 @@
 .null-ls*
 .ecrc
 .codespellrc
+.mise.toml
+.venv

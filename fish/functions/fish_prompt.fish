@@ -55,14 +55,14 @@ function fish_prompt
         set prompt_end " \n$bold_red\$ $reset_color"
     end
 
-    # pyenv
-    set prompt_pyenv ""
+    # python
+    set prompt_py ""
     set py_env $VIRTUAL_ENV
     set requirements "requirements.txt"
     if test -n "$py_env" || test -f "$requirements"
         set python_icon "🐍"
-        set python_version (pyenv version-name)
-        set prompt_pyenv " $python_icon $br_green$python_version$reset_color"
+        set python_version (python --version | string split ' ' -f 2)
+        set prompt_py " $python_icon $br_green$python_version$reset_color"
     end
 
     # rust
@@ -148,9 +148,9 @@ function fish_prompt
 
         set git_status "$git_status$reset_color$prompt_suffix"
 
-        set PS1 "$prompt_start$git_status$prompt_pyenv$prompt_go$prompt_rust$prompt_end"
+        set PS1 "$prompt_start$git_status$prompt_py$prompt_go$prompt_rust$prompt_end"
     else
-        set PS1 "$prompt_start$prompt_pyenv$prompt_go$prompt_rust$prompt_end"
+        set PS1 "$prompt_start$prompt_py$prompt_go$prompt_rust$prompt_end"
     end
 
     echo -e $PS1

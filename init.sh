@@ -5,7 +5,6 @@ CURRENT_DIR=$PWD
 
 BREW_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 POWERLINE_FONTS_URL="https://github.com/powerline/fonts.git"
-PYTHON_VERSION="3.11.2"
 PRJ_URL="https://github.com/Gitfz810/dotfiles.git"
 PRJ_DIR="$HOME/workspace/dotfiles"
 CODELLDB_DIR="$HOME/.local/codelldb"
@@ -64,10 +63,9 @@ function install_brew_pkg() {
         read -rp "${Blue}Do you want to install ${Red}'$item'${Blue}? (y/n): ${NC}" confirm
         if [[ $confirm == "y" ]]; then
             brew install "$item"
-            if [[ $item == "go" ]]; then
-                # go env -w GOPATH="$HOME/go"
-                go env -w GOPROXY="https://goproxy.cn,direct"
-                go env -w GO111MODULE="on"
+            if [[ $item == "mise" ]]; then
+                # for mise completion
+                mise use -g usage
             elif [[ $item == "tmux" ]]; then
                 if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
                     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -99,16 +97,41 @@ function install_cask_pkg() {
     echo "${LightGreen}Install cask packages over.${NC}"
 }
 
-function install_python_pkg() {
-    read -rp "${Yellow}Do you want to install python packages? (y/n): ${NC}" confirm
-    if [[ $confirm == "n" ]]; then
+function install_go() {
+    if ! exist mise; then
+        echo "${LightRed}mise not installed, please install it first!${NC}"
         return
     fi
 
-    pyenv global "$PYTHON_VERSION"
-    pip install -r "$PRJ_DIR/packages/python-pkg"
+    mise use -g go
+    # set go env
+    go env -w GO111MODULE="on"
+    go env -w GOPROXY="https://goproxy.cn,direct"
 
-    echo "${LightGreen}Python packages are installed over.${NC}"
+    echo "${LightGreen}Install go over.${NC}"
+}
+
+function install_python() {
+    if ! exist mise; then
+        echo "${LightRed}mise not installed, please install it first!${NC}"
+        return
+    fi
+
+    mise use -g python@3.11
+
+    ehco "${LightGreen}Install python over.${NC}"
+}
+
+function install_erlang() {
+    if ! exist mise; then
+        echo "${LightRed}mise not installed, please install it first!${NC}"
+        return
+    fi
+
+    # need install wxwidgets brew install wxwidgets
+    env KERL_CONFIGURE_OPTIONS="--enable-wx --with-wx-config=/opt/homebrew/bin/wx-config-3.0 --without-javac --without-odbc --enable-threads --with-ssl=$(brew --prefix openssl@1.1)" mise use -g erlang@25.3.2.12
+
+    echo "${LightGreen}Install erlang over.${NC}"
 }
 
 function install_powerline_fonts() {
@@ -222,8 +245,9 @@ function install_all() {
     clone_env
     install_brew
     install_brew_pkg
+    install_go
+    install_python
     install_cask_pkg
-    install_python_pkg
     install_powerline_fonts
     install_nerd_fonts
 
@@ -236,10 +260,11 @@ ${Cyan}select a function code:
 【 1 】 Install brew
 【 2 】 Install brew packages
 【 3 】 Install cask packages
-【 4 】 Install python packages
-【 5 】 Install powerline fonts
-【 6 】 Install nerd fonts
-【 7 】 Init environment
+【 4 】 Install golang
+【 5 】 Install python
+【 6 】 Install powerline fonts
+【 7 】 Install nerd fonts
+【 8 】 Init environment
 【 0 】 Install all
 【 e 】 Exit
 ===============================${NC}
@@ -256,10 +281,11 @@ case $choice in
     1) install_brew ;;
     2) install_brew_pkg ;;
     3) install_cask_pkg ;;
-    4) install_python_pkg ;;
-    5) install_powerline_fonts ;;
-    6) install_nerd_fonts ;;
-    7) init_env ;;
+    4) install_go ;;
+    5) install_python ;;
+    6) install_powerline_fonts ;;
+    7) install_nerd_fonts ;;
+    8) init_env ;;
     0) install_all ;;
     e) echo "${LightGreen}Bye, Bye.${NC}" && exit ;;
 esac
