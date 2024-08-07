@@ -45,6 +45,7 @@ function M.setup()
       "jq",
       "printf",
       "tmux",
+      "vrl",
     },
     -- disable automatically install missing parsers when entering buffer
     auto_install = false,
