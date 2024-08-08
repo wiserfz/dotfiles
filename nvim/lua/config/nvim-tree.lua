@@ -1,5 +1,6 @@
 local tree = require("nvim-tree")
-local util = require("util")
+local api = require("nvim-tree.api")
+local wk = require("which-key")
 
 --@param data table @The data from the autocmd
 local function open_nvim_tree(data)
@@ -19,15 +20,9 @@ end
 
 --@param bufnr number @The client buffer number
 local function _on_attach(bufnr)
-  local api = require("nvim-tree.api")
-
   local function opts(desc)
     return {
       desc = "nvim-tree: " .. desc,
-      buffer = bufnr,
-      noremap = true,
-      silent = true,
-      nowait = true,
     }
   end
 
@@ -59,7 +54,6 @@ function M.setup()
       width = 35,
       -- relativenumber = true,
     },
-    on_attach = _on_attach, -- see https://github.com/nvim-tree/nvim-tree.lua/wiki/Migrating-To-on_attach
     sort_by = "case_sensitive",
     hijack_cursor = true,
     system_open = {
@@ -111,7 +105,16 @@ function M.setup()
   })
 
   -- Toggle nvim-tree
-  util.map("n", "<leader>x", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
+  wk.add({
+    { "<leader>x", api.tree.toggle, desc = "File explorer" },
+    {
+      "<leader>X",
+      function()
+        api.tree.toggle({ find_file = true })
+      end,
+      desc = "File explorer current file",
+    },
+  })
 end
 
 return M

@@ -1,6 +1,6 @@
 local dap = require("dap")
 local dapui = require("dapui")
-local util = require("util")
+local wk = require("which-key")
 
 local M = {}
 
@@ -118,47 +118,36 @@ function M.setup()
     dapui.open()
   end
 
-  -- debugging with DAP
-  util.map("n", "<F5>", "<cmd>lua require'dap'.continue()<CR>")
-  util.map("n", "<F10>", "<cmd>lua require'dap'.step_over()<CR>")
-  util.map("n", "<F11>", "<cmd>lua require'dap'.step_into()<CR>")
-  util.map("n", "<F12>", "<cmd>lua require'dap'.step_out()<CR>")
-  util.map(
-    "n",
-    "<leader>b",
-    "<cmd>lua require'dap'.toggle_breakpoint()<CR>",
-    { desc = "Toggle Breakpoint" }
-  )
-  util.map(
-    "n",
-    "<leader>B",
-    "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
-    { desc = "Conditional Breakpoint" }
-  )
-  util.map(
-    "n",
-    "<leader>lp",
-    "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>",
-    { desc = "Log Breakpoint" }
-  )
-  util.map("n", "<leader>dr", "<cmd>lua require'dap'.repl.open()<CR>", { desc = "REPL" })
-  util.map("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<CR>", { desc = "Run Last Config" })
+  wk.add({
+    { "<f5>", dap.continue, desc = "Debug continue" },
+    { "<f10>", dap.step_over, desc = "Debug step over" },
+    { "<f11>", dap.step_into, desc = "Debug step into" },
+    { "<f12>", dap.step_out, desc = "Debug step out" },
 
-  util.map("n", "<leader>dT", "<cmd>lua require'dap'.terminate()<CR>", { desc = "Terminate" })
-  util.map(
-    "n",
-    "<leader>dD",
-    "<cmd>lua require'dap'.disconnect()<CR> require'dap'.close()<CR>",
-    { desc = "Disconnect & Close" }
-  )
+    { "<leader>d", group = "Debug" },
+    { "<leader>de", dapui.toggle, desc = "Toggle debug UI" },
 
-  util.map("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<CR>", { desc = "Toggle debug UI" })
-  util.map(
-    "n",
-    "<leader>de",
-    "<cmd>lua require'dapui'.eval()<CR>",
-    { desc = "Evaluate under cursor" }
-  )
+    { "<leader>db", dap.toggle_breakpoint, desc = "Toggle debug breakpoint" },
+    {
+      "<leader>dc",
+      function()
+        dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+      end,
+      desc = "Conditional debug breakpoint",
+    },
+    {
+      "<leader>dl",
+      function()
+        dap.set_breakpoint(nil, nil, vim.fn.input("Log print message: "))
+      end,
+      desc = "Log debug breakpoint",
+    },
+    { "<leader>dR", dap.run_last, desc = "Debug run last config", silent = false },
+    { "<leader>dr", dap.restart, desc = "Debug restart", silent = false },
+    { "<leader>dT", dap.terminate, desc = "Debug terminate", silent = false },
+    { "<leader>dD", dap.disconnect, desc = "Debug disconnect", silent = false },
+    { "<leader>dq", dap.close, desc = "Debug close" },
+  })
 end
 
 return M

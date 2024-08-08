@@ -1,21 +1,29 @@
 local M = {}
 
 local util = require("util")
+local wk = require("which-key")
 
 function M.setup()
-  -- clear search highlights
-  util.map("n", "<leader>nh", ":nohl<CR>")
+  wk.add({
+    noremap = false,
+    silent = true,
 
-  -- window management
-  util.map("n", "<leader>|", "<C-w>v") -- split window vertically
-  util.map("n", "<leader>-", "<C-w>s") -- split window horizontally
-  util.map("n", "<leader>se", "<C-w>=") -- make split windows equal width & height
-  util.map("n", "<leader>sx", ":close<CR>") -- close current split window
+    { "<leader>nh", "<cmd>nohl<cr>", desc = "No highlights" },
+    { "<leader>|", "<C-w>v", desc = "Split window vertically" },
+    { "<leader>-", "<C-w>s", desc = "Split window horizontally" },
 
-  util.map("n", "<leader>to", ":tabnew<CR>") -- open new tab
-  util.map("n", "<leader>tx", ":tabclose<CR>") -- close current tab
-  util.map("n", "<leader>tn", ":tabn<CR>") --  go to next tab
-  util.map("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
+    { "<leader>s", group = "Window" },
+    { "<leader>se", "<C-w>=", desc = "Equal split window" },
+    { "<leader>sx", "<cmd>close<cr>", desc = "Close current window" },
+    { "<leader>sz", "<cmd>MaximizerToggle<cr>", desc = "Maximize current window" },
+    { "<leader>s!", "<cmd>MaximizerToggle!<cr>", desc = "Restore all windows" },
+
+    { "<leader>t", group = "Tab" },
+    { "<leader>to", "<cmd>tabnew<cr>", desc = "New tab" },
+    { "<leader>tx", "<cmd>tabclose<cr>", desc = "Close tab" },
+    { "<leader>tn", "<cmd>tabn<cr>", desc = "Next tab" },
+    { "<leader>tp", "<cmd>tabp<cr>", desc = "Previous tab" },
+  })
 end
 
 return M

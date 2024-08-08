@@ -1,5 +1,5 @@
 local todo = require("todo-comments")
-local util = require("util")
+local wk = require("which-key")
 
 local M = {}
 
@@ -15,13 +15,25 @@ function M.setup()
     },
   })
 
-  util.map("n", "<leader>]t", function()
-    todo.jump_next()
-  end, { desc = "Next todo comment" })
+  wk.add({
+    noremap = false,
+    silent = true,
 
-  util.map("n", "<leader>[t", function()
-    todo.jump_prev()
-  end, { desc = "Previous todo comment" })
+    {
+      "]t",
+      function()
+        todo.jump_next()
+      end,
+      desc = "Next todo comment",
+    },
+    {
+      "[t",
+      function()
+        todo.jump_prev()
+      end,
+      desc = "Previous todo comment",
+    },
+  })
 end
 
 return M

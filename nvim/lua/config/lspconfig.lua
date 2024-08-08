@@ -2,7 +2,7 @@ local lspconfig = require("lspconfig")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local lsp_status = require("lsp-status")
 local neodev = require("neodev")
-local util = require("util")
+local wk = require("which-key")
 local mason_lspconfig = require("mason-lspconfig")
 local schemastore = require("schemastore")
 
@@ -162,25 +162,23 @@ end
 ---@param client lsp.Client @The client that was attached
 ---@param bufnr integer @The buffer number of the attached client
 function M.on_attach(client, bufnr)
-  -- keybind options
-  local opts = { buffer = bufnr }
-
-  -- set keybinds
-  -- WARN: lspsage goto_definition work with ufo has problem
-  -- util.map("n", "gd", "<cmd>Lspsaga goto_definition<CR>", opts)
-  util.map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  util.map("n", "gD", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
-  util.map("n", "gf", "<cmd>Lspsaga finder def+ref<CR>", opts) -- show definition, references
-  util.map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
-  util.map("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
-  util.map("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
-  -- util.map.set("n", "<leader>D", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show diagnostics for line
-  util.map("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
-  util.map("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
-  util.map("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
-  util.map("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
-  util.map("n", "<leader>o", "<cmd>Lspsaga outline<CR>", opts) -- see outline on right hand side
-  -- util.map({ "n", "t" }, "<A-d>", "<cmd>Lspsaga term_toggle<CR>") -- float terminal option-d
+  wk.add({
+    buffer = bufnr,
+    -- set keybinds
+    -- WARN: lspsage goto_definition work with ufo has problem
+    -- { "gd", "<cmd>Lspsaga goto_definition<CR>", desc = "LSP definition" },
+    { "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", desc = "LSP definition" },
+    { "gD", "<cmd>Lspsaga peek_definition<cr>", desc = "LSP peek_definition" },
+    { "gf", "<cmd>Lspsaga finder def+ref<cr>", desc = "Lspsaga finder" },
+    { "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", desc = "LSP implementation" },
+    { "<leader>ca", "<cmd>Lspsaga code_action<cr>", desc = "Code action" },
+    { "<leader>rn", "<cmd>Lspsaga rename<cr>", desc = "Rename" },
+    { "<leader>e", "<cmd>Lspsaga show_cursor_diagnostics<cr>", desc = "Current diagnostics" },
+    { "[e", "<cmd>Lspsaga diagnostic_jump_prev<cr>", desc = "Previous diagnostic" },
+    { "]e", "<cmd>Lspsaga diagnostic_jump_next<cr>", desc = "Next diagnostic" },
+    { "K", "<cmd>Lspsaga hover_doc<cr>", desc = "Hover actions" },
+    { "<leader>o", "<cmd>Lspsaga outline<cr>", desc = "Lspsaga outline" },
+  })
 end
 
 function M.setup()
