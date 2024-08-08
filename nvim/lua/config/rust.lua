@@ -1,6 +1,6 @@
-local util = require("util")
 local lsp = require("config.lspconfig")
 local rust_config = require("rustaceanvim.config")
+local wk = require("which-key")
 
 -- debugging rust by codelldb
 -- NOTE: install CodeLLDB via Mason, MasonInstall codelldb
@@ -22,18 +22,27 @@ function M.setup()
       capabilities = lsp.get_capabilities(),
       on_attach = function(client, bufnr)
         lsp.on_attach(client, bufnr)
-        -- keybind options
-        local opts = { noremap = true, silent = true, buffer = bufnr }
 
-        -- Code action groups
-        util.map("n", "<leader>ca", function()
-          vim.cmd.RustLsp("codeAction") -- supports rust-analyzer's grouping
-        end, opts)
+        wk.add({
+          noremap = true,
+          silent = true,
+          buffer = bufnr,
 
-        -- Hover actions
-        util.map("n", "K", function()
-          vim.cmd.RustLsp({ "hover", "actions" })
-        end, opts)
+          {
+            "<leader>ca",
+            function()
+              vim.cmd.RustLsp("codeAction") -- supports rust-analyzer's grouping
+            end,
+            desc = "Rustaceanvim code action",
+          },
+          {
+            "K",
+            function()
+              vim.cmd.RustLsp({ "hover", "actions" })
+            end,
+            desc = "Rustaceanvim hover actions",
+          },
+        })
       end,
       default_settings = {
         ["rust-analyzer"] = {

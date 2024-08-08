@@ -1,4 +1,5 @@
 local url = require("url-open")
+local wk = require("which-key")
 
 local M = {}
 
@@ -32,6 +33,18 @@ local options = {
 
 function M.setup()
   url.setup(options)
+
+  wk.add({
+    { "<leader>g", group = "Url" },
+
+    {
+      "<leader>gx",
+      "<cmd>URLOpenUnderCursor<cr>",
+      desc = "Url open",
+      noremap = false,
+      silent = true,
+    },
+  })
 end
 
 return M

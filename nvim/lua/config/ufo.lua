@@ -1,4 +1,5 @@
 local ufo = require("ufo")
+local wk = require("which-key")
 
 --@param virtText table @The virtual text
 --@param lnum number @The line number
@@ -69,10 +70,30 @@ function M.setup()
 
   ufo.setup(opts)
 
-  vim.keymap.set("n", "zR", ufo.openAllFolds)
-  vim.keymap.set("n", "zM", ufo.closeAllFolds)
-  vim.keymap.set("n", "zi", goPreviousClosedAndPeek)
-  vim.keymap.set("n", "zn", goNextClosedAndPeek)
+  wk.add({
+    { "<leader>z", group = "Fold" },
+
+    {
+      "<leader>zR",
+      ufo.openAllFolds,
+      desc = "Open all folds",
+    },
+    {
+      "<leader>zM",
+      ufo.closeAllFolds,
+      desc = "Close all folds",
+    },
+    {
+      "<leader>zp",
+      goPreviousClosedAndPeek,
+      desc = "Preview previous fold",
+    },
+    {
+      "<leader>zn",
+      goNextClosedAndPeek,
+      desc = "Preview next fold",
+    },
+  })
 
   vim.cmd([[
     " hi Folded guibg=#2e3440 guifg=#81a1c1

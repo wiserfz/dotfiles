@@ -1,5 +1,5 @@
 local bufferline = require("bufferline")
-local util = require("util")
+local wk = require("which-key")
 
 local M = {}
 local theme = require("kanagawa.colors").setup().theme
@@ -79,8 +79,16 @@ function M.setup()
   })
 
   -- bufferline
-  util.map("n", "]b", "<cmd>BufferLineCycleNext<CR>") -- move to next tab buffer
-  util.map("n", "[b", "<cmd>BufferLineCyclePrev<CR>") -- move to previous tab buffer
+  wk.add({
+    noremap = false,
+    silent = true,
+
+    { "<leader>b", group = "buffer" },
+
+    { "<leader>bn", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
+    { "<leader>bp", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous buffer" },
+    { "<leader>bd", "<cmd>bd<cr>", desc = "Close buffer" },
+  })
 end
 
 return M

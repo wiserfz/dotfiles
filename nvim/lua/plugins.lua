@@ -27,6 +27,13 @@ function M.setup()
 
   local lazy = require("lazy")
   lazy.setup({
+    -- Key mappings
+    {
+      "folke/which-key.nvim",
+      lazy = false,
+      priority = 1000,
+      config = config("which_key"),
+    },
     {
       -- "tomasr/molokai",
       "rebelot/kanagawa.nvim",
@@ -34,15 +41,32 @@ function M.setup()
       priority = 1000, -- make sure to load this before all the other start plugins
       config = config("theme"),
     },
-    "christoomey/vim-tmux-navigator", -- tmux & split window navigation
+    {
+      "christoomey/vim-tmux-navigator", -- tmux & split window navigation
+      cmd = {
+        "TmuxNavigateLeft",
+        "TmuxNavigateDown",
+        "TmuxNavigateUp",
+        "TmuxNavigateRight",
+        "TmuxNavigatePrevious",
+      },
+      keys = {
+        { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>", desc = "Tmux navigate left" },
+        { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>", desc = "Tmux navigate down" },
+        { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>", desc = "Tmux navigate up" },
+        { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>", desc = "Tmux navigate right" },
+        { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>", desc = "Tmux navigate previous" },
+      },
+    },
     "RRethy/vim-illuminate", -- highlight other uses of word under cursor
     "HiPhish/rainbow-delimiters.nvim", -- rainbow parentheses
     {
       "szw/vim-maximizer",
-      keys = {
-        { "<leader>sz", "<cmd>MaximizerToggle<CR>" }, -- toggle split window maximization
-        { "<leader>szz", "<cmd>MaximizerToggle!<CR>" }, -- toggle split window maximization
-      },
+      init = function()
+        -- disable default key mapping
+        vim.g.maximizer_set_default_mapping = 0
+        vim.g.maximizer_set_mapping_with_bang = 0
+      end,
     },
     {
       "norcalli/nvim-colorizer.lua", -- color highlighter
@@ -250,30 +274,39 @@ function M.setup()
         "nvim-tree/nvim-web-devicons",
       },
       lazy = "leetcode.nvim" ~= vim.fn.argv()[1],
-      opts = {
-        lang = "golang",
-        cn = { -- leetcode.cn
-          enabled = true,
-        },
-        storage = {
-          home = os.getenv("HOME") .. "/workspace/leetcode",
-        },
-        logging = false,
-        arg = "leetcode.nvim",
-      },
-      keys = {
-        { "<leader>ll", "<cmd>Leet list<CR>", mode = "n", noremap = false, silent = true }, -- open problem list
-        { "<leader>lr", "<cmd>Leet run<CR>", mode = "n", noremap = false, silent = true }, -- run currently opened question
-        { "<leader>ls", "<cmd>Leet submit<CR>", mode = "n", noremap = false, silent = true }, -- submit currently opened question
-        { "<leader>lo", "<cmd>Leet open<CR>", mode = "n", noremap = false, silent = true }, -- opens the current question in a default browser
-        {
-          "<leader>lu",
-          "<cmd>Leet cookie update<CR>",
-          mode = "n",
+      config = function()
+        require("leetcode").setup({
+          lang = "golang",
+          cn = { -- leetcode.cn
+            enabled = true,
+          },
+          storage = {
+            home = os.getenv("HOME") .. "/workspace/leetcode",
+          },
+          logging = false,
+          arg = "leetcode.nvim",
+        })
+
+        local wk = require("which-key")
+
+        wk.add({
           noremap = false,
           silent = true,
-        }, -- opens a prompt to enter a new cookie
-      },
+
+          { "<leader>l", group = "Leetcode" },
+
+          { "<leader>ll", "<cmd>Leet list<cr>", desc = "Problem list" },
+          { "<leader>lr", "<cmd>Leet run<cr>", desc = "Run current solution" },
+          { "<leader>ls", "<cmd>Leet submit<cr>", desc = "Subimt current solution" },
+          { "<leader>lo", "<cmd>Leet open<cr>", desc = "Open current problem" },
+          { "<leader>lc", "<cmd>Leet console<cr>", desc = "Open console for current problem" },
+          {
+            "<leader>lu",
+            "<cmd>Leet cookie update<CR>",
+            desc = "Update cookie",
+          },
+        })
+      end,
     },
     {
       "nvim-lualine/lualine.nvim",
@@ -355,9 +388,6 @@ function M.setup()
       "sontungexpt/url-open",
       event = "VeryLazy",
       cmd = "URLOpenUnderCursor",
-      keys = {
-        { "<leader>gx", "<cmd>URLOpenUnderCursor<CR>", mode = "n", noremap = false, silent = true },
-      },
       config = config("url"),
     },
   })
