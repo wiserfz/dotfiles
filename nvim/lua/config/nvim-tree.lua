@@ -60,7 +60,7 @@ function M.setup()
       cmd = "open",
     },
     renderer = {
-      group_empty = true,
+      group_empty = false,
       highlight_hidden = "name",
       special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md", "go.mod" },
       highlight_git = "name",

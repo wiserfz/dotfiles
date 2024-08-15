@@ -240,8 +240,22 @@ function M.setup()
   mason_lspconfig.setup({
     ensure_installed = ensure_installed,
     -- auto-install configured servers (with lspconfig)
-    automatic_installation = true, -- not the same as ensure_installed
+    automatic_installation = false, -- not the same as ensure_installed
     handlers = { setup },
+  })
+
+  -- special setup for protobuf language server
+  -- install by cargo install protols
+  lspconfig.protols.setup({
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+      -- disable formatting for LSP clients as this is handled by none-ls
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
+
+      lsp_status.on_attach(client)
+      M.on_attach(client, bufnr)
+    end,
   })
 end
 
