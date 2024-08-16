@@ -17,8 +17,9 @@ function fish_prompt
 
     # Bold
     set bold_red (set_color -o red)
-    set bold_green (set_color -o green) # Green
+    set bold_green (set_color -o green)
     set bold_white (set_color -o white)
+    set bold_blue (set_color -o blue)
 
     set git_changed_color (set_color -o ffc600)
     set git_add_color (set_color -o 3ad900)
@@ -26,10 +27,10 @@ function fish_prompt
     set git_remote_color (set_color -o 009aa6)
 
     # High Intensty
-    set intensty_black (set_color -o black) # Black
+    set intensty_black (set_color -o black)
 
     # Bold High Intensty
-    set magenta (set_color -o purple) # Purple
+    set magenta (set_color -o purple)
 
     set tiffany_blue (set_color -o 81D8D0)
 
@@ -50,37 +51,30 @@ function fish_prompt
     set path_short (pwd|sed "s=$HOME=~=")
 
     set prompt_start "$yellow$path_short$reset_color"
-    set prompt_end " \n$bold_white\$ $reset_color"
+    set prompt_end " \n$bold_green\$ $reset_color"
     if test $__last_command_exit_status != 0
         set prompt_end " \n$bold_red\$ $reset_color"
     end
 
-    # python
-    set prompt_py ""
-    set py_env $VIRTUAL_ENV
-    set requirements "requirements.txt"
-    if test -n "$py_env" || test -f "$requirements"
-        set python_icon "🐍"
+    if test -n "$VIRTUAL_ENV" || test -f "requirements.txt"
+        set python_icon "󱔎 "
         set python_version (python --version | string split ' ' -f 2)
-        set prompt_py " $python_icon $br_green$python_version$reset_color"
-    end
-
-    # rust
-    set prompt_rust ""
-    set cargo_config "Cargo.toml"
-    if test -f "$cargo_config"
-        set rust_icon "🦀"
+        set prompt_lang " $bold_green$python_icon$python_version$reset_color"
+    else if test -f "Cargo.toml"
+        set rust_icon " "
         set rust_version (rustc --version | string split ' ' -f 2)
-        set prompt_rust " $rust_icon $bold_orange$rust_version$reset_color"
-    end
-
-    # go
-    set prompt_go ""
-    set go_config "go.mod"
-    if test -f "$go_config"
-        set go_icon "ʕ◔ϖ◔ʔ"
+        set prompt_lang " $bold_orange$rust_icon$rust_version$reset_color"
+    else if test -f "go.mod"
+        # set go_icon "ʕ◔ϖ◔ʔ"
+        set go_icon " "
         set go_version (go version | string split ' ' -f 3 | string trim -c "go")
-        set prompt_go " $br_blue$go_icon $go_version$reset_color"
+        set prompt_lang " $tiffany_blue$go_icon$go_version$reset_color"
+    else if test -d lua || test -d nvim
+        set lua_icon " "
+        set lua_version (luajit -v | string split ' ' -f 2)
+        set prompt_lang " $bold_blue$lua_icon$lua_version$reset_color"
+    else
+        set prompt_lang ""
     end
 
     set -e __current_git_status
@@ -148,9 +142,9 @@ function fish_prompt
 
         set git_status "$git_status$reset_color$prompt_suffix"
 
-        set PS1 "$prompt_start$git_status$prompt_py$prompt_go$prompt_rust$prompt_end"
+        set PS1 "$prompt_start$git_status$prompt_lang$prompt_end"
     else
-        set PS1 "$prompt_start$prompt_py$prompt_go$prompt_rust$prompt_end"
+        set PS1 "$prompt_start$prompt_lang$prompt_end"
     end
 
     echo -e $PS1
