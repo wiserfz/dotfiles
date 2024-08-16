@@ -83,7 +83,7 @@ function M.setup()
         { pattern = "diff", icon = " ", color = "red" },
         { pattern = "save", icon = " ", color = "blue" },
         { pattern = "treesitter", icon = " ", color = "green" },
-        -- { pattern = "render markdown", icon = " ", color = "purple" },
+        { pattern = "render markdown", icon = " ", color = "purple" },
         { pattern = "blame", icon = "󱜸 ", color = "red" },
         { pattern = "project", icon = " ", color = "yellow" },
         { pattern = "undo", icon = "󰕍 ", hl = "Type" },
