@@ -1,0 +1,127 @@
+[window]
+decorations = "Buttonless"
+opacity = 0.90
+startup_mode = "SimpleFullscreen"
+option_as_alt = "Both"
+
+[window.dimensions]
+columns = 0
+lines = 0
+
+[window.padding]
+x = 20
+y = 20
+
+[scrolling]
+history = 50000
+
+[font]
+size = 12
+glyph_offset = { x = 0, y = -1 }
+
+# Alacritty doesn't support ligatures
+# see: https://github.com/alacritty/alacritty/issues/50
+[font.normal]
+family = "JetBrainsMonoNL Nerd Font Propo"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMonoNL Nerd Font Propo"
+style = "ExtraBold"
+
+[font.italic]
+family = "JetBrainsMonoNL Nerd Font Propo"
+style = "Bold Italic"
+
+[font.bold_italic]
+family = "JetBrainsMonoNL Nerd Font Propo"
+style = "ExtraBold Italic"
+
+[colors.primary]
+background = "#262626"
+bright_foreground = "#CDD6F4"
+dim_foreground = "#CDD6F4"
+foreground = "#CDD6F4"
+
+[colors.cursor]
+cursor = "#8E8F8F"
+text = "CellForeground"
+
+[colors.vi_mode_cursor]
+cursor = "#8E8F8F"
+text = "CellForeground"
+
+[colors.search.focused_match]
+background = "#F1A604"
+foreground = "#171004"
+
+[colors.search.matches]
+background = "#4A4A4A"
+foreground = "#D7D7AF"
+
+[colors.hints.start]
+background = "#F1A604"
+foreground = "#171004"
+
+[colors.hints.end]
+background = "#4A4A4A"
+foreground = "#D7D7AF"
+
+[colors.footer_bar]
+background = "#262626"
+foreground = "#CDD6F4"
+
+[colors.selection]
+background = "#F5E0DC"
+text = "#1E1E2E"
+
+[colors.normal]
+black = "#141414"
+blue = "#157DD5"
+cyan = "#149ECB"
+green = "#15CD85"
+magenta = "#C132C3"
+red = "#C71904"
+white = "#D8DAD8"
+yellow = "#CDD418"
+
+[colors.bright]
+black = "#5A5960"
+blue = "#6197FF"
+cyan = "#38E2E2"
+green = "#8BE134"
+magenta = "#FF77FF"
+red = "#EF2A29"
+white = "#EDEEEC"
+yellow = "#FFFF00"
+
+[colors]
+transparent_background_colors = true
+draw_bold_text_with_bright_colors = true
+
+# [bell]
+# duration = 1000
+# color = "#C3C3C4"
+
+[[hints.enabled]]
+command = "open" # On macOS
+hyperlinks = true
+post_processing = true
+persist = false
+mouse.enabled = true
+binding = { key = "U", mods = "Control|Shift" }
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "Return"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "ToggleViMode"
+key = "Space"
+mods = "Shift"
+
+[terminal.shell]
+program = "/opt/homebrew/bin/fish"
+args = ["--login", "-c", "tmux a || tmux new"]
