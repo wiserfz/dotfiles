@@ -202,19 +202,19 @@ function init_env() {
 
     cd "$HOME" || return
     rm -rf .gitconfig
-    ln -sfv "$PRJ_DIR"/git/gitconfig .gitconfig
+    ln -sfv "$PRJ_DIR/git/gitconfig" .gitconfig
 
     rm -rf .gitignore
-    ln -sfv "$PRJ_DIR"/git/gitignore .gitignore
+    ln -sfv "$PRJ_DIR/git/gitignore" .gitignore
 
     rm -rf .tmux.conf
-    ln -sfv "$PRJ_DIR"/tmux.conf .tmux.conf
+    ln -sfv "$PRJ_DIR/tmux.conf" .tmux.conf
 
     rm -rf .vimrc
-    ln -sfv "$PRJ_DIR"/vimrc .vimrc
+    ln -sfv "$PRJ_DIR/vimrc" .vimrc
 
     rm -rf .vim
-    ln -sfv "$PRJ_DIR"/vim .vim
+    ln -sfv "$PRJ_DIR/vim" .vim
 
     dir="$HOME/.config"
     if [[ ! -d "$dir" ]]; then
@@ -222,19 +222,22 @@ function init_env() {
     fi
 
     rm -rf .config/fish
-    ln -sfv "$PRJ_DIR"/fish .config/fish
+    ln -sfv "$PRJ_DIR/fish" .config/fish
 
     rm -rf .config/nvim
-    ln -sfv "$PRJ_DIR"/nvim .config/nvim
+    ln -sfv "$PRJ_DIR/nvim" .config/nvim
+
+    rm -rf .config/alacritty
+    ln -sfv "$PRJ_DIR/alacritty" .config/alacritty
 
     rm -rf .config/yamllint
-    ln -sfv "$PRJ_DIR"/config/yamllint .config/yamllint
+    ln -sfv "$PRJ_DIR/config/yamllint" .config/yamllint
 
     rm -rf .config/yamlfmt
-    ln -sfv "$PRJ_DIR"/config/yamlfmt .config/yamlfmt
+    ln -sfv "$PRJ_DIR/config/yamlfmt" .config/yamlfmt
 
     rm -rf .config/hadolint.yaml
-    ln -sfv "$PRJ_DIR"/config/hadolint.yaml .config/hadolint.yaml
+    ln -sfv "$PRJ_DIR/config/hadolint.yaml" .config/hadolint.yaml
 
     cd "$CURRENT_DIR" || return
 
