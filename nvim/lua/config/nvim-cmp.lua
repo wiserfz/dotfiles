@@ -125,13 +125,13 @@ function M.setup()
         group_index = 2,
       },
       { name = "nvim_lsp_signature_help", group_index = 3 }, -- display function signatures with current parameter emphasized
-      { name = "path", group_index = 3 }, -- file system paths
       {
         name = "luasnip", -- snippets
-        option = { use_show_condition = false, show_autosnippets = false },
+        -- option = { use_show_condition = false, show_autosnippets = false },
         group_index = 3,
       },
-      { name = "buffer", group_index = 3 }, -- text within current buffer
+      { name = "path", group_index = 4 }, -- file system paths
+      { name = "buffer", group_index = 4 }, -- text within current buffer
       -- { name = "nvim_lua", group_index = 3 }, -- complete neovim's Lua runtime API such vim.lsp.*
     }),
     -- configure lspkind for vs-code like icons

@@ -11,15 +11,37 @@
 
 ;; .gitlab-ci.yml
 (block_mapping_pair
-    key: (flow_node
-      (plain_scalar
-        (string_scalar) @_name
-        (#eq? @_name "coverage")
-        ))
-    value: (flow_node
-      (single_quote_scalar) @injection.content
-      (#set! injection.language "regex")
-      (#offset! @injection.content 0 1 0 -2)))
+  key: (flow_node
+    (plain_scalar
+      (string_scalar) @_name
+      (#eq? @_name "coverage")))
+  value: (flow_node
+    (single_quote_scalar) @injection.content
+    (#set! injection.language "regex")
+    (#offset! @injection.content 0 1 0 -2)))
+
+; only for $CI_COMMIT_TAG variable
+(block_mapping_pair
+  key: (flow_node
+    (plain_scalar
+      (string_scalar) @_name
+      (#eq? @_name "rules")))
+  value: (block_node
+    (block_sequence
+      (block_sequence_item
+        (block_node
+          (block_mapping
+            (block_mapping_pair
+              key: (flow_node
+                (plain_scalar
+                  (string_scalar)))
+              value: (flow_node
+                (plain_scalar
+                  (string_scalar) @injection.content
+                  (#lua-match? @injection.content "^%$.*=~.*/$")
+                  ; (#gsub! @regex.value "^.*%s=~%s/(.*)/$" "%1")
+                  (#offset! @injection.content 0 19 0 -1 )
+                  (#set! injection.language "regex"))))))))))
 
 ;; vector vrl embedded in Yaml
 (block_mapping_pair
