@@ -170,7 +170,6 @@ function M.setup()
             library = { plugins = { "neotest", "nvim-dap-ui" }, types = true },
           },
         },
-        "nvim-lua/lsp-status.nvim",
       },
       config = config("lspconfig"),
     },
@@ -202,11 +201,11 @@ function M.setup()
       },
       config = config("none-ls"),
     },
-    -- {
-    --   "jay-babu/mason-null-ls.nvim",
-    --   event = { "BufReadPre", "BufNewFile" },
-    --   config = config("mason-null-ls"),
-    -- },
+    {
+      "jay-babu/mason-null-ls.nvim",
+      event = { "BufReadPre", "BufNewFile" },
+      config = config("mason-null-ls"),
+    },
     -- {
     --   "mfussenegger/nvim-lint",
     --   event = { "BufReadPre", "BufNewFile" },
@@ -398,6 +397,23 @@ function M.setup()
         "nvim-tree/nvim-web-devicons",
       },
       config = config("markdown"),
+    },
+    {
+      "olimorris/codecompanion.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        "nvim-telescope/telescope.nvim", -- Optional
+        {
+          "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
+          opts = {
+            input = {
+              title_pos = "center",
+            },
+          },
+        },
+      },
+      config = config("codecompanion"),
     },
   })
 end

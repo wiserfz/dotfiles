@@ -1,40 +1,105 @@
 local lualine = require("lualine")
+local diagnostics_icon = require("util").diagnostics
+local lazy_status = require("lazy.status")
 
---@return string @The status of the LSP client
-local function lsp_status()
-  return require("lsp-status").status()
+--@param name string @The name of the highlight group
+--@return function @A function that returns the foreground color of the highlight group
+local function fg(name)
+  return function()
+    ---@type {foreground?:number}?
+    local hl = vim.api.nvim_get_hl_by_name(name, true)
+    return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
+  end
+end
+
+--@return table @A lualine component that displays the status of Code Companion requests
+local function code_companion_status()
+  local code_companion = require("lualine.component"):extend()
+  code_companion.processing = false
+  code_companion.spinner_index = 1
+
+  local spinner_symbols = {
+    "⠋",
+    "⠙",
+    "⠹",
+    "⠸",
+    "⠼",
+    "⠴",
+    "⠦",
+    "⠧",
+    "⠇",
+    "⠏",
+  }
+  local spinner_symbols_len = 10
+
+  -- Initializer
+  function code_companion:init(options)
+    code_companion.super.init(self, options)
+
+    local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
+    vim.api.nvim_create_autocmd({ "User" }, {
+      pattern = "CodeCompanionRequest*",
+      group = group,
+      callback = function(request)
+        if request.match == "CodeCompanionRequestStarted" then
+          self.processing = true
+        elseif request.match == "CodeCompanionRequestFinished" then
+          self.processing = false
+        end
+      end,
+    })
+  end
+
+  -- Function that runs every time statusline is updated
+  function code_companion:update_status()
+    if self.processing then
+      self.spinner_index = (self.spinner_index % spinner_symbols_len) + 1
+      return spinner_symbols[self.spinner_index]
+    else
+      return nil
+    end
+  end
+
+  return code_companion
 end
 
 local M = {}
 
 function M.setup()
-  local lualine_kanagawa = require("lualine.themes.kanagawa")
-  lualine_kanagawa.normal.b.bg = "#3B4261"
-  lualine_kanagawa.normal.c.bg = "#1F2335"
-
   local config = {
     options = {
       icons_enabled = true,
-      theme = lualine_kanagawa,
       component_separators = "",
-      section_separators = { left = "", right = "" },
+      section_separators = { left = " ", right = "" },
+      globalstatus = true,
       disabled_filetypes = {
         statusline = {
           "dashboard",
-          -- "NvimTree",
         },
       },
     },
     sections = {
+      lualine_a = {
+        {
+          "mode",
+          separator = { left = "", right = "" },
+          -- padding = { left = 1, right = 1 },
+        },
+      },
+      lualine_b = { "branch" },
       lualine_c = {
         {
           "filename",
-          -- 0: Just the filename
-          -- 1: Relative path
-          -- 2: Absolute path
-          -- 3: Absolute path, with tilde as the home directory
-          -- 4: Filename and parent dir, with tilde as the home directory
           path = 1,
+        },
+        {
+          "diagnostics",
+          symbols = {
+            error = diagnostics_icon.Error,
+            warn = diagnostics_icon.Warn,
+            info = diagnostics_icon.Info,
+            hint = diagnostics_icon.Hint,
+          },
         },
       },
       lualine_x = {
@@ -47,7 +112,7 @@ function M.setup()
           cond = function()
             return vim.bo.filetype ~= ""
           end,
-          color = { fg = "#6EB0A3" },
+          color = fg("String"),
         },
         {
           "encoding",
@@ -56,22 +121,24 @@ function M.setup()
           end,
           color = { fg = "#a9a1e1" },
         },
-        "fileformat",
         { "filetype", color = { fg = "#ECBE7B" } },
-        { lsp_status, color = { fg = "#a9b665" } },
-        -- {
-        --   function()
-        --     local linters = require("lint").get_running()
-        --     if #linters == 0 then
-        --       return "󰦕"
-        --     end
-        --     return "󱉶 " .. table.concat(linters, ", ")
-        --   end,
-        --   cond = function()
-        --     return vim.bo.filetype ~= ""
-        --   end,
-        --   color = { fg = "#ffa447" },
-        -- },
+        { code_companion_status },
+        {
+          lazy_status.updates,
+          cond = lazy_status.has_updates,
+          color = fg("Special"),
+        },
+      },
+      lualine_y = {
+        { "fileformat", padding = { left = 2 } },
+        { "progress", separator = " ", padding = { left = 1, right = 1 } },
+      },
+      lualine_z = {
+        {
+          "location",
+          separator = { left = "", right = "" },
+          -- padding = { left = 1, right = 1 },
+        },
       },
     },
   }

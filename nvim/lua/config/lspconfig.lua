@@ -1,10 +1,10 @@
 local lspconfig = require("lspconfig")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
-local lsp_status = require("lsp-status")
 local neodev = require("neodev")
 local wk = require("which-key")
 local mason_lspconfig = require("mason-lspconfig")
 local schemastore = require("schemastore")
+local util = require("util")
 
 ---------------------------
 -- Server configurations --
@@ -20,22 +20,11 @@ local server_configs = {
         -- make the language server recognize "vim" global
         diagnostics = {
           enable = false,
-          globals = {
-            "vim",
-            "Color",
-            "c",
-            "Group",
-            "g",
-            "s",
-            "describe",
-            "it",
-            "before_each",
-            "after_each",
-            "use",
-          },
+          globals = { "vim" },
           -- disable = { "missing-parameters", "missing-fields" },
         },
         workspace = {
+          checkThirdParty = false,
           -- make language server aware of runtime files
           library = {
             [vim.fn.expand("$VIMRUNTIME/lua")] = true,
@@ -140,8 +129,6 @@ local M = {}
 function M.get_capabilities()
   -- used to enable autocompletion (assign to every lsp server config)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  -- Add lsp_status capabilities
-  capabilities = vim.tbl_extend("force", capabilities, lsp_status.capabilities)
   capabilities = vim.tbl_deep_extend("force", capabilities, cmp_nvim_lsp.default_capabilities())
 
   capabilities.textDocument.foldingRange = {
@@ -162,6 +149,10 @@ end
 ---@param client lsp.Client @The client that was attached
 ---@param bufnr integer @The buffer number of the attached client
 function M.on_attach(client, bufnr)
+  -- disable formatting for LSP clients as this is handled by confrom
+  client.server_capabilities.documentFormattingProvider = false
+  client.server_capabilities.documentRangeFormattingProvider = false
+
   wk.add({
     buffer = bufnr,
     -- set keybinds
@@ -186,21 +177,10 @@ function M.setup()
   vim.lsp.set_log_level("ERROR")
 
   -- Change the Diagnostic symbols in the sign column (gutter)
-  local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-  for type, icon in pairs(signs) do
+  for type, icon in pairs(util.diagnostics) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
   end
-  -- Status config
-  lsp_status.config({
-    status_symbol = "  LSP:",
-    indicator_errors = signs.Error,
-    indicator_warnings = signs.Warn,
-    indicator_info = signs.Info,
-    indicator_hint = signs.Hint,
-    indicator_ok = "",
-    current_function = false,
-  })
   -- Neovim Lua API completions/documentation
   neodev.setup({
     override = function(_, library)
@@ -222,11 +202,6 @@ function M.setup()
     local opts_with_capabilities = vim.tbl_deep_extend("force", opts, {
       capabilities = capabilities,
       on_attach = function(client, bufnr)
-        -- disable formatting for LSP clients as this is handled by none-ls
-        -- client.server_capabilities.documentFormattingProvider = false
-        -- client.server_capabilities.documentRangeFormattingProvider = false
-
-        lsp_status.on_attach(client)
         M.on_attach(client, bufnr)
       end,
     })
@@ -249,11 +224,6 @@ function M.setup()
   lspconfig.protols.setup({
     capabilities = capabilities,
     on_attach = function(client, bufnr)
-      -- disable formatting for LSP clients as this is handled by none-ls
-      client.server_capabilities.documentFormattingProvider = false
-      client.server_capabilities.documentRangeFormattingProvider = false
-
-      lsp_status.on_attach(client)
       M.on_attach(client, bufnr)
     end,
   })
