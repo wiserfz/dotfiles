@@ -19,6 +19,7 @@ function M.setup()
         { plugin = "todo-comments.nvim", pattern = "todo", icon = " ", hl = "DevIconMjs" },
         { plugin = "lazy.nvim", cat = "filetype", name = "lazy" },
         { plugin = "lspsaga.nvim", pattern = "lsp", icon = " ", hl = "Type" },
+        { plugin = "codecompanion.nvim", pattern = "ai", icon = " ", hl = "Macro" },
         -- { pattern = "lazy", icon = "󰒲 ", color = "purple" },
         { pattern = "tmux", icon = " ", color = "blue" },
 
@@ -58,6 +59,7 @@ function M.setup()
         { pattern = "yank", icon = " ", color = "orange" },
         { pattern = "replace", icon = " ", color = "orange" },
         { pattern = "run", icon = " ", hl = "Function" },
+        { pattern = "add", icon = " ", hl = "DiffAdd" },
 
         -- { pattern = "dashboard", icon = " ", hl = "DevIconVim" },
         { pattern = "file explorer", icon = " ", hl = "Directory" },
@@ -71,8 +73,6 @@ function M.setup()
         { pattern = "terminal", icon = "  ", color = "red" },
         { pattern = "find", icon = "󰈞 ", hl = "Function" },
         { pattern = "search", icon = " ", hl = "Function" },
-        { pattern = "test", cat = "filetype", name = "neotest-summary" },
-        -- { pattern = "file", icon = "󰈔", color = "cyan" },
         { pattern = "debug", icon = "󰃤 ", color = "red" },
         { pattern = "code", icon = " ", color = "orange" },
         { pattern = "notif", icon = "󰵅 ", color = "blue" },

@@ -27,4 +27,33 @@ function M.join_paths(...)
   return table.concat({ ... }, separator)
 end
 
+M.diagnostics = {
+  Error = " ",
+  Warn = " ",
+  Hint = " ",
+  Info = " ",
+}
+
+M.git = {
+  Added = " ",
+  Modified = " ",
+  Removed = " ",
+}
+
+M.dap = {
+  breakpoint = " ",
+  breakpoint_condition = " ",
+  log_point = " ",
+  stopped = " ",
+  breakpoint_rejected = " ",
+  pause = " ",
+  play = " ",
+  step_into = " ",
+  step_over = " ",
+  step_out = " ",
+  step_back = " ",
+  run_last = " ",
+  terminate = " ",
+}
+
 return M
