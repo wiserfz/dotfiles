@@ -6,3 +6,4 @@
 .codespellrc
 .mise.toml
 .venv
+.pre-commit-config.yaml
