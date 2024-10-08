@@ -69,7 +69,7 @@ function fish_prompt
         set go_icon " "
         set go_version (go version | string split ' ' -f 3 | string trim -c "go")
         set prompt_lang " $tiffany_blue$go_icon$go_version$reset_color"
-    else if test -d lua || test -d nvim
+    else if test -d lua || test -f "selene.toml"
         set lua_icon " "
         set lua_version (luajit -v | string split ' ' -f 2)
         set prompt_lang " $bold_blue$lua_icon$lua_version$reset_color"

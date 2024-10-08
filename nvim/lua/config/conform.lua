@@ -4,6 +4,10 @@ local wk = require("which-key")
 
 local M = {}
 
+function string:suffix(ending)
+  return ending == "" or self:sub(-#ending) == ending
+end
+
 function M.setup()
   conform.setup({
     formatters_by_ft = {
@@ -45,15 +49,24 @@ function M.setup()
       -- if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
       --   return
       -- end
+
+      -- Disable autoformat for file has certain suffix
+      local bufname = vim.api.nvim_buf_get_name(bufnr)
+      if bufname:suffix("lazy-lock.json") then
+        return
+      end
+
       -- Disable with a global or buffer-local variable
       if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
         return
       end
+
       -- Disable autoformat for files in a certain path
       -- local bufname = vim.api.nvim_buf_get_name(bufnr)
-      -- if bufname:match("/node_modules/") then
+      -- if bufname:match("/target/") then
       --   return
       -- end
+
       return { timeout_ms = 500, lsp_format = "fallback" }
     end,
   })
