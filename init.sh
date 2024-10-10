@@ -9,6 +9,7 @@ PRJ_URL="https://github.com/Gitfz810/dotfiles.git"
 PRJ_DIR="$HOME/workspace/dotfiles"
 CODELLDB_DIR="$HOME/.local/codelldb"
 ARCH=$(uname -m)
+HOMEBREW_PREFIX="/opt/homebrew"
 
 # Black=$'\e[0;30m'
 Red=$'\e[0;31m'
@@ -70,6 +71,13 @@ function install_brew_pkg() {
                 if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
                     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
                 fi
+                if [[ -f "$HOMEBREW_PREFIX/bin/tmux" ]]; then
+                    sudo ln -sfv $HOMEBREW_PREFIX/bin/tmux /usr/local/bin/tmux
+                fi
+            elif [[ $item == "fish" ]]; then
+                if [[ -f "$HOMEBREW_PREFIX/bin/fish" ]]; then
+                    sudo ln -sfv $HOMEBREW_PREFIX/bin/fish /usr/local/bin/fish
+                fi
             fi
             brew cleanup "$item"
             echo "${Green}Install ${Red}$item ${Blue}over.${NC}"
@@ -129,7 +137,7 @@ function install_erlang() {
     fi
 
     # need install wxwidgets brew install wxwidgets
-    env KERL_CONFIGURE_OPTIONS="--enable-wx --with-wx-config=/opt/homebrew/bin/wx-config-3.0 --without-javac --without-odbc --enable-threads --with-ssl=$(brew --prefix openssl@1.1)" mise use -g erlang@25.3.2.12
+    env KERL_CONFIGURE_OPTIONS="--enable-wx --with-wx-config=$HOMEBREW_PREFIX/bin/wx-config-3.0 --without-javac --without-odbc --enable-threads --with-ssl=$(brew --prefix openssl@1.1)" mise use -g erlang@25.3.2.12
 
     echo "${LightGreen}Install erlang over.${NC}"
 }

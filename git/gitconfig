@@ -7,7 +7,7 @@
 [push]
 	autoSetupRemote = true
 [gpg]
-	program = /opt/homebrew/bin/gpg
+	program = /usr/local/bin/gpg
 	format = openpgp
 [includeIf "gitdir:~/workspace/tuya/"]
 	path = ~/.tuya.inc
