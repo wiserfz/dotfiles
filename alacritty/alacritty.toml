@@ -123,5 +123,5 @@ key = "Space"
 mods = "Shift"
 
 [terminal.shell]
-program = "/opt/homebrew/bin/fish"
+program = "/usr/local/bin/fish"
 args = ["--login", "-c", "tmux a || tmux new"]

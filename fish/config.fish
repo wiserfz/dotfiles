@@ -13,12 +13,9 @@ if status is-interactive
         fish_add_path $HOME/.cargo/bin
     end
 
-    if test -d /opt/homebrew/bin
-        fish_add_path /opt/homebrew/bin
-    end
-
-    if test -d /opt/homebrew/sbin
-        fish_add_path /opt/homebrew/sbin
+    if command -q brew
+        fish_add_path (brew --prefix)/bin
+        fish_add_path (brew --prefix)/sbin
     end
 
     if test -d $HOME/.local/share/nvim/mason/bin

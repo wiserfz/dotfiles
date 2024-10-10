@@ -1,0 +1,6 @@
+-- vim.cmd([[
+--   hi link erlangAtom Constant
+--   hi link erlangGlobalFuncCall Function
+--   hi link erlangLocalFuncCall Function
+--   hi link erlangCommentAnnotation Special
+-- ]])
