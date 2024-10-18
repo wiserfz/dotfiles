@@ -64,9 +64,9 @@ function M.setup()
         winblend = 0,
       },
     },
+    fold_virt_text_handler = handler,
   }
 
-  opts["fold_virt_text_handler"] = handler
   ufo.setup(opts)
 
   vim.keymap.set("n", "zR", ufo.openAllFolds)
