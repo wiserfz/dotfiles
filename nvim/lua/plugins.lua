@@ -47,7 +47,7 @@ function M.setup()
     {
       "norcalli/nvim-colorizer.lua", -- color highlighter
       config = function()
-        require("colorizer").setup({}, { RGB = false })
+        require("colorizer").setup({ "*" }, { RGB = false })
       end,
     },
     {
@@ -151,22 +151,9 @@ function M.setup()
       config = config("lspconfig"),
     },
     {
-      "nvimtools/none-ls.nvim",
-      dependencies = {
-        "nvimtools/none-ls-extras.nvim",
-        "gbprod/none-ls-shellcheck.nvim",
-      },
-      config = config("none-ls"),
-    },
-    {
       "williamboman/mason.nvim",
       event = "VeryLazy",
       config = config("mason"),
-    },
-    {
-      "jay-babu/mason-null-ls.nvim",
-      event = { "BufReadPre", "BufNewFile" },
-      config = config("mason-null-ls"),
     },
     {
       "j-hui/fidget.nvim",
@@ -181,6 +168,36 @@ function M.setup()
         "nvim-tree/nvim-web-devicons", -- optional
       },
       config = config("lspsaga"),
+    },
+    -- Linter
+    {
+      "nvimtools/none-ls.nvim",
+      dependencies = {
+        "nvimtools/none-ls-extras.nvim",
+        "gbprod/none-ls-shellcheck.nvim",
+      },
+      config = config("none-ls"),
+    },
+    -- {
+    --   "jay-babu/mason-null-ls.nvim",
+    --   event = { "BufReadPre", "BufNewFile" },
+    --   config = config("mason-null-ls"),
+    -- },
+    -- {
+    --   "mfussenegger/nvim-lint",
+    --   event = { "BufReadPre", "BufNewFile" },
+    --   config = config("lint"),
+    -- },
+    -- Formatter
+    {
+      "stevearc/conform.nvim",
+      event = { "BufWritePre" },
+      cmd = { "ConformInfo" },
+      init = function()
+        -- If you want the formatexpr, here is the place to set it
+        vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+      end,
+      config = config("conform"),
     },
     -- Golang
     {
@@ -250,7 +267,7 @@ function M.setup()
         { "<leader>ls", "<cmd>Leet submit<CR>", mode = "n", noremap = false, silent = true }, -- submit currently opened question
         { "<leader>lo", "<cmd>Leet open<CR>", mode = "n", noremap = false, silent = true }, -- opens the current question in a default browser
         {
-          "<leader>lcu",
+          "<leader>lu",
           "<cmd>Leet cookie update<CR>",
           mode = "n",
           noremap = false,

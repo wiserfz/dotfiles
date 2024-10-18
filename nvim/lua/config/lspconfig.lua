@@ -124,6 +124,7 @@ local server_configs = {
     },
   },
   markdown_oxide = {},
+  elp = {}, -- for erlang
 }
 
 local disable = function() end
@@ -165,6 +166,8 @@ function M.on_attach(client, bufnr)
   local opts = { buffer = bufnr }
 
   -- set keybinds
+  -- WARN: lspsage goto_definition work with ufo has problem
+  -- util.map("n", "gd", "<cmd>Lspsaga goto_definition<CR>", opts)
   util.map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   util.map("n", "gD", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
   util.map("n", "gf", "<cmd>Lspsaga finder def+ref<CR>", opts) -- show definition, references
@@ -222,8 +225,8 @@ function M.setup()
       capabilities = capabilities,
       on_attach = function(client, bufnr)
         -- disable formatting for LSP clients as this is handled by none-ls
-        client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentRangeFormattingProvider = false
+        -- client.server_capabilities.documentFormattingProvider = false
+        -- client.server_capabilities.documentRangeFormattingProvider = false
 
         lsp_status.on_attach(client)
         M.on_attach(client, bufnr)

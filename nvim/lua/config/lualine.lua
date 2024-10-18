@@ -59,6 +59,19 @@ function M.setup()
         "fileformat",
         { "filetype", color = { fg = "#ECBE7B" } },
         { lsp_status, color = { fg = "#a9b665" } },
+        -- {
+        --   function()
+        --     local linters = require("lint").get_running()
+        --     if #linters == 0 then
+        --       return "󰦕"
+        --     end
+        --     return "󱉶 " .. table.concat(linters, ", ")
+        --   end,
+        --   cond = function()
+        --     return vim.bo.filetype ~= ""
+        --   end,
+        --   color = { fg = "#ffa447" },
+        -- },
       },
     },
   }

@@ -139,13 +139,6 @@ function M.setup()
       vim.opt_local.spell = true
     end,
   })
-
-  -- Trim trailing spaces
-  vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-    pattern = { "*" },
-    group = group,
-    command = [[%s/\s\+$//e]],
-  })
 end
 
 return M
