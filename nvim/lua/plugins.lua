@@ -418,6 +418,14 @@ function M.setup()
       },
       config = config("codecompanion"),
     },
+    {
+      "echasnovski/mini.animate", -- Animate common Neovim actions
+      cond = function()
+        return vim.g.neovide == nil
+      end,
+      version = false,
+      config = config("animation"),
+    },
   })
 end
 
