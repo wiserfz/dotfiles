@@ -376,6 +376,9 @@ function M.setup()
     },
     {
       "kevinhwang91/nvim-ufo",
+      cond = function()
+        return vim.g.neovide == nil
+      end,
       event = "BufReadPost",
       dependencies = {
         "kevinhwang91/promise-async",

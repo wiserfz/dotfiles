@@ -238,6 +238,9 @@ function init_env() {
     rm -rf .config/alacritty
     ln -sfv "$PRJ_DIR/alacritty" .config/alacritty
 
+    rm -rf .config/neovide
+    ln -sfv "$PRJ_DIR/neovide" .config/neovide
+
     rm -rf .config/yamllint
     ln -sfv "$PRJ_DIR/config/yamllint" .config/yamllint
 

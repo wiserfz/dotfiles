@@ -24,3 +24,4 @@ end
 prequire("options")
 prequire("plugins")
 prequire("keymaps")
+prequire("neovide")
