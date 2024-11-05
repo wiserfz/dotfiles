@@ -48,6 +48,14 @@ function M.setup()
     },
   })
 
+  if vim.g.neovide ~= nil then
+    telescope.setup({
+      defaults = {
+        winblend = 70,
+      },
+    })
+  end
+
   -- load extension to support preview of media files
   telescope.load_extension("media_files")
 
