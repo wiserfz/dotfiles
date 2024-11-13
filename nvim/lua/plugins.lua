@@ -135,7 +135,6 @@ function M.setup()
     {
       "saecki/crates.nvim",
       event = { "BufRead Cargo.toml" },
-      tag = "stable",
       config = config("crates"),
     },
     {

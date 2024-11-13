@@ -14,6 +14,7 @@ function M.setup()
         max_results = 30,
       },
       cmp = {
+        enabled = true,
         use_custom_kind = true,
       },
     },
