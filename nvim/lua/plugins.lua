@@ -58,7 +58,11 @@ function M.setup()
         { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>", desc = "Tmux navigate previous" },
       },
     },
-    "RRethy/vim-illuminate", -- highlight other uses of word under cursor
+    {
+      "RRethy/vim-illuminate", -- highlight other uses of word under cursor
+      event = "BufReadPost",
+      config = config("illuminate"),
+    },
     "HiPhish/rainbow-delimiters.nvim", -- rainbow parentheses
     {
       "szw/vim-maximizer",
