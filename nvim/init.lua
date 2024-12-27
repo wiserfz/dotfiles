@@ -21,6 +21,10 @@ local function prequire(name, setup)
   return mod
 end
 
+-- FIXME: https://github.com/neovim/neovim/issues/31675
+-- Remove this line when the issue is fixed
+vim.hl = vim.highlight
+
 prequire("options")
 prequire("plugins")
 prequire("keymaps")
