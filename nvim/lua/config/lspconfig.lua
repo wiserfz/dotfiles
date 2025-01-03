@@ -1,5 +1,5 @@
 local lspconfig = require("lspconfig")
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local blink = require("blink.cmp")
 local neodev = require("neodev")
 local wk = require("which-key")
 local mason_lspconfig = require("mason-lspconfig")
@@ -129,7 +129,7 @@ local M = {}
 function M.get_capabilities()
   -- used to enable autocompletion (assign to every lsp server config)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = vim.tbl_deep_extend("force", capabilities, cmp_nvim_lsp.default_capabilities())
+  capabilities = vim.tbl_deep_extend("force", capabilities, blink.get_lsp_capabilities())
 
   capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
