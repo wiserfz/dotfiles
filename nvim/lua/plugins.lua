@@ -92,27 +92,14 @@ function M.setup()
       config = config("bufferline"),
     },
     {
-      "hrsh7th/nvim-cmp", -- completion plugin
-      event = "InsertEnter",
+      "saghen/blink.cmp",
+      version = "*",
       dependencies = {
-        "hrsh7th/cmp-buffer", -- source for text in buffer
-        "hrsh7th/cmp-path", -- source for file system paths
-        {
-          "L3MON4D3/LuaSnip",
-          -- follow latest release.
-          version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-          -- install jsregexp (optional!).
-          build = "make install_jsregexp",
-        },
-        "saadparwaiz1/cmp_luasnip", -- for autocompletion
         "rafamadriz/friendly-snippets", -- useful snippets
-        "onsails/lspkind.nvim", -- vs-code like pictograms
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-nvim-lsp-signature-help",
-        "windwp/nvim-autopairs",
-        "zbirenbaum/copilot.lua",
+        "giuxtaposition/blink-cmp-copilot",
+        "saghen/blink.compat",
       },
-      config = config("nvim-cmp"),
+      config = config("blink"),
     },
     {
       "numToStr/Comment.nvim",
@@ -146,14 +133,6 @@ function M.setup()
       "zbirenbaum/copilot.lua",
       cmd = "Copilot",
       event = { "BufReadPre", "BufNewFile" },
-      dependencies = {
-        {
-          "zbirenbaum/copilot-cmp",
-          config = function()
-            require("copilot_cmp").setup()
-          end,
-        },
-      },
       config = config("copilot"),
     },
     {
@@ -186,7 +165,7 @@ function M.setup()
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim", -- Integration with nvim-lspconfig
         "b0o/schemastore.nvim", -- YAML/JSON schemas
-        "hrsh7th/cmp-nvim-lsp",
+        "saghen/blink.cmp", -- completion
         {
           "folke/neodev.nvim",
           opts = {
@@ -252,7 +231,6 @@ function M.setup()
         "ray-x/guihua.lua",
         "neovim/nvim-lspconfig",
         "nvim-treesitter/nvim-treesitter",
-        "hrsh7th/cmp-nvim-lsp",
       },
       -- event = { "CmdlineEnter" },
       ft = { "go", "gomod" },
@@ -264,9 +242,8 @@ function M.setup()
       "mrcjkb/rustaceanvim",
       dependencies = {
         "neovim/nvim-lspconfig",
-        "hrsh7th/cmp-nvim-lsp",
       },
-      version = "^4", -- Recommended
+      version = "v5", -- Recommended
       lazy = false, -- This plugin is already lazy
       ft = { "rust" },
       config = config("rust"),
@@ -394,10 +371,6 @@ function M.setup()
       config = config("treesitter"),
     },
     {
-      "luukvbaal/statuscol.nvim",
-      config = config("statuscol"),
-    },
-    {
       "kevinhwang91/nvim-ufo",
       cond = function()
         return vim.g.neovide == nil
@@ -405,7 +378,10 @@ function M.setup()
       event = "BufReadPost",
       dependencies = {
         "kevinhwang91/promise-async",
-        "luukvbaal/statuscol.nvim",
+        {
+          "luukvbaal/statuscol.nvim",
+          config = config("statuscol"),
+        },
       },
       config = config("ufo"),
     },

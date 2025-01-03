@@ -12,12 +12,6 @@ local M = {}
 
 function M.setup()
   vim.g.rustaceanvim = {
-    tools = {
-      inlay_hints = {
-        show_parameter_hints = false,
-        only_current_line = true,
-      },
-    },
     server = {
       capabilities = lsp.get_capabilities(),
       on_attach = function(client, bufnr)
@@ -65,6 +59,17 @@ function M.setup()
             enable = true,
             attributes = {
               enable = true,
+            },
+          },
+          files = {
+            excludeDirs = {
+              ".git",
+              ".gitlab-ci",
+              ".idea",
+              ".vscode",
+              ".settings",
+              "node_modules",
+              "target",
             },
           },
         },
