@@ -66,6 +66,10 @@ function M.setup()
     "HiPhish/rainbow-delimiters.nvim", -- rainbow parentheses
     {
       "szw/vim-maximizer",
+      event = {
+        "BufReadPre",
+        "BufNewFile",
+      },
       init = function()
         -- disable default key mapping
         vim.g.maximizer_set_default_mapping = 0
@@ -74,6 +78,10 @@ function M.setup()
     },
     {
       "norcalli/nvim-colorizer.lua", -- color highlighter
+      event = {
+        "BufReadPre",
+        "BufNewFile",
+      },
       config = function()
         require("colorizer").setup({ "*" }, { RGB = false })
       end,
@@ -94,6 +102,7 @@ function M.setup()
     {
       "saghen/blink.cmp",
       version = "*",
+      event = "VimEnter",
       dependencies = {
         "rafamadriz/friendly-snippets", -- useful snippets
         "giuxtaposition/blink-cmp-copilot",
@@ -261,6 +270,14 @@ function M.setup()
       event = { "BufReadPre", "BufNewFile" },
       config = config("gitsigns"),
     },
+    -- ConflictMarker, highlight conflict marker and jump between conflict by [x and ]x
+    {
+      "rhysd/conflict-marker.vim",
+      event = {
+        "BufReadPre",
+        "BufNewFile",
+      },
+    },
     -- Leetcode
     {
       "kawre/leetcode.nvim",
@@ -309,6 +326,7 @@ function M.setup()
     },
     {
       "nvim-lualine/lualine.nvim",
+      event = "VimEnter",
       dependencies = {
         "nvim-tree/nvim-web-devicons",
       },
@@ -337,7 +355,7 @@ function M.setup()
     },
     {
       "nvim-telescope/telescope.nvim", -- fuzzy finder
-      branch = "0.1.x",
+      tag = "0.1.8",
       dependencies = {
         "nvim-lua/plenary.nvim",
         {
