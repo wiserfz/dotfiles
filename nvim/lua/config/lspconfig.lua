@@ -1,4 +1,5 @@
 local lspconfig = require("lspconfig")
+local lspconfig_util = require("lspconfig").util
 local blink = require("blink.cmp")
 local neodev = require("neodev")
 local wk = require("which-key")
@@ -112,7 +113,12 @@ local server_configs = {
       },
     },
   },
-  markdown_oxide = {},
+  protols = {}, -- for protobuf
+  -- markdown_oxide = {
+  --   root_dir = function(fname, _)
+  --     return lspconfig_util.root_pattern(".obsidian", ".moxide.toml", ".git")(fname) or vim.uv.cwd()
+  --   end,
+  -- },
   elp = {}, -- for erlang
 }
 
@@ -217,15 +223,6 @@ function M.setup()
     -- auto-install configured servers (with lspconfig)
     automatic_installation = false, -- not the same as ensure_installed
     handlers = { setup },
-  })
-
-  -- special setup for protobuf language server
-  -- install by cargo install protols
-  lspconfig.protols.setup({
-    capabilities = capabilities,
-    on_attach = function(client, bufnr)
-      M.on_attach(client, bufnr)
-    end,
   })
 end
 
