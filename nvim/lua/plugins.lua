@@ -395,6 +395,7 @@ function M.setup()
       end,
       event = "BufReadPost",
       dependencies = {
+        "neovim/nvim-lspconfig",
         "kevinhwang91/promise-async",
         {
           "luukvbaal/statuscol.nvim",

@@ -17,7 +17,6 @@ function M.setup()
       "hadolint",
       "impl",
       "jq",
-      "markdown-oxide",
       -- WARN: mac with intel CPU which only can install selene@0.26.1
       -- See issue: https://github.com/williamboman/mason.nvim/issues/1693
       "selene",

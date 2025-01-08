@@ -14,33 +14,45 @@ function M.setup()
       ["<Tab>"] = { "snippet_forward", "select_next", "fallback" },
       ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
 
-      ["<C-k>"] = { "select_prev", "fallback" },
       ["<C-j>"] = { "select_next", "fallback" },
+      ["<C-k>"] = { "select_prev", "fallback" },
 
-      ["<C-b>"] = { "scroll_documentation_up", "fallback" },
-      ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+      cmdline = {
+        ["<C-e>"] = { "hide", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
+
+        ["<Tab>"] = { "show", "select_next", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "fallback" },
+
+        ["<C-j>"] = { "select_next", "fallback" },
+        ["<C-k>"] = { "select_prev", "fallback" },
+      },
     },
 
-    -- Disable for some filetypes
     enabled = function()
-      return not vim.tbl_contains({ "markdown" }, vim.bo.filetype)
-        and vim.bo.buftype ~= "prompt"
+      local ft_table = { "DressingInput", "TelescopePrompt" }
+      return not vim.tbl_contains(ft_table, vim.bo.filetype)
+        and vim.bo.buftype ~= "prompt" -- ~= not equal
         and vim.b.completion ~= false
     end,
 
     completion = {
       list = {
-        selection = function(ctx)
-          return ctx.mode == "cmdline" and "auto_insert" or "manual"
-        end,
+        selection = {
+          preselect = false,
+          auto_insert = function(ctx)
+            return ctx.mode ~= "cmdline"
+          end,
+        },
       },
       menu = {
         draw = {
           treesitter = { "lsp" },
         },
-        -- Don't show completion menu automatically when searching
+        -- Don't show completion menu automatically on cmdline
         auto_show = function(ctx)
-          return ctx.mode ~= "cmdline" or not vim.tbl_contains({ "/", "?" }, vim.fn.getcmdtype())
+          return ctx.mode ~= "cmdline"
+          -- or not vim.tbl_contains({ "/", "?" }, vim.fn.getcmdtype())
         end,
       },
       documentation = {
@@ -49,6 +61,9 @@ function M.setup()
       trigger = {
         -- these are annoying
         show_on_x_blocked_trigger_characters = { "'", '"', "(", "[", "{" },
+      },
+      accept = {
+        create_undo_point = false,
       },
     },
     signature = {
@@ -60,7 +75,7 @@ function M.setup()
       kind_icons = util.icons,
     },
     sources = {
-      default = { "copilot", "lsp", "path", "luasnip", "buffer", "crates" },
+      default = { "copilot", "lsp", "path", "snippets", "buffer", "crates" },
       providers = {
         copilot = {
           name = "copilot",
