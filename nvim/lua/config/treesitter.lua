@@ -8,7 +8,7 @@ function M.setup()
     highlight = {
       enable = true, -- false will disable the whole extension
       disable = function(_lang, buf)
-        local max_filesize = 100 * 1024 -- 100 KB
+        local max_filesize = 300 * 1024 -- 100 KB
         local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
         if ok and stats and stats.size > max_filesize then
           return true
@@ -21,6 +21,7 @@ function M.setup()
     indent = { enable = true },
     -- ensure these language parsers are installed
     ensure_installed = {
+      "asm",
       "json",
       "yaml",
       "markdown",
