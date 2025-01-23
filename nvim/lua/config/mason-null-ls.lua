@@ -8,7 +8,6 @@ function M.setup()
       "ruff",
       "buf",
       "codelldb",
-      "codespell",
       "editorconfig-checker",
       "gofumpt",
       "goimports",

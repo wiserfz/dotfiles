@@ -3,7 +3,7 @@
 *.sublime-*
 .null-ls*
 .ecrc
-.codespellrc
 .mise.toml
 .venv
 .pre-commit-config.yaml
+.harper_dict.txt

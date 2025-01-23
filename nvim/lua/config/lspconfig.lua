@@ -120,6 +120,35 @@ local server_configs = {
   --   end,
   -- },
   elp = {}, -- for erlang
+  harper_ls = { -- Grammar Checker
+    settings = {
+      ["harper-ls"] = {
+        userDictPath = vim.fn.getcwd() .. "/.harper_dict.txt",
+        diagnosticSeverity = "hint", -- Can also be "information", "warning", or "error"
+        markdown = {
+          ignore_link_title = true,
+        },
+        linters = {
+          spell_check = false,
+          spelled_numbers = false,
+          an_a = true,
+          sentence_capitalization = false,
+          unclosed_quotes = true,
+          wrong_quotes = false,
+          long_sentences = false,
+          repeated_words = true,
+          spaces = false,
+          matcher = true,
+          correct_number_suffix = true,
+          number_suffix_capitalization = true,
+          multiple_sequential_pronouns = true,
+          linking_verbs = false,
+          avoid_curses = true,
+          terminating_conjunctions = true,
+        },
+      },
+    },
+  },
 }
 
 local disable = function() end
