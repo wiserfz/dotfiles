@@ -22,10 +22,6 @@ function M.setup()
   null_ls.setup({
     -- debug = true, -- enable debug mode and get debug output
     sources = {
-      diagnostics.codespell.with({ -- common misspellings checker
-        extra_args = { "-L", "crate" }, -- comma separated list of words to ignore
-      }),
-
       -- formatting.buf, -- protocol buffer formatter
       diagnostics.buf, -- protocol buffer linter
 
