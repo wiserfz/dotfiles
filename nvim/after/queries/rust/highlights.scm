@@ -1,5 +1,7 @@
 ;; extends
 
-; (enum_item
-;   type_parameters: (type_parameters(constrained_type_parameter
-;     left: (type_identifier) @generic_type (#set! "priority" 130))))
+(call_expression
+  function: (field_expression
+    field: (field_identifier) @panic.call
+      (#match? @panic.call "(unwrap$|expect$)")
+      (#set! "priority" 128)))
