@@ -179,10 +179,10 @@ function init_env() {
 
     cd "$HOME" || return
     rm -rf .gitconfig
-    ln -sfv "$PRJ_DIR"/gitconfig .gitconfig
+    ln -sfv "$PRJ_DIR"/git/gitconfig .gitconfig
 
     rm -rf .gitignore
-    ln -sfv "$PRJ_DIR"/gitignore .gitignore
+    ln -sfv "$PRJ_DIR"/git/gitignore .gitignore
 
     rm -rf .tmux.conf
     ln -sfv "$PRJ_DIR"/tmux.conf .tmux.conf
@@ -191,15 +191,15 @@ function init_env() {
     ln -sfv "$PRJ_DIR"/vimrc .vimrc
 
     rm -rf .vim
-    ln -sfv "$PRJ_DIR"/vim_dir .vim
+    ln -sfv "$PRJ_DIR"/vim .vim
 
-    rm -rf .config/fish
-    ln -sfv "$PRJ_DIR"/fish .config/fish
-
-    dir="$HOME/.config/nvim"
+    dir="$HOME/.config"
     if [[ ! -d "$dir" ]]; then
         mkdir -p "$dir"
     fi
+
+    rm -rf .config/fish
+    ln -sfv "$PRJ_DIR"/fish .config/fish
 
     rm -rf .config/nvim
     ln -sfv "$PRJ_DIR"/nvim .config/nvim
@@ -212,9 +212,6 @@ function init_env() {
 
     rm -rf .config/hadolint.yaml
     ln -sfv "$PRJ_DIR"/config/hadolint.yaml .config/hadolint.yaml
-
-    rm -rf .config/gitstatus.py
-    ln -sfv "$PRJ_DIR"/gitstatus.py .config/gitstatus.py
 
     cd "$CURRENT_DIR" || return
 

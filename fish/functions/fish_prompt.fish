@@ -1,8 +1,8 @@
 function fish_prompt
     set -l __last_command_exit_status $status
 
-    if not set -q __config_dir
-        set __config_dir ~/.config
+    if not set -q __dotfiles_project
+        set __dotfiles_project ~/workspace/dotfiles/
     end
     # Colors
     # Reset
@@ -31,7 +31,7 @@ function fish_prompt
     # Bold High Intensty
     set magenta (set_color -o purple) # Purple
 
-    set bold_cyan (set_color -o cyan)
+    set tiffany_blue (set_color -o 81D8D0)
 
     # rust
     set bold_orange (set_color -o F05A1B)
@@ -84,7 +84,7 @@ function fish_prompt
     end
 
     set -e __current_git_status
-    set gitstatus "$__config_dir/gitstatus.py"
+    set gitstatus "$__dotfiles_project/git/gitstatus.py"
 
     set __current_git_status (python $gitstatus)
 
@@ -95,7 +95,7 @@ function fish_prompt
     set git_prompt_conflicts "$git_delete_color✖ "
     set git_prompt_changed "$git_changed_color✚ "
     set git_prompt_remote "$git_remote_color 󰅡 "
-    set git_prompt_untracked "$bold_cyan "
+    set git_prompt_untracked "$tiffany_blue "
     set git_prompt_stashed "$intensty_black⚑ "
     set git_prompt_clean "$bold_green✔"
 

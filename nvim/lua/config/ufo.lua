@@ -1,0 +1,84 @@
+local ufo = require("ufo")
+
+--@param virtText table @The virtual text
+--@param lnum number @The line number
+--@param endLnum number @The end line number
+--@param width number @The width of the window
+--@param truncate function @The function to truncate the virtual text
+--@return table @The new virtual text
+local handler = function(virtText, lnum, endLnum, width, truncate)
+  local newVirtText = {}
+  local suffix = ("  󰁂 %d "):format(endLnum - lnum)
+  local sufWidth = vim.fn.strdisplaywidth(suffix)
+  local targetWidth = width - sufWidth
+  local curWidth = 0
+  for _, chunk in ipairs(virtText) do
+    local chunkText = chunk[1]
+    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+    if targetWidth > curWidth + chunkWidth then
+      table.insert(newVirtText, chunk)
+    else
+      chunkText = truncate(chunkText, targetWidth - curWidth)
+      local hlGroup = chunk[2]
+      table.insert(newVirtText, { chunkText, hlGroup })
+      chunkWidth = vim.fn.strdisplaywidth(chunkText)
+      -- str width returned from truncate() may less than 2nd argument, need padding
+      if curWidth + chunkWidth < targetWidth then
+        suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+      end
+      break
+    end
+    curWidth = curWidth + chunkWidth
+  end
+  local rAlignAppndx =
+    math.max(math.min(vim.opt.textwidth["_value"], width - 1) - curWidth - sufWidth, 0)
+  suffix = (" "):rep(rAlignAppndx) .. suffix
+  table.insert(newVirtText, { suffix, "MoreMsg" })
+  return newVirtText
+end
+
+local function goPreviousClosedAndPeek()
+  ufo.goPreviousClosedFold()
+  ufo.peekFoldedLinesUnderCursor()
+end
+
+local function goNextClosedAndPeek()
+  ufo.goNextClosedFold()
+  ufo.peekFoldedLinesUnderCursor()
+end
+
+local M = {}
+
+function M.setup()
+  local opts = {
+    -- INFO: Uncomment to use treeitter as fold provider, otherwise nvim lsp is used
+    -- provider_selector = function(bufnr, filetype, buftype)
+    --   return { "treesitter", "indent" }
+    -- end,
+    open_fold_hl_timeout = 400,
+    close_fold_kinds_for_ft = { default = { "imports", "comment" } },
+    preview = {
+      win_config = {
+        border = { "", "─", "", "", "", "─", "", "" },
+        -- winhighlight = "Normal:Folded",
+        winblend = 0,
+      },
+    },
+  }
+
+  opts["fold_virt_text_handler"] = handler
+  ufo.setup(opts)
+
+  vim.keymap.set("n", "zR", ufo.openAllFolds)
+  vim.keymap.set("n", "zM", ufo.closeAllFolds)
+  vim.keymap.set("n", "zi", goPreviousClosedAndPeek)
+  vim.keymap.set("n", "zn", goNextClosedAndPeek)
+
+  vim.cmd([[
+    " hi Folded guibg=#2e3440 guifg=#81a1c1
+    hi Folded guibg=NONE
+    hi FoldColumn guifg=gray guibg=#232526
+  ]])
+end
+
+return M

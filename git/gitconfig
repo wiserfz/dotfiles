@@ -1,0 +1,70 @@
+[user]
+	name = wiser-fz
+	email = mailfz810@163.com
+	signingkey = BAF752355EBF68C41137A5B909562B59D4303F61
+[commit]
+	gpgsign = true
+[push]
+	autoSetupRemote = true
+[gpg]
+	program = /opt/homebrew/bin/gpg
+	format = openpgp
+[includeIf "gitdir:~/workspace/tuya/"]
+	path = ~/.tuya.inc
+[color]
+	ui = true
+[core]
+	pager = delta
+	excludesFile = ~/.gitignore
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	features = custom
+[delta "custom"]
+	dark = true
+	side-by-side = true
+	navigate = true
+	keep-plus-minus-markers = true
+	file-added-label = [+]
+	file-copied-label = [==]
+	file-modified-label = [*]
+	file-removed-label = [-]
+	file-renamed-label = [->]
+	file-style = omit
+	zero-style = syntax
+	commit-decoration-style = green box
+	commit-style = yellow bold
+	hunk-header-decoration-style = blue box ul
+	hunk-header-file-style = purple ul bold
+	hunk-header-line-number-style = yellow box bold
+	hunk-header-style = file line-number syntax bold
+	line-numbers = true
+	line-numbers-left-format = "{nm:>1}|"
+	line-numbers-left-style = blue
+	line-numbers-minus-style = red bold
+	line-numbers-plus-style = green bold
+	line-numbers-right-format = "{np:>1}|"
+	line-numbers-right-style = blue
+	line-numbers-zero-style = white
+	minus-emph-style = syntax bold red
+	plus-emph-style = syntax bold green
+	whitespace-error-style = purple bold
+[tag]
+	forceSignAnnotated = false
+[diff]
+	colorMoved = default
+	tool = Kaleidoscope
+[merge]
+	conflictstyle = diff3
+	tool = Kaleidoscope
+[mergetool "code"]
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path $MERGED -- $LOCAL $REMOTE
+[difftool]
+	prompt = false
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output $MERGED --base $BASE -- $LOCAL --snapshot $REMOTE --snapshot
+	trustExitCode = true
+[mergetool]
+	prompt = false
