@@ -113,7 +113,7 @@ local server_configs = {
       },
     },
   },
-  protols = {}, -- for protobuf
+  buf_ls = {}, -- for protobuf
   -- markdown_oxide = {
   --   root_dir = function(fname, _)
   --     return lspconfig_util.root_pattern(".obsidian", ".moxide.toml", ".git")(fname) or vim.uv.cwd()
