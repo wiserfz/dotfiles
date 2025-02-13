@@ -22,9 +22,6 @@ function M.setup()
   null_ls.setup({
     -- debug = true, -- enable debug mode and get debug output
     sources = {
-      -- formatting.buf, -- protocol buffer formatter
-      diagnostics.buf, -- protocol buffer linter
-
       -- formatting.yamlfmt, -- yaml formatter configuration of yamlfmt: https://github.com/google/yamlfmt/blob/main/docs/config-file.md
       diagnostics.yamllint, -- yaml linter configuration of yamllint: https://yamllint.readthedocs.io/en/stable/configuration.html
 

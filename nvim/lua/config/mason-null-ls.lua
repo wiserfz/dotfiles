@@ -6,7 +6,6 @@ function M.setup()
   mason_none_ls.setup({
     ensure_installed = {
       "ruff",
-      "buf",
       "codelldb",
       "editorconfig-checker",
       "gofumpt",

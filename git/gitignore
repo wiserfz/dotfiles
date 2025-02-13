@@ -7,3 +7,4 @@
 .venv
 .pre-commit-config.yaml
 .harper_dict.txt
+buf.yaml
