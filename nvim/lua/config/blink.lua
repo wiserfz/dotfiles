@@ -16,8 +16,12 @@ function M.setup()
 
       ["<C-j>"] = { "select_next", "fallback" },
       ["<C-k>"] = { "select_prev", "fallback" },
+    },
 
-      cmdline = {
+    -- setup for cmdline completion
+    cmdline = {
+      enabled = true,
+      keymap = {
         ["<C-e>"] = { "hide", "fallback" },
         ["<CR>"] = { "accept", "fallback" },
 
@@ -27,6 +31,18 @@ function M.setup()
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-k>"] = { "select_prev", "fallback" },
       },
+      sources = function()
+        local type = vim.fn.getcmdtype()
+        -- Search forward and backward
+        if type == "/" or type == "?" then
+          return { "buffer" }
+        end
+        -- Commands
+        if type == ":" or type == "@" then
+          return { "cmdline" }
+        end
+        return {}
+      end,
     },
 
     enabled = function()
