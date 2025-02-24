@@ -59,20 +59,7 @@ local server_configs = {
         schemaStore = {
           enable = false,
           -- url = "https://www.schemastore.org/api/json/catalog.json",
-        },
-        customTags = {
-          -- AWS CloudFormation tags
-          "!Equals sequence",
-          "!FindInMap sequence",
-          "!GetAtt",
-          "!GetAZs",
-          "!ImportValue",
-          "!Join sequence",
-          "!Ref",
-          "!Select sequence",
-          "!Split sequence",
-          "!Sub",
-          "!Or sequence",
+          url = "",
         },
       },
     },
