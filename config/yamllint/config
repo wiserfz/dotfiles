@@ -5,5 +5,4 @@ extends: default
 rules:
   indentation: disable
   line-length: disable
-  document-start:
-    present: false
+  document-start: disable
