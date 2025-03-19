@@ -3,13 +3,17 @@
 
 CURRENT_DIR=$PWD
 
-BREW_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
+BREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install"
 POWERLINE_FONTS_URL="https://github.com/powerline/fonts.git"
 PRJ_URL="https://github.com/Gitfz810/dotfiles.git"
 PRJ_DIR="$HOME/workspace/dotfiles"
 CODELLDB_DIR="$HOME/.local/codelldb"
 ARCH=$(uname -m)
-HOMEBREW_PREFIX="/opt/homebrew"
+
+HOMEBREW_PREFIX="/usr/local"
+if [[ $ARCH == "arm64" ]]; then
+    HOMEBREW_PREFIX="/opt/homebrew"
+fi
 
 # Black=$'\e[0;30m'
 Red=$'\e[0;31m'
@@ -71,12 +75,19 @@ function install_brew_pkg() {
                 if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
                     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
                 fi
-                if [[ -f "$HOMEBREW_PREFIX/bin/tmux" ]]; then
-                    sudo ln -sfv $HOMEBREW_PREFIX/bin/tmux /usr/local/bin/tmux
+                if [[ $ARCH == "arm64" ]]; then
+                    sudo mkdir -p /usr/local/bin/
+
+                    sudo ln -sfv "$HOMEBREW_PREFIX/bin/tmux" /usr/local/bin/tmux
                 fi
             elif [[ $item == "fish" ]]; then
-                if [[ -f "$HOMEBREW_PREFIX/bin/fish" ]]; then
-                    sudo ln -sfv $HOMEBREW_PREFIX/bin/fish /usr/local/bin/fish
+                if [[ $ARCH == "arm64" ]]; then
+                    sudo mkdir -p /usr/local/bin/
+                    sudo ln -sfv "$HOMEBREW_PREFIX/bin/fish" /usr/local/bin/fish
+
+                    # set default shell to fish
+                    echo /usr/local/bin/fish | sudo tee -a /etc/shells
+                    chsh -s /usr/local/bin/fish
                 fi
             fi
             brew cleanup "$item"
@@ -137,9 +148,20 @@ function install_erlang() {
     fi
 
     # need install wxwidgets brew install wxwidgets
-    env KERL_CONFIGURE_OPTIONS="--enable-wx --with-wx-config=$HOMEBREW_PREFIX/bin/wx-config-3.0 --without-javac --without-odbc --enable-threads --with-ssl=$(brew --prefix openssl@1.1)" mise use -g erlang@25.3.2.12
+    env KERL_CONFIGURE_OPTIONS="--enable-wx --with-wx-config=$HOMEBREW_PREFIX/bin/wx-config-3.0 --without-javac --without-odbc --enable-threads --with-ssl=$(brew --prefix openssl@1.1)" mise use -g erlang@26
 
     echo "${LightGreen}Install erlang over.${NC}"
+}
+
+function install_rust() {
+    if exist rustc; then
+        echo "${LightRed}Rust already installed!${NC}"
+        return
+    fi
+
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+    echo "${LightGreen}Install rust over.${NC}"
 }
 
 function install_powerline_fonts() {
@@ -297,7 +319,7 @@ case $choice in
     3) install_cask_pkg ;;
     4) install_go ;;
     5) install_python ;;
-    6) install_powerline_fonts ;;
+    6) install_rust ;;
     7) install_nerd_fonts ;;
     8) init_env ;;
     0) install_all ;;
