@@ -49,19 +49,22 @@ if command -v brew >/dev/null 2>&1
     set -Ux HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK true
 end
 
-# fzf
-set -Ux FZF_CTRL_T_OPTS "
-    --walker-skip .git,target
-    --preview 'bat -n --color=always {}'
-    --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-set -Ux FZF_CTRL_R_OPTS "
-    --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
-    --color header:italic
-    --header 'Press CTRL-Y to copy command into clipboard'"
-fzf --fish | source
+# # fzf
+# set -Ux FZF_CTRL_T_OPTS "
+#     --walker-skip .git,target
+#     --preview 'bat -n --color=always {}'
+#     --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+# set -Ux FZF_CTRL_R_OPTS "
+#     --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+#     --color header:italic
+#     --header 'Press CTRL-Y to copy command into clipboard'"
+# fzf --fish | source
 
 # setup with mise
 mise activate fish | source
 
 # setup with zoxide
 zoxide init fish | source
+
+# setup with atuin instead of fzf
+atuin init fish | source
