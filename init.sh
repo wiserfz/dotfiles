@@ -3,11 +3,10 @@
 
 CURRENT_DIR=$PWD
 
-BREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install"
+BREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 POWERLINE_FONTS_URL="https://github.com/powerline/fonts.git"
-PRJ_URL="https://github.com/Gitfz810/dotfiles.git"
-PRJ_DIR="$HOME/workspace/dotfiles"
-CODELLDB_DIR="$HOME/.local/codelldb"
+PRJ_URL="https://github.com/wiserfz/dotfiles.git"
+PRJ_DIR="$HOME/Workspace/dotfiles"
 ARCH=$(uname -m)
 
 HOMEBREW_PREFIX="/usr/local"
@@ -52,7 +51,7 @@ function install_brew() {
 
     if [[ $(uname) == "Darwin" ]] && ! exist brew; then
         xcode-select --install
-        ruby -e "$(curl -fsSL $BREW_URL)"
+        bash -c "$(curl -fsSL $BREW_URL)"
     fi
 
     echo "${LightGreen}Install Homebrew over.${NC}"
@@ -84,11 +83,11 @@ function install_brew_pkg() {
                 if [[ $ARCH == "arm64" ]]; then
                     sudo mkdir -p /usr/local/bin/
                     sudo ln -sfv "$HOMEBREW_PREFIX/bin/fish" /usr/local/bin/fish
-
-                    # set default shell to fish
-                    echo /usr/local/bin/fish | sudo tee -a /etc/shells
-                    chsh -s /usr/local/bin/fish
                 fi
+
+                # set default shell to fish
+                echo /usr/local/bin/fish | sudo tee -a /etc/shells
+                chsh -s /usr/local/bin/fish
             fi
             brew cleanup "$item"
             echo "${Green}Install ${Red}$item ${Blue}over.${NC}"
@@ -138,7 +137,7 @@ function install_python() {
 
     mise use -g python@3.11
 
-    ehco "${LightGreen}Install python over.${NC}"
+    echo "${LightGreen}Install python over.${NC}"
 }
 
 function install_erlang() {
@@ -194,32 +193,6 @@ function install_nerd_fonts() {
     brew install "${font}"
 
     echo "${LightGreen}Install nerd fonts ${LightRed}$font ${LightGreen}over.${NC}"
-}
-
-function install_codelldb() {
-    read -rp "${Yellow}Do you want to install codelldb(debug plugin)? (y/n): ${NC}" confirm
-    if [[ $confirm == "n" ]]; then
-        return
-    fi
-
-    read -rp "${Yellow}Please enter install version of codelldb(e.g. v1.9.0): ${NC}" version
-
-    arch=$ARCH
-    if [[ "$ARCH" == "arm64" ]]; then
-        arch="aarch64"
-    fi
-
-    url=$(printf "https://github.com/vadimcn/codelldb/releases/download/%s/codelldb-${arch}-darwin.vsix" "$version")
-    echo "$url"
-
-    if [[ ! -d "$CODELLDB_DIR/extension" ]]; then
-        filename="codelldb-${arch}-darwin.vsix"
-        curl --location --remote-name -s "$url" -o "$filename"
-        unzip -qo "$filename" -d "$CODELLDB_DIR/"
-        rm -f "$filename"
-    fi
-
-    echo "${LightGreen}Install codelldb version $version over.${NC}"
 }
 
 function init_env() {
@@ -284,7 +257,7 @@ function install_all() {
     install_go
     install_python
     install_cask_pkg
-    install_powerline_fonts
+    install_rust
     install_nerd_fonts
 
     init_env
@@ -298,7 +271,7 @@ ${Cyan}select a function code:
 【 3 】 Install cask packages
 【 4 】 Install golang
 【 5 】 Install python
-【 6 】 Install powerline fonts
+【 6 】 Install rust
 【 7 】 Install nerd fonts
 【 8 】 Init environment
 【 0 】 Install all
