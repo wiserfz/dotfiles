@@ -9,7 +9,7 @@
 [gpg]
 	program = /usr/local/bin/gpg
 	format = openpgp
-[includeIf "gitdir:~/workspace/tuya/"]
+[includeIf "gitdir:~/Workspace/tuya/"]
 	path = ~/.tuya.inc
 [color]
 	ui = true
@@ -51,6 +51,7 @@
 	whitespace-error-style = purple bold
 [tag]
 	forceSignAnnotated = false
+	gpgSign = true
 [diff]
 	colorMoved = default
 	tool = Kaleidoscope
@@ -63,6 +64,7 @@
 	cmd = ksdiff --partial-changeset --relative-path $MERGED -- $LOCAL $REMOTE
 [difftool]
 	prompt = false
+	trustExitCode = true
 [mergetool "Kaleidoscope"]
 	cmd = ksdiff --merge --output $MERGED --base $BASE -- $LOCAL --snapshot $REMOTE --snapshot
 	trustExitCode = true

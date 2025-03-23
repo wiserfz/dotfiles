@@ -11,9 +11,12 @@ neovim
 tokei
 zoxide
 gnupg
+pinentry-mac
 wget
 protobuf
 pwgen
 mise
 yazi
 hugo
+npm
+just

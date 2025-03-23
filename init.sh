@@ -3,13 +3,16 @@
 
 CURRENT_DIR=$PWD
 
-BREW_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
+BREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 POWERLINE_FONTS_URL="https://github.com/powerline/fonts.git"
-PRJ_URL="https://github.com/Gitfz810/dotfiles.git"
-PRJ_DIR="$HOME/workspace/dotfiles"
-CODELLDB_DIR="$HOME/.local/codelldb"
+PRJ_URL="https://github.com/wiserfz/dotfiles.git"
+PRJ_DIR="$HOME/Workspace/dotfiles"
 ARCH=$(uname -m)
-HOMEBREW_PREFIX="/opt/homebrew"
+
+HOMEBREW_PREFIX="/usr/local"
+if [[ $ARCH == "arm64" ]]; then
+    HOMEBREW_PREFIX="/opt/homebrew"
+fi
 
 # Black=$'\e[0;30m'
 Red=$'\e[0;31m'
@@ -48,7 +51,7 @@ function install_brew() {
 
     if [[ $(uname) == "Darwin" ]] && ! exist brew; then
         xcode-select --install
-        ruby -e "$(curl -fsSL $BREW_URL)"
+        bash -c "$(curl -fsSL $BREW_URL)"
     fi
 
     echo "${LightGreen}Install Homebrew over.${NC}"
@@ -71,13 +74,24 @@ function install_brew_pkg() {
                 if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
                     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
                 fi
-                if [[ -f "$HOMEBREW_PREFIX/bin/tmux" ]]; then
-                    sudo ln -sfv $HOMEBREW_PREFIX/bin/tmux /usr/local/bin/tmux
+                if [[ $ARCH == "arm64" ]]; then
+                    sudo mkdir -p /usr/local/bin/
+
+                    sudo ln -sfv "$HOMEBREW_PREFIX/bin/tmux" /usr/local/bin/tmux
                 fi
             elif [[ $item == "fish" ]]; then
-                if [[ -f "$HOMEBREW_PREFIX/bin/fish" ]]; then
-                    sudo ln -sfv $HOMEBREW_PREFIX/bin/fish /usr/local/bin/fish
+                if [[ $ARCH == "arm64" ]]; then
+                    sudo mkdir -p /usr/local/bin/
+                    sudo ln -sfv "$HOMEBREW_PREFIX/bin/fish" /usr/local/bin/fish
                 fi
+
+                # set default shell to fish
+                echo /usr/local/bin/fish | sudo tee -a /etc/shells
+                chsh -s /usr/local/bin/fish
+            elif [[ $item = "pinentry-mac" ]]; then
+                echo "pinentry-program $(which pinentry-mac)" >> ~/.gnupg/gpg-agent.conf
+
+                killall gpg-agent
             fi
             brew cleanup "$item"
             echo "${Green}Install ${Red}$item ${Blue}over.${NC}"
@@ -127,7 +141,7 @@ function install_python() {
 
     mise use -g python@3.11
 
-    ehco "${LightGreen}Install python over.${NC}"
+    echo "${LightGreen}Install python over.${NC}"
 }
 
 function install_erlang() {
@@ -137,9 +151,20 @@ function install_erlang() {
     fi
 
     # need install wxwidgets brew install wxwidgets
-    env KERL_CONFIGURE_OPTIONS="--enable-wx --with-wx-config=$HOMEBREW_PREFIX/bin/wx-config-3.0 --without-javac --without-odbc --enable-threads --with-ssl=$(brew --prefix openssl@1.1)" mise use -g erlang@25.3.2.12
+    env KERL_CONFIGURE_OPTIONS="--enable-wx --with-wx-config=$HOMEBREW_PREFIX/bin/wx-config-3.0 --without-javac --without-odbc --enable-threads --with-ssl=$(brew --prefix openssl@1.1)" mise use -g erlang@26
 
     echo "${LightGreen}Install erlang over.${NC}"
+}
+
+function install_rust() {
+    if exist rustc; then
+        echo "${LightRed}Rust already installed!${NC}"
+        return
+    fi
+
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+    echo "${LightGreen}Install rust over.${NC}"
 }
 
 function install_powerline_fonts() {
@@ -172,32 +197,6 @@ function install_nerd_fonts() {
     brew install "${font}"
 
     echo "${LightGreen}Install nerd fonts ${LightRed}$font ${LightGreen}over.${NC}"
-}
-
-function install_codelldb() {
-    read -rp "${Yellow}Do you want to install codelldb(debug plugin)? (y/n): ${NC}" confirm
-    if [[ $confirm == "n" ]]; then
-        return
-    fi
-
-    read -rp "${Yellow}Please enter install version of codelldb(e.g. v1.9.0): ${NC}" version
-
-    arch=$ARCH
-    if [[ "$ARCH" == "arm64" ]]; then
-        arch="aarch64"
-    fi
-
-    url=$(printf "https://github.com/vadimcn/codelldb/releases/download/%s/codelldb-${arch}-darwin.vsix" "$version")
-    echo "$url"
-
-    if [[ ! -d "$CODELLDB_DIR/extension" ]]; then
-        filename="codelldb-${arch}-darwin.vsix"
-        curl --location --remote-name -s "$url" -o "$filename"
-        unzip -qo "$filename" -d "$CODELLDB_DIR/"
-        rm -f "$filename"
-    fi
-
-    echo "${LightGreen}Install codelldb version $version over.${NC}"
 }
 
 function init_env() {
@@ -262,7 +261,7 @@ function install_all() {
     install_go
     install_python
     install_cask_pkg
-    install_powerline_fonts
+    install_rust
     install_nerd_fonts
 
     init_env
@@ -276,7 +275,7 @@ ${Cyan}select a function code:
 【 3 】 Install cask packages
 【 4 】 Install golang
 【 5 】 Install python
-【 6 】 Install powerline fonts
+【 6 】 Install rust
 【 7 】 Install nerd fonts
 【 8 】 Init environment
 【 0 】 Install all
@@ -297,7 +296,7 @@ case $choice in
     3) install_cask_pkg ;;
     4) install_go ;;
     5) install_python ;;
-    6) install_powerline_fonts ;;
+    6) install_rust ;;
     7) install_nerd_fonts ;;
     8) init_env ;;
     0) install_all ;;

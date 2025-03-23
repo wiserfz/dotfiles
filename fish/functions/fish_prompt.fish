@@ -2,7 +2,7 @@ function fish_prompt
     set -l __last_command_exit_status $status
 
     if not set -q __dotfiles_project
-        set __dotfiles_project ~/workspace/dotfiles/
+        set __dotfiles_project ~/Workspace/dotfiles/
     end
     # Colors
     # Reset

@@ -37,8 +37,13 @@ set -x MANPAGER "sh -c 'col -bx | bat -l man -p --theme \"Monokai Extended\"'"
 if command -v brew >/dev/null 2>&1
     # disable homebrew auto update
     set -Ux HOMEBREW_NO_AUTO_UPDATE true
-    # setup homebrew mirror
+    # setup homebrew mirror for install package
+    # see: https://mirrors.ustc.edu.cn/help/brew.git.html#homebrew-linuxbrew
     set -Ux HOMEBREW_BREW_GIT_REMOTE "https://mirrors.ustc.edu.cn/brew.git"
+    set -Ux HOMEBREW_CORE_GIT_REMOTE "https://mirrors.ustc.edu.cn/homebrew-core.git"
+    set -Ux HOMEBREW_BOTTLE_DOMAIN "https://mirrors.ustc.edu.cn/homebrew-bottles"
+    set -Ux HOMEBREW_API_DOMAIN "https://mirrors.ustc.edu.cn/homebrew-bottles/api"
+
     set -Ux HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS 7
     # disable homebrew installed dependents check
     set -Ux HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK true
