@@ -297,7 +297,7 @@ function M.setup()
             enabled = true,
           },
           storage = {
-            home = os.getenv("HOME") .. "/workspace/leetcode",
+            home = os.getenv("HOME") .. "/Workspace/leetcode",
           },
           logging = false,
           arg = "leetcode.nvim",
@@ -438,8 +438,8 @@ function M.setup()
     },
     {
       "echasnovski/mini.animate", -- Animate common Neovim actions
-      cond = function()
-        return vim.g.neovide == nil
+      enabled = function()
+        return vim.g.neovide == nil and util.arch() ~= "arm64"
       end,
       version = false,
       config = config("animation"),

@@ -99,4 +99,12 @@ M.icons = {
   Variable = "󰀫 ",
 }
 
+function M.arch()
+  local handle = io.popen("uname -m")
+  local arch = handle:read("*a")
+  handle.close()
+
+  return arch
+end
+
 return M

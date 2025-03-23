@@ -78,7 +78,7 @@ function M.setup()
           icon = " ",
           desc = "Dotfiles project",
           group = "Number",
-          action = ":e ~/workspace/dotfiles/",
+          action = ":e ~/Workspace/dotfiles/",
           key = ".",
         },
         {
