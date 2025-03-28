@@ -54,6 +54,7 @@ function M.setup()
             buildScripts = {
               enable = true,
             },
+            features = "all",
           },
           procMacro = {
             enable = true,
