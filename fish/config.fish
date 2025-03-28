@@ -25,10 +25,8 @@ end
 
 # delete welcome message of fish shell
 set fish_greeting ""
-set -Ux fish_prompt_pwd_dir_length 0
 
-set -Ux LC_ALL "en_US.UTF-8"
-set -Ux CLICOLOR 1
+set -x LC_ALL "en_US.UTF-8"
 
 # colorizing pager for man, using bat
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p --theme \"Monokai Extended\"'"
@@ -36,25 +34,25 @@ set -x MANPAGER "sh -c 'col -bx | bat -l man -p --theme \"Monokai Extended\"'"
 # brew
 if command -v brew >/dev/null 2>&1
     # disable homebrew auto update
-    set -Ux HOMEBREW_NO_AUTO_UPDATE true
+    set -x HOMEBREW_NO_AUTO_UPDATE true
     # setup homebrew mirror for install package
     # see: https://mirrors.ustc.edu.cn/help/brew.git.html#homebrew-linuxbrew
-    set -Ux HOMEBREW_BREW_GIT_REMOTE "https://mirrors.ustc.edu.cn/brew.git"
-    set -Ux HOMEBREW_CORE_GIT_REMOTE "https://mirrors.ustc.edu.cn/homebrew-core.git"
-    set -Ux HOMEBREW_BOTTLE_DOMAIN "https://mirrors.ustc.edu.cn/homebrew-bottles"
-    set -Ux HOMEBREW_API_DOMAIN "https://mirrors.ustc.edu.cn/homebrew-bottles/api"
+    set -x HOMEBREW_BREW_GIT_REMOTE "https://mirrors.ustc.edu.cn/brew.git"
+    set -x HOMEBREW_CORE_GIT_REMOTE "https://mirrors.ustc.edu.cn/homebrew-core.git"
+    set -x HOMEBREW_BOTTLE_DOMAIN "https://mirrors.ustc.edu.cn/homebrew-bottles"
+    set -x HOMEBREW_API_DOMAIN "https://mirrors.ustc.edu.cn/homebrew-bottles/api"
 
-    set -Ux HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS 7
+    set -x HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS 7
     # disable homebrew installed dependents check
-    set -Ux HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK true
+    set -x HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK true
 end
 
 # # fzf
-# set -Ux FZF_CTRL_T_OPTS "
+# set -x FZF_CTRL_T_OPTS "
 #     --walker-skip .git,target
 #     --preview 'bat -n --color=always {}'
 #     --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-# set -Ux FZF_CTRL_R_OPTS "
+# set -x FZF_CTRL_R_OPTS "
 #     --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
 #     --color header:italic
 #     --header 'Press CTRL-Y to copy command into clipboard'"
