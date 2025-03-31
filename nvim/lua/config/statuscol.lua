@@ -33,7 +33,7 @@ function M.setup()
       {
         sign = {
           namespace = { "gitsigns" },
-          maxwidth = 1,
+          maxwidth = 2,
           colwidth = 1,
           wrap = true,
           foldclosed = true,
