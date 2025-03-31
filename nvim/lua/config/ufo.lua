@@ -84,12 +84,22 @@ function M.setup()
       desc = "Close all folds",
     },
     {
-      "<leader>zp",
+      "<leader>zr",
+      ufo.openFoldsExceptKinds,
+      desc = "Open folds except specified kinds",
+    },
+    {
+      "<leader>zm",
+      ufo.closeFoldsWith,
+      desc = "Close the folds with a higher level",
+    },
+    {
+      "<leader>zk",
       goPreviousClosedAndPeek,
       desc = "Preview previous fold",
     },
     {
-      "<leader>zn",
+      "<leader>zj",
       goNextClosedAndPeek,
       desc = "Preview next fold",
     },

@@ -388,11 +388,11 @@ function M.setup()
       event = "VeryLazy",
       config = config("treesitter"),
     },
+    -- WARN: Neovide has something wrong with nvim-ufo plugin,
+    -- it doesn't work well when click on folds can't open.
+    -- see https://github.com/neovide/neovide/issues/2815
     {
       "kevinhwang91/nvim-ufo",
-      cond = function()
-        return vim.g.neovide == nil
-      end,
       event = "BufReadPost",
       dependencies = {
         "neovim/nvim-lspconfig",
