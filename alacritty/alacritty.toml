@@ -1,6 +1,6 @@
 [window]
 decorations = "Buttonless"
-opacity = 0.90
+opacity = 0.80
 startup_mode = "SimpleFullscreen"
 option_as_alt = "Both"
 

@@ -17,6 +17,7 @@ function M.setup()
         return true
       end,
     },
+    copilot_model = "gpt-4o-copilot",
   })
 end
 
