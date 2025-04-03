@@ -6,7 +6,7 @@ function M.setup()
   fidget.setup({
     progress = {
       display = {
-        done_icon = "",
+        done_icon = "✔ ",
         done_ttl = 2,
       },
       ignore = { "null-ls" },
@@ -14,7 +14,7 @@ function M.setup()
     notification = {
       window = {
         max_height = 4,
-        normal_hl = "FidgetNormal",
+        -- winblend = 0,
       },
     },
   })

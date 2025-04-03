@@ -106,9 +106,8 @@ function M.setup()
   })
 
   vim.cmd([[
-    " hi Folded guibg=#2e3440 guifg=#81a1c1
     hi Folded guibg=NONE
-    hi FoldColumn guifg=gray guibg=#232526
+    hi FoldColumn guifg=gray
   ]])
 end
 
