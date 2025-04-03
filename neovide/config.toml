@@ -3,9 +3,8 @@ frame = "buttonless"
 idle = true
 maximized = false
 no-multigrid = false
-srgb = false
-tabs = false
-theme = "auto"
+srgb = true
+tabs = true
 mouse-cursor-icon = "arrow"
 title-hidden = true
 vsync = true
@@ -31,3 +30,9 @@ style = "Bold Italic"
 [[font.bold_italic]]
 family = "JetBrainsMono Nerd Font Propo"
 style = "ExtraBold Italic"
+
+[box-drawing]
+mode = "font-glyph"
+
+[box-drawing.sizes]
+default = [2, 4]

@@ -6,13 +6,15 @@ end
 
 -- Add keybinds to change transparency
 local change_transparency = function(delta)
-  vim.g.neovide_transparency = vim.g.neovide_transparency + delta
+  vim.g.neovide_opacity = vim.g.neovide_opacity + delta
 end
 
 function M.setup()
   if vim.g.neovide == nil then
     return
   end
+
+  vim.g.neovide_macos_simple_fullscreen = true
 
   -- Change font size with ctrl + and ctrl -
   vim.g.neovide_scale_factor = 1.0
@@ -27,7 +29,8 @@ function M.setup()
   vim.g.neovide_text_contrast = 0.1
 
   -- Set transparency and background color (title bar color)
-  vim.g.neovide_transparency = 0.8
+  vim.g.neovide_opacity = 0.8
+  vim.g.neovide_normal_opacity = 1.0
   -- command + ] to increase transparency
   vim.keymap.set({ "n", "v", "o" }, "<D-]>", function()
     change_transparency(0.01)
@@ -37,8 +40,15 @@ function M.setup()
     change_transparency(-0.01)
   end)
 
+  -- Set duration for the animation of change window position
+  vim.g.neovide_position_animation_length = 0.3
+
+  -- Set duration for the animation of scoll cursor
+  vim.g.neovide_scroll_animation_length = 0.3
+  vim.g.neovide_scroll_animation_far_lines = 10
+
   -- Set floating window transparency
-  vim.o.winblend = 40
+  vim.o.winblend = 45
 
   vim.g.neovide_floating_blur_amount_x = 10.0
   vim.g.neovide_floating_blur_amount_y = 10.0

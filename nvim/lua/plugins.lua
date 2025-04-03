@@ -252,7 +252,7 @@ function M.setup()
       dependencies = {
         "neovim/nvim-lspconfig",
       },
-      version = "v5", -- Recommended
+      version = "^6", -- Recommended
       lazy = false, -- This plugin is already lazy
       ft = { "rust" },
       config = config("rust"),
@@ -324,6 +324,8 @@ function M.setup()
         })
       end,
     },
+    -- WARN: lualine background transparent not work well with neovide
+    -- see: https://github.com/neovide/neovide/issues/2275
     {
       "nvim-lualine/lualine.nvim",
       event = "VimEnter",
@@ -436,14 +438,14 @@ function M.setup()
       },
       config = config("codecompanion"),
     },
-    {
-      "echasnovski/mini.animate", -- Animate common Neovim actions
-      enabled = function()
-        return vim.g.neovide == nil and util.arch() ~= "arm64"
-      end,
-      version = false,
-      config = config("animation"),
-    },
+    -- {
+    --   "echasnovski/mini.animate", -- Animate common Neovim actions
+    --   enabled = function()
+    --     return vim.g.neovide == nil and util.arch() ~= "arm64"
+    --   end,
+    --   version = false,
+    --   config = config("animation"),
+    -- },
   })
 end
 
