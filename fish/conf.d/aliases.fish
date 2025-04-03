@@ -26,5 +26,6 @@ end
 
 # Git alias
 alias gst="git status -sb"
-alias glg="git log --stat --graph --all --max-count=20 --show-signature"
+# alias glg="git log --stat --graph --all --max-count=20 --show-signature"
+alias glg="git log --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 alias gco="git checkout"

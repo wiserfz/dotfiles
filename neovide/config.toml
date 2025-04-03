@@ -31,3 +31,9 @@ style = "Bold Italic"
 [[font.bold_italic]]
 family = "JetBrainsMono Nerd Font Propo"
 style = "ExtraBold Italic"
+
+[box-drawing]
+mode = "font-glyph"
+
+[box-drawing.sizes]
+default = [2, 4]
