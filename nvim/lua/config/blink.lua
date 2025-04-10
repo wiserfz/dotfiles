@@ -91,7 +91,7 @@ function M.setup()
       kind_icons = util.icons,
     },
     sources = {
-      default = { "copilot", "lsp", "path", "snippets", "buffer", "crates" },
+      default = { "copilot", "lazydev", "lsp", "path", "snippets", "buffer", "crates" },
       providers = {
         copilot = {
           name = "copilot",
@@ -112,7 +112,13 @@ function M.setup()
         crates = {
           name = "crates",
           module = "blink.compat.source",
-          score_offset = 10,
+          score_offset = 100,
+        },
+        lazydev = {
+          name = "LazyDev",
+          module = "lazydev.integrations.blink",
+          -- make lazydev completions top priority (see `:h blink.cmp`)
+          score_offset = 100,
         },
       },
     },

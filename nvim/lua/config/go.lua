@@ -14,6 +14,7 @@ function M.setup()
     lsp_inlay_hints = {
       enable = false,
     },
+    diagnostic = false,
   })
 end
 

@@ -175,12 +175,6 @@ function M.setup()
         "williamboman/mason-lspconfig.nvim", -- Integration with nvim-lspconfig
         "b0o/schemastore.nvim", -- YAML/JSON schemas
         "saghen/blink.cmp", -- completion
-        {
-          "folke/neodev.nvim",
-          opts = {
-            library = { plugins = { "neotest", "nvim-dap-ui" }, types = true },
-          },
-        },
       },
       config = config("lspconfig"),
     },
@@ -254,8 +248,23 @@ function M.setup()
       },
       version = "^6", -- Recommended
       lazy = false, -- This plugin is already lazy
-      ft = { "rust" },
+      ft = "rust",
       config = config("rust"),
+    },
+    -- Lua
+    {
+      "folke/lazydev.nvim",
+      ft = "lua",
+      opts = {
+        integrations = {
+          lspconfig = false,
+          cmp = false,
+        },
+        library = {
+          { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          { path = "lazy.nvim", words = { "LazyVim" } },
+        },
+      },
     },
     -- Indent
     {
