@@ -1,7 +1,6 @@
 local lspconfig = require("lspconfig")
 local lspconfig_util = require("lspconfig").util
 local blink = require("blink.cmp")
-local neodev = require("neodev")
 local wk = require("which-key")
 local mason_lspconfig = require("mason-lspconfig")
 local schemastore = require("schemastore")
@@ -209,15 +208,28 @@ function M.setup()
   vim.lsp.set_log_level("ERROR")
 
   -- Change the Diagnostic symbols in the sign column (gutter)
+  local diagnostics_text = {}
+  local diagnostics_numhl = {}
   for type, icon in pairs(util.diagnostics) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    if type == "Error" then
+      diagnostics_text[vim.diagnostic.severity.ERROR] = icon
+      diagnostics_numhl[vim.diagnostic.severity.ERROR] = ""
+    elseif type == "Warn" then
+      diagnostics_text[vim.diagnostic.severity.WARN] = icon
+      diagnostics_numhl[vim.diagnostic.severity.WARN] = ""
+    elseif type == "Info" then
+      diagnostics_text[vim.diagnostic.severity.INFO] = icon
+      diagnostics_numhl[vim.diagnostic.severity.INFO] = ""
+    else
+      diagnostics_text[vim.diagnostic.severity.HINT] = icon
+      diagnostics_numhl[vim.diagnostic.severity.HINT] = ""
+    end
   end
-  -- Neovim Lua API completions/documentation
-  neodev.setup({
-    override = function(_, library)
-      library.enabled = true
-    end,
+  vim.diagnostic.config({
+    signs = {
+      text = diagnostics_text,
+      numhl = diagnostics_numhl,
+    },
   })
 
   -- Client capabilities
