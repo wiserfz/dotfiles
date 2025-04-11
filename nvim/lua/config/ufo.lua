@@ -1,5 +1,6 @@
 local ufo = require("ufo")
 local wk = require("which-key")
+local promise = require("promise")
 
 --@param virtText table @The virtual text
 --@param lnum number @The line number
@@ -48,14 +49,38 @@ local function goNextClosedAndPeek()
   ufo.peekFoldedLinesUnderCursor()
 end
 
+--@param bufnr number
+--@return Promise
+local function customizeSelector(bufnr)
+  local function handleFallbackException(err, providerName)
+    if type(err) == "string" and err:match("UfoFallbackException") then
+      return ufo.getFolds(bufnr, providerName)
+    else
+      return promise.reject(err)
+    end
+  end
+
+  return ufo
+    .getFolds(bufnr, "lsp")
+    :catch(function(err)
+      return handleFallbackException(err, "treesitter")
+    end)
+    :catch(function(err)
+      return handleFallbackException(err, "indent")
+    end)
+end
+
 local M = {}
 
 function M.setup()
   local opts = {
-    -- INFO: Uncomment to use treeitter as fold provider, otherwise nvim lsp is used
-    -- provider_selector = function(bufnr, filetype, buftype)
-    --   return { "treesitter", "indent" }
-    -- end,
+    -- lsp -> treesitter -> indent
+    provider_selector = function(bufnr, filetype, buftype)
+      if filetype == "erlang" then
+        return { "treesitter", "indent" }
+      end
+      customizeSelector(bufnr)
+    end,
     open_fold_hl_timeout = 400,
     close_fold_kinds_for_ft = { default = { "imports", "comment" } },
     preview = {
