@@ -1,5 +1,7 @@
 local blink = require("blink.cmp")
+local blink_type = require("blink.cmp.types")
 local util = require("util")
+local colorful_menu = require("colorful-menu")
 
 local M = {}
 
@@ -63,7 +65,17 @@ function M.setup()
       },
       menu = {
         draw = {
-          treesitter = { "lsp" },
+          columns = { { "kind_icon" }, { "label", gap = 2 } },
+          components = {
+            label = {
+              text = function(ctx)
+                return colorful_menu.blink_components_text(ctx)
+              end,
+              highlight = function(ctx)
+                return colorful_menu.blink_components_highlight(ctx)
+              end,
+            },
+          },
         },
         -- Don't show completion menu automatically on cmdline
         auto_show = function(ctx)
@@ -107,6 +119,17 @@ function M.setup()
               item.kind = kind_idx
             end
             return items
+          end,
+        },
+        lsp = {
+          name = "LSP",
+          module = "blink.cmp.sources.lsp",
+          fallbacks = { "buffer" },
+          transform_items = function(_, items)
+            -- filter out text items, since we have the buffer source
+            return vim.tbl_filter(function(item)
+              return item.kind ~= blink_type.CompletionItemKind.Text
+            end, items)
           end,
         },
         crates = {
