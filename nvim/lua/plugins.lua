@@ -107,6 +107,7 @@ function M.setup()
         "rafamadriz/friendly-snippets", -- useful snippets
         "giuxtaposition/blink-cmp-copilot",
         "saghen/blink.compat",
+        "xzbdmw/colorful-menu.nvim",
       },
       config = config("blink"),
     },
@@ -447,14 +448,6 @@ function M.setup()
       },
       config = config("codecompanion"),
     },
-    -- {
-    --   "echasnovski/mini.animate", -- Animate common Neovim actions
-    --   enabled = function()
-    --     return vim.g.neovide == nil and util.arch() ~= "arm64"
-    --   end,
-    --   version = false,
-    --   config = config("animation"),
-    -- },
   })
 end
 
