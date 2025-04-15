@@ -294,45 +294,14 @@ function M.setup()
       build = ":TSUpdate html",
       dependencies = {
         "nvim-telescope/telescope.nvim",
+        -- "ibhagwan/fzf-lua",
         "nvim-lua/plenary.nvim", -- required by telescope
         "MunifTanjim/nui.nvim",
         "nvim-treesitter/nvim-treesitter",
         "nvim-tree/nvim-web-devicons",
       },
       lazy = "leetcode.nvim" ~= vim.fn.argv()[1],
-      config = function()
-        require("leetcode").setup({
-          lang = "golang",
-          cn = { -- leetcode.cn
-            enabled = true,
-          },
-          storage = {
-            home = os.getenv("HOME") .. "/Workspace/leetcode",
-          },
-          logging = false,
-          arg = "leetcode.nvim",
-        })
-
-        local wk = require("which-key")
-
-        wk.add({
-          noremap = false,
-          silent = true,
-
-          { "<leader>l", group = "Leetcode" },
-
-          { "<leader>ll", "<cmd>Leet list<cr>", desc = "Problem list" },
-          { "<leader>lr", "<cmd>Leet run<cr>", desc = "Run current solution" },
-          { "<leader>ls", "<cmd>Leet submit<cr>", desc = "Subimt current solution" },
-          { "<leader>lo", "<cmd>Leet open<cr>", desc = "Open current problem" },
-          { "<leader>lc", "<cmd>Leet console<cr>", desc = "Open console for current problem" },
-          {
-            "<leader>lu",
-            "<cmd>Leet cookie update<CR>",
-            desc = "Update cookie",
-          },
-        })
-      end,
+      config = config("leetcode"),
     },
     -- WARN: lualine background transparent not work well with neovide
     -- see: https://github.com/neovide/neovide/issues/2275
