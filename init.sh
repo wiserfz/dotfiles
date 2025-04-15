@@ -139,7 +139,7 @@ function install_python() {
         return
     fi
 
-    mise use -g python@3.11
+    mise use -g python
 
     echo "${LightGreen}Install python over.${NC}"
 }
@@ -165,6 +165,17 @@ function install_rust() {
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
     echo "${LightGreen}Install rust over.${NC}"
+}
+
+function install_node() {
+    if ! exist mise; then
+        echo "${LightRed}mise not installed, please install it first!${NC}"
+        return
+    fi
+
+    mise use -g node
+
+    echo "${LightGreen}Install node over.${NC}"
 }
 
 function install_powerline_fonts() {
@@ -258,10 +269,11 @@ function install_all() {
     clone_env
     install_brew
     install_brew_pkg
+    install_cask_pkg
     install_go
     install_python
-    install_cask_pkg
     install_rust
+    install_node
     install_nerd_fonts
 
     init_env
@@ -276,8 +288,9 @@ ${Cyan}select a function code:
 【 4 】 Install golang
 【 5 】 Install python
 【 6 】 Install rust
-【 7 】 Install nerd fonts
-【 8 】 Init environment
+【 7 】 Install node
+【 8 】 Install nerd fonts
+【 9 】 Init environment
 【 0 】 Install all
 【 e 】 Exit
 ===============================${NC}
@@ -297,8 +310,9 @@ case $choice in
     4) install_go ;;
     5) install_python ;;
     6) install_rust ;;
-    7) install_nerd_fonts ;;
-    8) init_env ;;
+    7) install_node ;;
+    8) install_nerd_fonts ;;
+    9) init_env ;;
     0) install_all ;;
     e) echo "${LightGreen}Bye, Bye.${NC}" && exit ;;
 esac
