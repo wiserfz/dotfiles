@@ -16,10 +16,12 @@ end
 local M = {}
 
 function M.setup()
-  -- configure telescope
-  telescope.setup({
+  local opts = {
     -- configure custom mappings
     defaults = {
+      prompt_prefix = "  ",
+      selection_caret = "󱞪 ",
+      sorting_strategy = "ascending",
       mappings = {
         i = {
           ["<C-k>"] = actions.move_selection_previous, -- move to prev result
@@ -28,14 +30,10 @@ function M.setup()
         },
       },
       file_ignore_patterns = {
-        "^.git/",
-        "^target/",
+        ".git/",
+        "target/",
         "LICENSE*",
-      },
-      layout_config = {
-        vertical = {
-          width = 0.5,
-        },
+        "node_modules",
       },
     },
     extensions = {
@@ -45,16 +43,20 @@ function M.setup()
         filetypes = { "png", "webp", "jpg", "jpeg", "ppm", "pdf" },
         find_cmd = "rg", -- find command (defaults to `fd`)
       },
-    },
-  })
-
-  if vim.g.neovide ~= nil then
-    telescope.setup({
-      defaults = {
-        winblend = 70,
+      extensions = {
+        fzf = {
+          fuzzy = true, -- false will only do exact matching
+          override_generic_sorter = true, -- override the generic sorter
+          override_file_sorter = true, -- override the file sorter
+          case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+          -- the default case_mode is "smart_case"
+        },
       },
-    })
-  end
+    },
+  }
+
+  -- configure telescope
+  telescope.setup(opts)
 
   -- load extension to support preview of media files
   telescope.load_extension("media_files")
