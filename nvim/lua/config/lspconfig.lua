@@ -1,5 +1,4 @@
 local lspconfig = require("lspconfig")
-local lspconfig_util = require("lspconfig").util
 local blink = require("blink.cmp")
 local wk = require("which-key")
 local mason_lspconfig = require("mason-lspconfig")
@@ -84,8 +83,10 @@ local server_configs = {
           checkThirdParty = false,
           -- make language server aware of runtime files
           library = {
-            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-            [vim.fn.stdpath("config") .. "/lua"] = true,
+            vim.fn.expand("$VIMRUNTIME/lua"),
+            vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
+            vim.fn.stdpath("config") .. "/lua",
+            "${3rd}/luv/library",
           },
         },
         -- Do not send telemetry data containing a randomized but unique identifier
@@ -157,11 +158,6 @@ local server_configs = {
     },
   },
   buf_ls = {}, -- for protobuf
-  -- markdown_oxide = {
-  --   root_dir = function(fname, _)
-  --     return lspconfig_util.root_pattern(".obsidian", ".moxide.toml", ".git")(fname) or vim.uv.cwd()
-  --   end,
-  -- },
   elp = {}, -- for erlang
   harper_ls = { -- Grammar Checker
     on_attach = function(client, bufnr)
@@ -188,7 +184,13 @@ local server_configs = {
   },
   clangd = { -- for c and cpp
     filetypes = { "h", "c", "cpp", "cc", "objc", "objcpp" },
-    cmd = { "clangd", "--background-index" },
+    cmd = {
+      "clangd",
+      "--background-index",
+      "--suggest-missing-includes",
+      "--clang-tidy",
+      "--header-insertion=iwyu",
+    },
     single_file_support = true,
     root_dir = lspconfig.util.root_pattern(
       ".clangd",
