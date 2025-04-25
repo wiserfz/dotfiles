@@ -10,18 +10,24 @@ end
 
 function M.setup()
   conform.setup({
+    default_format_opts = {
+      lsp_format = "fallback",
+    },
     formatters_by_ft = {
-      proto = { "buf" }, -- protocol buffer formatter
-      yaml = { "yamlfmt" }, -- yaml formatter configuration of yamlfmt: https://github.com/google/yamlfmt/blob/main/docs/config-file.md
-      sh = { "shfmt" }, -- shell parser and formatter
-      lua = { "stylua" }, -- lua formatter
-      fish = { "fish_indent" }, -- indenter and prettifier for fish code
-      sql = { "sqlfmt" }, -- sql formatter
-      json = { "jq" }, -- json formatter
-      python = { "ruff_format" }, -- python formatter
-      go = { "gofmt", "goimports" }, -- go formatter
-      rust = { "rustfmt" }, -- rust formatter
-      ["*"] = { "trim_whitespace" },
+      proto = { "buf" },
+      yaml = { "yamlfmt" }, -- https://github.com/google/yamlfmt/blob/main/docs/config-file.md
+      sh = { "shfmt" },
+      lua = { "stylua" },
+      fish = { "fish_indent" },
+      sql = { "sqlfmt" },
+      json = { "jq" },
+      python = { "ruff_format" },
+      go = { "goimports", "gofmt" },
+      rust = { "rustfmt" },
+      erlang = { "erlfmt" },
+      markdown = { "injected" },
+      query = { "format-queries" },
+      ["_"] = { "trim_whitespace", "trim_newlines" },
     },
     formatters = {
       shfmt = {
@@ -39,35 +45,40 @@ function M.setup()
       },
       rustfmt = {
         options = {
-          default_edition = "2021",
+          default_edition = "2024",
         },
       },
     },
     format_on_save = function(bufnr)
+      local trim_formatters = {
+        timeout_ms = 5000,
+        formatters = { "trim_whitespace", "trim_newlines" },
+      }
+
       -- Disable autoformat on certain filetypes
-      -- local ignore_filetypes = { "sql", "java" }
-      -- if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
-      --   return
-      -- end
+      local ignore_filetypes = { "rust", "erlang" }
+      if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
+        return trim_formatters
+      end
 
       -- Disable autoformat for file has certain suffix
       local bufname = vim.api.nvim_buf_get_name(bufnr)
       if bufname:suffix("lazy-lock.json") then
-        return
+        return trim_formatters
       end
 
       -- Disable with a global or buffer-local variable
       if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-        return
+        return trim_formatters
       end
 
       -- Disable autoformat for files in a certain path
       -- local bufname = vim.api.nvim_buf_get_name(bufnr)
       -- if bufname:match("/target/") then
-      --   return
+      --   return trim_whitespace
       -- end
 
-      return { timeout_ms = 500, lsp_format = "fallback" }
+      return { timeout_ms = 5000, lsp_format = "fallback" }
     end,
   })
 
@@ -92,7 +103,7 @@ function M.setup()
 
   wk.add({
     {
-      "<leader>F",
+      "gqq",
       function()
         conform.format({ async = true }, function(err)
           if not err then
@@ -107,9 +118,8 @@ function M.setup()
           end
         end)
       end,
+      mode = { "n", "v" },
       desc = "Format code",
-      noremap = false,
-      silent = true,
     },
   })
 end
