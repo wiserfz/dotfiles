@@ -57,10 +57,10 @@ function M.setup()
         {
           "diagnostics",
           symbols = {
-            error = diagnostics_icon.Error,
-            warn = diagnostics_icon.Warn,
-            info = diagnostics_icon.Info,
-            hint = diagnostics_icon.Hint,
+            error = diagnostics_icon.ERROR,
+            warn = diagnostics_icon.WARN,
+            info = diagnostics_icon.INFO,
+            hint = diagnostics_icon.HINT,
           },
         },
         {

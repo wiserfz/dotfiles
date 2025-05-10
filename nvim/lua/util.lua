@@ -28,10 +28,10 @@ function M.join_paths(...)
 end
 
 M.diagnostics = {
-  Error = " ",
-  Warn = " ",
-  Hint = " ",
-  Info = " ",
+  ERROR = " ",
+  WARN = " ",
+  HINT = " ",
+  INFO = " ",
 }
 
 M.git = {

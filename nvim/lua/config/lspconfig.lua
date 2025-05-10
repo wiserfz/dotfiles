@@ -213,19 +213,8 @@ function M.setup()
   local diagnostics_text = {}
   local diagnostics_numhl = {}
   for type, icon in pairs(util.diagnostics) do
-    if type == "Error" then
-      diagnostics_text[vim.diagnostic.severity.ERROR] = icon
-      diagnostics_numhl[vim.diagnostic.severity.ERROR] = ""
-    elseif type == "Warn" then
-      diagnostics_text[vim.diagnostic.severity.WARN] = icon
-      diagnostics_numhl[vim.diagnostic.severity.WARN] = ""
-    elseif type == "Info" then
-      diagnostics_text[vim.diagnostic.severity.INFO] = icon
-      diagnostics_numhl[vim.diagnostic.severity.INFO] = ""
-    else
-      diagnostics_text[vim.diagnostic.severity.HINT] = icon
-      diagnostics_numhl[vim.diagnostic.severity.HINT] = ""
-    end
+    diagnostics_text[vim.diagnostic.severity[type]] = icon
+    diagnostics_numhl[vim.diagnostic.severity[type]] = ""
   end
   vim.diagnostic.config({
     signs = {
