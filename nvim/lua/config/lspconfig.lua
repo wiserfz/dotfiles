@@ -1,10 +1,10 @@
 local lspconfig = require("lspconfig")
 local blink = require("blink.cmp")
 local wk = require("which-key")
+local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 local schemastore = require("schemastore")
 local util = require("util")
-local work_directory = os.getenv("HOME") .. "/Workspace"
 
 local disable = function() end
 -- Special server configurations
@@ -161,7 +161,7 @@ local server_configs = {
   elp = {}, -- for erlang
   harper_ls = { -- Grammar Checker
     on_attach = function(client, bufnr)
-      if vim.fs.dirname(vim.fn.getcwd()) == work_directory then
+      if vim.fs.dirname(vim.fn.getcwd()) == os.getenv("HOME") .. "/Workspace" then
         vim.lsp.stop_client(client.id)
         return
       end
@@ -240,18 +240,32 @@ function M.setup()
         M.on_attach(client, bufnr)
       end,
     })
-    lspconfig[server_name].setup(opts_with_capabilities)
+
+    vim.lsp.config(server_name, opts_with_capabilities)
   end
 
   -- Ensure that servers mentioned above get installed
-  local ensure_installed =
-    vim.list_extend(vim.tbl_keys(server_configs), vim.tbl_keys(special_servers))
+  local special_servers_name = vim.tbl_keys(special_servers)
+  local ensure_installed = vim.list_extend(vim.tbl_keys(server_configs), special_servers_name)
 
+  for _, server_name in ipairs(ensure_installed) do
+    setup(server_name)
+  end
+
+  mason.setup({
+    ui = {
+      icons = {
+        package_installed = "✓",
+        package_pending = "➜",
+        package_uninstalled = "✗",
+      },
+    },
+  })
   mason_lspconfig.setup({
     ensure_installed = ensure_installed,
-    -- auto-install configured servers (with lspconfig)
-    automatic_installation = false, -- not the same as ensure_installed
-    handlers = { setup },
+    automatic_enable = {
+      exclude = special_servers_name,
+    },
   })
 end
 
