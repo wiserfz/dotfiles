@@ -158,6 +158,7 @@ local server_configs = {
     },
   },
   buf_ls = {}, -- for protobuf
+  just = {},
   elp = {}, -- for erlang
   harper_ls = { -- Grammar Checker
     on_attach = function(client, bufnr)
