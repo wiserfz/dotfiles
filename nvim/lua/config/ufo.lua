@@ -134,6 +134,15 @@ function M.setup()
     hi Folded guibg=NONE
     hi FoldColumn guifg=gray
   ]])
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "sagaoutline" },
+    callback = function()
+      ufo.detach()
+      vim.opt_local.foldenable = false
+      vim.opt_local.foldcolumn = "0"
+    end,
+  })
 end
 
 return M
