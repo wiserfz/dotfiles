@@ -4,14 +4,14 @@ local wk = require("which-key")
 
 local M = {}
 
---@param suggestion string @The arguments for the command
---@return table @The command arguments
+---@param suggestion string @The arguments for the command
+---@return table @The command arguments
 local function input_cmd_args(suggestion)
   local cmd_args_str = vim.fn.input("Args: ", suggestion)
   return vim.split(cmd_args_str, " ", { plain = true, trimempty = true })
 end
 
---@return table @The init commands
+---@return table @The init commands
 local function init_commands()
   local rustc_sysroot = vim.fn.trim(vim.fn.system("rustc --print sysroot"))
 

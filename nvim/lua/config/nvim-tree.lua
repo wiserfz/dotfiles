@@ -2,7 +2,7 @@ local tree = require("nvim-tree")
 local api = require("nvim-tree.api")
 local wk = require("which-key")
 
---@param data table @The data from the autocmd
+---@param data table @The data from the autocmd
 local function open_nvim_tree(data)
   -- buffer is a directory
   local directory = vim.fn.isdirectory(data.file) == 1
@@ -18,7 +18,7 @@ local function open_nvim_tree(data)
   require("nvim-tree.api").tree.open()
 end
 
---@param bufnr number @The client buffer number
+---@param bufnr number @The client buffer number
 local function _on_attach(bufnr)
   local function opts(desc)
     return {
