@@ -3,8 +3,8 @@ local diagnostics_icon = require("util").diagnostics
 local lazy_status = require("lazy.status")
 local devicons = require("nvim-web-devicons")
 
---@param name string @The name of the highlight group
---@return function @A function that returns the foreground color of the highlight group
+---@param name string @The name of the highlight group
+---@return function @A function that returns the foreground color of the highlight group
 local function fg(name)
   return function()
     ---@type {foreground?:number}?

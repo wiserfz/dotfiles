@@ -15,7 +15,7 @@ local special_servers = {
 
 local M = {}
 
---@return table @Capabilities for LSP clients
+---@return table @Capabilities for LSP clients
 function M.get_capabilities()
   -- used to enable autocompletion (assign to every lsp server config)
   local capabilities = vim.lsp.protocol.make_client_capabilities()

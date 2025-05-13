@@ -2,12 +2,12 @@ local ufo = require("ufo")
 local wk = require("which-key")
 local promise = require("promise")
 
---@param virtText table @The virtual text
---@param lnum number @The line number
---@param endLnum number @The end line number
---@param width number @The width of the window
---@param truncate function @The function to truncate the virtual text
---@return table @The new virtual text
+---@param virtText table @The virtual text
+---@param lnum number @The line number
+---@param endLnum number @The end line number
+---@param width number @The width of the window
+---@param truncate function @The function to truncate the virtual text
+---@return table @The new virtual text
 local handler = function(virtText, lnum, endLnum, width, truncate)
   local newVirtText = {}
   local suffix = ("  󰁂 %d "):format(endLnum - lnum)
@@ -49,8 +49,8 @@ local function goNextClosedAndPeek()
   ufo.peekFoldedLinesUnderCursor()
 end
 
---@param bufnr number
---@return Promise
+---@param bufnr number
+---@return Promise
 local function customizeSelector(bufnr)
   local function handleFallbackException(err, providerName)
     if type(err) == "string" and err:match("UfoFallbackException") then
