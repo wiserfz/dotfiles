@@ -41,6 +41,7 @@ function M.setup()
         click = "v:lua.ScSa",
       },
     },
+    ft_ignore = { "sagaoutline" },
   })
 end
 
