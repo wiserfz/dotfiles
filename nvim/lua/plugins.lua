@@ -308,6 +308,10 @@ function M.setup()
       },
       config = config("lualine"),
     },
+    -- WARN: Due to nvim-treesitter incompatible rewrite, so the nvim-matchup plugin can't integrate
+    -- with treesitter.
+    -- see: https://github.com/andymass/vim-matchup/pull/330,
+    -- https://github.com/andymass/vim-matchup/pull/390
     {
       "andymass/vim-matchup",
       dependencies = "tpope/vim-repeat",
@@ -329,6 +333,8 @@ function M.setup()
       event = { "BufReadPre", "BufNewFile" },
       config = true,
     },
+    -- WARN: Due to nvim-treesitter incompatible rewrite, so the preview highlight of telescope plugin
+    -- doesn't work, see: https://github.com/nvim-telescope/telescope.nvim/issues/3474
     {
       "nvim-telescope/telescope.nvim", -- fuzzy finder
       tag = "0.1.8",
@@ -358,10 +364,9 @@ function M.setup()
         "andymass/vim-matchup",
         "windwp/nvim-ts-autotag",
       },
-      build = function()
-        require("nvim-treesitter.install").update({ with_sync = true })()
-      end,
-      event = "VeryLazy",
+      lazy = false, -- load treesitter at startup
+      branch = "main",
+      build = ":TSUpdate",
       config = config("treesitter"),
     },
     -- WARN: Neovide has something wrong with nvim-ufo plugin,
