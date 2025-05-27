@@ -1,4 +1,4 @@
-; NOTE: Copy form nvim-treesitter/queries/erlang/highlights.scm
+; NOTE: Copy form nvim-treesitter/runtime/queries/erlang/highlights.scm
 ((atom) @constant
   (#set! priority "90"))
 
@@ -95,8 +95,8 @@
   lhs: _ @constant.macro
   (#set! priority 101))
 
-(_preprocessor_directive) @keyword.directive
-(#set! priority 99)
+((_preprocessor_directive) @keyword.directive
+  (#set! priority 99))
 
 ; Attributes
 (pp_include) @keyword.import
