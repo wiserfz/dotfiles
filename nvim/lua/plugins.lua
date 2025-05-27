@@ -236,6 +236,8 @@ function M.setup()
       config = config("conform"),
     },
     -- Golang
+    -- WARN: go.nvim is not compatible with treesitter main branch, see:
+    -- https://github.com/ray-x/go.nvim/issues/576
     {
       "ray-x/go.nvim",
       dependencies = { -- optional packages
@@ -321,15 +323,6 @@ function M.setup()
       config = config("lualine"),
     },
     {
-      "andymass/vim-matchup",
-      dependencies = "tpope/vim-repeat",
-      commit = "5456eaccf757606884ec1ac1ef3f564019973873",
-      event = "CursorMoved",
-      init = function()
-        vim.g.matchup_matchparen_offscreen = { method = "popup" } -- Don't display off-screen matches
-      end,
-    },
-    {
       "nvim-tree/nvim-tree.lua", -- file explorer
       dependencies = {
         "nvim-tree/nvim-web-devicons", -- for file icons
@@ -342,9 +335,11 @@ function M.setup()
       event = { "BufReadPre", "BufNewFile" },
       config = true,
     },
+    -- NOTE: Due to nvim-treesitter incompatible rewrite, so the preview highlight of telescope plugin
+    -- doesn't work, see: https://github.com/nvim-telescope/telescope.nvim/issues/3474
     {
       "nvim-telescope/telescope.nvim", -- fuzzy finder
-      tag = "0.1.8",
+      branch = "master",
       dependencies = {
         "nvim-lua/plenary.nvim",
         {
@@ -368,14 +363,22 @@ function M.setup()
       "nvim-treesitter/nvim-treesitter",
       dependencies = {
         -- "nvim-treesitter/nvim-treesitter-context",
-        "andymass/vim-matchup",
         "windwp/nvim-ts-autotag",
       },
-      build = function()
-        require("nvim-treesitter.install").update({ with_sync = true })()
-      end,
-      event = "VeryLazy",
+      lazy = false, -- load treesitter at startup
+      branch = "main",
+      build = ":TSUpdate",
       config = config("treesitter"),
+    },
+    {
+      "andymass/vim-matchup",
+      init = function()
+        -- recognize only symbols in strings and comments (and not words like `for`
+        -- or `end`)
+        vim.g.matchup_delim_noskips = 1
+        vim.g.matchup_matchparen_offscreen = { method = "popup" } -- Don't display off-screen matches
+        vim.g.matchup_matchparen_deferred = 1
+      end,
     },
     -- WARN: Neovide has something wrong with nvim-ufo plugin,
     -- it doesn't work well when click on folds can't open.
