@@ -1,2 +1,5 @@
 .netrwhist
 fish_variables
+docker.fish
+kubectl.fish
+orbctl.fish
