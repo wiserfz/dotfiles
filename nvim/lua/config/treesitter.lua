@@ -58,6 +58,9 @@ function M.setup()
       "ssh_config",
       "textproto",
       "comment",
+      "html",
+      "editorconfig",
+      "make",
     },
     -- disable automatically install missing parsers when entering buffer
     auto_install = false,

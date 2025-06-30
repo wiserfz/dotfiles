@@ -3,7 +3,6 @@ local M = {}
 function M.setup()
   vim.g.mapleader = ","
   vim.g.localleader = "\\"
-  vim.g.editorconfig = false
 
   vim.g.t_Co = 256
 

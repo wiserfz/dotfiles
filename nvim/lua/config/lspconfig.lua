@@ -1,7 +1,6 @@
 local lspconfig = require("lspconfig")
 local blink = require("blink.cmp")
 local wk = require("which-key")
-local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 local schemastore = require("schemastore")
 local util = require("util")
@@ -253,15 +252,6 @@ function M.setup()
     setup(server_name)
   end
 
-  mason.setup({
-    ui = {
-      icons = {
-        package_installed = "✓",
-        package_pending = "➜",
-        package_uninstalled = "✗",
-      },
-    },
-  })
   mason_lspconfig.setup({
     ensure_installed = ensure_installed,
     automatic_enable = {
