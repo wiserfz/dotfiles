@@ -172,7 +172,18 @@ function M.setup()
       "neovim/nvim-lspconfig",
       event = { "BufReadPre", "BufNewFile" },
       dependencies = {
-        "mason-org/mason.nvim",
+        {
+          "mason-org/mason.nvim",
+          opts = {
+            ui = {
+              icons = {
+                package_installed = "✓",
+                package_pending = "➜",
+                package_uninstalled = "✗",
+              },
+            },
+          },
+        },
         "mason-org/mason-lspconfig.nvim", -- Integration with nvim-lspconfig
         "b0o/schemastore.nvim", -- YAML/JSON schemas
         "saghen/blink.cmp", -- completion
