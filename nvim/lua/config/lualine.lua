@@ -8,8 +8,10 @@ local devicons = require("nvim-web-devicons")
 local function fg(name)
   return function()
     ---@type {foreground?:number}?
-    local hl = vim.api.nvim_get_hl_by_name(name, true)
-    return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
+    local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name })
+    ---@diagnostic disable-next-line: undefined-field
+    local fg_color = hl and (hl.fg or hl.foreground)
+    return fg_color and { fg = string.format("#%06x", fg_color) }
   end
 end
 

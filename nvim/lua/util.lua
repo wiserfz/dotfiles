@@ -99,11 +99,14 @@ M.icons = {
   Variable = "󰀫 ",
 }
 
----@return string @The current OS
+---@return string @The current CPU arch
 function M.arch()
   local handle = io.popen("uname -m")
+  if handle == nil then
+    return "unknown"
+  end
   local arch = handle:read("*a")
-  handle.close()
+  handle:close()
 
   return arch
 end
