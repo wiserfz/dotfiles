@@ -1,9 +1,11 @@
 local conform = require("conform")
-local util = require("util")
 local wk = require("which-key")
 
 local M = {}
 
+---WARN: diagnostic error see: https://github.com/LuaLS/lua-language-server/issues/2035
+---@param self string @The string suffix is ending or not
+---@diagnostic disable-next-line: duplicate-set-field
 function string:suffix(ending)
   return ending == "" or self:sub(-#ending) == ending
 end

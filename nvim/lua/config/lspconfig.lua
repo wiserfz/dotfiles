@@ -35,7 +35,7 @@ function M.get_capabilities()
   return capabilities
 end
 
----@param client lsp.Client @The client that was attached
+---@param client vim.lsp.Client @The client that was attached
 ---@param bufnr integer @The buffer number of the attached client
 function M.on_attach(client, bufnr)
   -- disable formatting for LSP clients as this is handled by confrom
@@ -74,8 +74,13 @@ local server_configs = {
         },
         -- make the language server recognize "vim" global
         diagnostics = {
-          enable = false,
-          globals = { "vim" },
+          disable = {
+            "missing-fields",
+          },
+          globals = {
+            "vim",
+            "require",
+          },
           -- disable = { "missing-parameters", "missing-fields" },
         },
         workspace = {
@@ -87,10 +92,6 @@ local server_configs = {
             vim.fn.stdpath("config") .. "/lua",
             "${3rd}/luv/library",
           },
-        },
-        -- Do not send telemetry data containing a randomized but unique identifier
-        telemetry = {
-          enable = false,
         },
         hint = {
           enable = true,

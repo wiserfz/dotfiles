@@ -50,7 +50,6 @@ local function goNextClosedAndPeek()
 end
 
 ---@param bufnr number
----@return Promise
 local function customizeSelector(bufnr)
   local function handleFallbackException(err, providerName)
     if type(err) == "string" and err:match("UfoFallbackException") then
