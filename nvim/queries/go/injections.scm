@@ -1,4 +1,4 @@
-;; extends
+; extends
 
 ; highlight embedded SQL queries in go
 (call_expression

@@ -1,4 +1,4 @@
-;; extends
+; extends
 
 (pair
   key: (_)

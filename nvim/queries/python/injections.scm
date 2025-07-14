@@ -1,4 +1,4 @@
-;; extends
+; extends
 
 ; highlight sqlite commands in python
 (call
