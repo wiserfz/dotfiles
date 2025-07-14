@@ -1,4 +1,4 @@
-;; extends
+; extends
 
 ("go" @my.keyword.coroutine
   (#set! "priority" 126))

@@ -1,5 +1,4 @@
 ; NOTE: Copy form nvim-treesitter/queries/erlang/highlights.scm
-
 ((atom) @constant
   (#set! priority "90"))
 
@@ -17,7 +16,6 @@
 ;
 ; ((comment) @comment.documentation
 ;   (#lua-match? @comment.documentation "^[%%][%%]"))
-
 ; keyword
 [
   "fun"

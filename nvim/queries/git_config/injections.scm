@@ -1,4 +1,4 @@
-;; extends
+; extends
 
 (variable
   (_)

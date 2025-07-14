@@ -1,4 +1,4 @@
-;; extends
+; extends
 
 ; Inject SQL in rust but in rust macro has problem
 ; see: https://github.com/nvim-treesitter/nvim-treesitter/issues/3110

@@ -323,6 +323,7 @@ function M.setup()
     {
       "andymass/vim-matchup",
       dependencies = "tpope/vim-repeat",
+      commit = "5456eaccf757606884ec1ac1ef3f564019973873",
       event = "CursorMoved",
       init = function()
         vim.g.matchup_matchparen_offscreen = { method = "popup" } -- Don't display off-screen matches

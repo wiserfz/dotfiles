@@ -1,60 +1,4 @@
-;; extends
-;; vim:ft=query
-
-; (table
-;   (dotted_key
-;     (bare_key) @_transforms
-;     (bare_key))
-;   (pair
-;     (bare_key) @_source
-;     (string) @injection.content)
-;   (#eq? @_transforms "transforms")
-;   (#eq? @_source "source")
-;   (#match? @injection.content "^'''\n")
-;   (#offset! @injection.content 0 3 0 -3)
-;   (#set! injection.language "vrl"))
-;
-; (table
-;   (dotted_key
-;     (dotted_key
-;       (bare_key) @_transforms
-;       (_))
-;     (bare_key) @_condition)
-;   (pair
-;     (bare_key) @_source
-;     (string) @injection.content)
-;   (#eq? @_transforms "transforms")
-;   (#eq? @_condition "condition")
-;   (#eq? @_source "source")
-;   (#match? @injection.content "^'''\n")
-;   (#offset! @injection.content 0 3 0 -3)
-;   (#set! injection.language "vrl"))
-;
-; (table_array_element
-;   (dotted_key
-;     (dotted_key (_))
-;     (bare_key) @_conditions)
-;   (pair
-;     (bare_key) @_source
-;     (string) @injection.content)
-;   (#eq? @_conditions "conditions")
-;   (#eq? @_source "source")
-;   (#match? @injection.content "^'''\n")
-;   (#offset! @injection.content 0 3 0 -3)
-;   (#set! injection.language "vrl"))
-;
-; (table_array_element
-;   (dotted_key
-;     (dotted_key (_))
-;     (bare_key) @_conditions)
-;   (pair
-;     (bare_key) @_source
-;     (string) @injection.content)
-;   (#eq? @_conditions "conditions")
-;   (#eq? @_source "source")
-;   (#match? @injection.content "^[\"']")
-;   (#offset! @injection.content 0 1 0 -1)
-;   (#set! injection.language "vrl"))
+; extends
 
 (pair
   (bare_key) @_source
@@ -68,32 +12,60 @@
   (bare_key) @_source
   (#any-of? @_source "source" "condition")
   (string) @injection.content
-  (#match? @injection.content "^'")
+  (#match? @injection.content "^[\"']")
   (#offset! @injection.content 0 1 0 -1)
   (#set! injection.language "vrl"))
 
 (table
   (dotted_key
-  (_)
-  (bare_key) @_route
-  (#eq? @_route "route"))
+    (_)
+    (bare_key) @_route
+    (#eq? @_route "route"))
   (pair
-  (_)
-  (string) @injection.content
-  (#match? @injection.content "^'''\n")
-  (#offset! @injection.content 0 3 0 -3)
-  (#set! injection.language "vrl"))
-)
+    (_)
+    (string) @injection.content
+    (#match? @injection.content "^'''\n")
+    (#offset! @injection.content 0 3 0 -3)
+    (#set! injection.language "vrl")))
 
 (table
   (dotted_key
-  (_)
-  (bare_key) @_route
-  (#eq? @_route "route"))
+    (_)
+    (bare_key) @_route
+    (#eq? @_route "route"))
   (pair
-  (_)
+    (_)
+    (string) @injection.content
+    (#match? @injection.content "^[\"']")
+    (#offset! @injection.content 0 1 0 -1)
+    (#set! injection.language "vrl")))
+
+(pair
+  (bare_key) @_key_field
+  (#eq? @_key_field "key_field")
   (string) @injection.content
-  (#match? @injection.content "^'")
+  (#match? @injection.content "^\"[.%].+\"$")
   (#offset! @injection.content 0 1 0 -1)
   (#set! injection.language "vrl"))
-)
+
+; inject bash environment variables
+(pair
+  (_)
+  (string) @injection.content
+  (#match? @injection.content "^\"\\\$\\\{?.+\\\}?\"$")
+  (#offset! @injection.content 0 1 0 -1)
+  (#set! injection.language "bash"))
+
+; inject json for message field
+(table
+  (dotted_key
+    (_)
+    (bare_key) @_log_fields
+    (#eq? @_log_fields "log_fields"))
+  (pair
+    (bare_key) @_message_field
+    (#eq? @_message_field "message")
+    (string) @injection.content
+    (#match? @injection.content "^'''[ \n]*\\\{.+\\\}[ \n]*'''$")
+    (#offset! @injection.content 0 3 0 -3)
+    (#set! injection.language "json")))
