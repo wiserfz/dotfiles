@@ -242,6 +242,30 @@ function M.setup()
       end,
     })
 
+    if server_name == "elp" then
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.lsp.handlers["window/showMessage"] = function(_, result, _)
+        local notify_func = function(msg, level, options)
+          local status_ok, fidget = pcall(require, "fidget")
+          if status_ok then
+            fidget.notify(msg, level, options)
+          else
+            vim.notify(msg, level)
+          end
+        end
+
+        local level = result.type or vim.log.levels.INFO
+        if string.match(result.message, "ELP version: .*, OTP version: .*") then
+          local msg1 = string.gsub(result.message, "ELP version: (.*), OTP version: (.*)\n", "%1")
+          local msg2 = string.gsub(result.message, "ELP version: (.*), OTP version: (.*)\n", "%2")
+          notify_func(msg1, level, { skip_history = true, annote = "ELP" })
+          notify_func(msg2, level, { skip_history = true, annote = "OTP" })
+        else
+          notify_func(result.message, level)
+        end
+      end
+    end
+
     vim.lsp.config(server_name, opts_with_capabilities)
   end
 

@@ -9,12 +9,10 @@ function M.setup()
         done_icon = "✔ ",
         done_ttl = 2,
       },
-      ignore = { "null-ls" },
-    },
-    notification = {
-      window = {
-        max_height = 4,
-        -- winblend = 0,
+      ignore = {
+        "null-ls",
+        "copilot",
+        "harper_ls",
       },
     },
   })
