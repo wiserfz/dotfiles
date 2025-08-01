@@ -63,7 +63,11 @@ function M.setup()
       event = "BufReadPost",
       config = config("illuminate"),
     },
-    "HiPhish/rainbow-delimiters.nvim", -- rainbow parentheses
+    {
+      "HiPhish/rainbow-delimiters.nvim", -- rainbow parentheses
+      submodules = false,
+      event = "BufRead",
+    },
     {
       "szw/vim-maximizer",
       event = {

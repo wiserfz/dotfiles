@@ -32,7 +32,7 @@ set -x LC_ALL "en_US.UTF-8"
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p --theme \"Monokai Extended\"'"
 
 # brew
-if command -v brew >/dev/null 2>&1
+if command -q -v brew >/dev/null 2>&1
     # disable homebrew auto update
     set -x HOMEBREW_NO_AUTO_UPDATE true
     # setup homebrew mirror for install package

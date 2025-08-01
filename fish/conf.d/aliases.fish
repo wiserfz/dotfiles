@@ -1,4 +1,4 @@
-# Custom alias
+# @fish-lsp-disable 2002
 alias ll="ls -ClhF"
 alias la="ls -A"
 alias lla="ls -ClhFA"

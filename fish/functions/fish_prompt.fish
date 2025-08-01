@@ -1,3 +1,4 @@
+# @fish-lsp-disable 4004
 function fish_prompt
     set -l __last_command_exit_status $status
 
@@ -40,6 +41,8 @@ function fish_prompt
     set br_blue (set_color -o 4DD1FF)
     # python
     set br_green (set_color -o BFD55D)
+    # erlang
+    set br_red (set_color -o A90432)
 
     # Default values for the appearance of the prompt. Configure at will.
     set prompt_prefix "["
@@ -73,6 +76,15 @@ function fish_prompt
         set lua_icon " "
         set lua_version (luajit -v | string split ' ' -f 2)
         set prompt_lang " $bold_blue$lua_icon$lua_version$reset_color"
+    else if test -f "rebar.config"
+        set erlang_icon " "
+        set erlang_version OTP-(
+            erl -eval \
+            "erlang:display(erlang:system_info(otp_release)), halt()." -noshell \
+            | string trim \
+            | string trim -c \"
+        )
+        set prompt_lang " $br_red$erlang_icon$erlang_version$reset_color"
     else
         set prompt_lang ""
     end
