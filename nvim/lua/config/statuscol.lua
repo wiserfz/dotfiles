@@ -5,9 +5,14 @@ local M = {}
 
 function M.setup()
   col.setup({
+    setopt = true,
     relculright = true,
     segments = {
-      { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+      {
+        text = { " ", builtin.foldfunc, " " },
+        condition = { builtin.not_empty, true, builtin.not_empty },
+        click = "v:lua.ScFa",
+      },
       {
         sign = {
           namespace = { "diagnostic" },
@@ -29,7 +34,7 @@ function M.setup()
         },
         click = "v:lua.ScSa",
       },
-      { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
+      { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
       {
         sign = {
           namespace = { "gitsigns" },
@@ -41,7 +46,15 @@ function M.setup()
         click = "v:lua.ScSa",
       },
     },
-    ft_ignore = { "sagaoutline" },
+    ft_ignore = {
+      -- "sagaoutline",
+      "help",
+      "vim",
+      "dashboard",
+      "NvimTree",
+      "noice",
+      "lazy",
+    },
   })
 end
 

@@ -23,9 +23,8 @@ local opts = {
     highlight = "RenderMarkdownCode",
     highlight_inline = "RenderMarkdownCodeInline",
   },
-  dash = {
-    enabled = true,
-  },
+  dash = { enabled = true },
+  completions = { blink = { enabled = true } },
   heading = {
     enabled = true,
     sign = false,

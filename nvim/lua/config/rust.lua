@@ -20,6 +20,11 @@ function M.setup()
   vim.g.rustaceanvim = function()
     ---@type rustaceanvim.Opts
     local opts = {
+      tools = {
+        float_win_config = {
+          border = "rounded",
+        },
+      },
       server = {
         capabilities = lsp.get_capabilities(),
         on_attach = function(client, bufnr)

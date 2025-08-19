@@ -12,7 +12,8 @@ function M.setup()
       "goimports",
       "gomodifytags",
       "gotests",
-      "hadolint",
+      -- WARN: hadolint only release binary for mac with intel CPU
+      -- "hadolint",
       "impl",
       "jq",
       -- WARN: mac with intel CPU which only can install selene@0.26.1
@@ -26,7 +27,7 @@ function M.setup()
       "yamlfmt",
       "yamllint",
     },
-    automatic_installation = true,
+    automatic_installation = false,
   })
 end
 

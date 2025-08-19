@@ -13,8 +13,6 @@ function M.setup()
       require("none-ls-shellcheck.diagnostics"), -- shell linter
       require("none-ls-shellcheck.code_actions"), -- shell code action
 
-      require("none-ls.diagnostics.ruff"), -- python linter
-
       diagnostics.selene.with({ -- lua linter
         condition = function(utils)
           return utils.root_has_file({ "selene.toml" })
@@ -25,7 +23,7 @@ function M.setup()
         disabled_filetypes = { "erlang", "markdown", "python", "vrl" }, -- disable editorconfig checker
       }),
 
-      diagnostics.hadolint, -- dockerfile linter
+      -- diagnostics.hadolint, -- dockerfile linter
 
       diagnostics.fish, -- basic linting is available for fish scripts
 

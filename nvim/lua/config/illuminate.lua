@@ -10,6 +10,7 @@ function M.setup()
       "fugitive",
       "NvimTree",
       "dashboard",
+      "sagafinder",
       "help",
     },
   })

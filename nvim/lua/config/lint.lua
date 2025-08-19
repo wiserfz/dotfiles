@@ -1,14 +1,6 @@
 local lint = require("lint")
 local util = require("util")
 
-local codespell = lint.linters.codespell
-codespell.args = {
-  "--ignore-words-list",
-  "crate",
-  "--stdin-single-line",
-  "-",
-}
-
 local M = {}
 
 local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
@@ -57,7 +49,6 @@ function M.setup()
         nil,
         { cwd = client.root_dir or vim.fn.fnamemodify(vim.fn.finddir(".git", ".;"), ":h") }
       )
-      lint.try_lint("codespell")
       -- WARN: This will lint all buffers(include NvimTree, help and so on), which is not a good idea
       lint.try_lint("editorconfig_checker")
     end,

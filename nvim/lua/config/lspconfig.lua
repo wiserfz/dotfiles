@@ -1,4 +1,4 @@
-local lspconfig = require("lspconfig")
+-- local lspconfig = require("lspconfig")
 local blink = require("blink.cmp")
 local wk = require("which-key")
 local mason_lspconfig = require("mason-lspconfig")
@@ -39,8 +39,8 @@ end
 ---@param bufnr integer @The buffer number of the attached client
 function M.on_attach(client, bufnr)
   -- disable formatting for LSP clients as this is handled by confrom
-  client.server_capabilities.documentFormattingProvider = false
-  client.server_capabilities.documentRangeFormattingProvider = false
+  -- client.server_capabilities.documentFormattingProvider = false
+  -- client.server_capabilities.documentRangeFormattingProvider = false
 
   wk.add({
     buffer = bufnr,
@@ -138,10 +138,15 @@ local server_configs = {
     settings = {
       pylsp = {
         plugins = {
-          -- Disable formatting diagnostics (that's what formatters are for)
-          pylint = { enabled = false },
+          autopep8 = { enabled = false },
+          mccabe = { enabled = false },
+          preload = { enabled = false },
           pycodestyle = { enabled = false },
           pyflakes = { enabled = false },
+          ruff = {
+            enabled = true,
+            lineLength = 100,
+          },
         },
       },
     },
@@ -150,7 +155,9 @@ local server_configs = {
   fish_lsp = {},
   buf_ls = {}, -- for protobuf
   just = {},
-  elp = {}, -- for erlang
+  elp = { -- erlang type checker
+    root_dir = vim.fs.root(0, { ".git" }),
+  },
   harper_ls = { -- Grammar Checker
     on_attach = function(client, bufnr)
       if vim.fs.dirname(vim.fn.getcwd()) == os.getenv("HOME") .. "/Workspace" then
@@ -158,6 +165,10 @@ local server_configs = {
         return
       end
       M.on_attach(client, bufnr)
+    end,
+    reuse_client = function(client, config)
+      -- reuse client if the name and root_dir matches
+      return client.name == config.name and client.config.root_dir == config.root_dir
     end,
     settings = {
       ["harper-ls"] = {
@@ -179,12 +190,14 @@ local server_configs = {
     cmd = {
       "clangd",
       "--background-index",
-      "--suggest-missing-includes",
       "--clang-tidy",
       "--header-insertion=iwyu",
+      "--completion-style=detailed",
+      "--function-arg-placeholders",
+      "--fallback-style=llvm",
+      "--suggest-missing-includes",
     },
-    single_file_support = true,
-    root_dir = lspconfig.util.root_pattern(
+    root_dir = vim.fs.root(0, {
       ".clangd",
       ".clang-tidy",
       ".clang-format",
@@ -192,8 +205,8 @@ local server_configs = {
       "compile_flags.txt",
       "configure.ac",
       ".git",
-      "Makefile"
-    ),
+      "Makefile",
+    }),
   },
   ts_query_ls = {
     filetypes = { "query" },

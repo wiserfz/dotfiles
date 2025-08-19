@@ -45,6 +45,7 @@ function M.setup()
         end
         return {}
       end,
+      completion = { ghost_text = { enabled = false } },
     },
 
     enabled = function()
@@ -82,9 +83,13 @@ function M.setup()
           return ctx.mode ~= "cmdline"
           -- or not vim.tbl_contains({ "/", "?" }, vim.fn.getcmdtype())
         end,
+        border = "rounded",
+        winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder",
+        scrollbar = false,
       },
       documentation = {
         auto_show = true,
+        window = { border = "rounded", scrollbar = false },
       },
       trigger = {
         -- these are annoying
@@ -96,8 +101,12 @@ function M.setup()
     },
     signature = {
       enabled = true, -- experimental, can also be provided by `noice` plugin
+      window = { border = "rounded" },
     },
     appearance = {
+      -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+      -- Useful for when your theme doesn't support blink.cmp
+      -- Will be removed in a future release
       use_nvim_cmp_as_default = true,
       nerd_font_variant = "normal",
       kind_icons = util.icons,
@@ -107,19 +116,13 @@ function M.setup()
       providers = {
         copilot = {
           name = "copilot",
-          module = "blink-cmp-copilot",
+          module = "blink-copilot",
           score_offset = 100,
           async = true,
-          transform_items = function(_, items)
-            local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
-            local kind_idx = #CompletionItemKind + 1
-            CompletionItemKind[kind_idx] = "Copilot"
-
-            for _, item in ipairs(items) do
-              item.kind = kind_idx
-            end
-            return items
-          end,
+          opts = {
+            kind_icon = " ",
+            kind_hl = "SignColumn",
+          },
         },
         lsp = {
           name = "LSP",
@@ -148,9 +151,6 @@ function M.setup()
   }
 
   blink.setup(opts)
-
-  -- highlight for Copilot completion items
-  vim.api.nvim_set_hl(0, "BlinkCmpKindCopilot", { fg = "#7539DE" })
 end
 
 return M

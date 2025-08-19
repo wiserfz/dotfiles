@@ -61,6 +61,7 @@ function M.setup()
       "html",
       "editorconfig",
       "make",
+      "promql",
     },
     -- disable automatically install missing parsers when entering buffer
     auto_install = false,

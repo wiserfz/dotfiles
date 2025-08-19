@@ -66,6 +66,8 @@ function M.setup()
 
   telescope.load_extension("dap")
 
+  telescope.load_extension("noice")
+
   wk.add({
     { "<leader>f", group = "Find" },
 

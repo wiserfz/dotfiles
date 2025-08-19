@@ -27,19 +27,18 @@ function M.setup()
 
   local lazy = require("lazy")
   lazy.setup({
-    -- Key mappings
-    {
-      "folke/which-key.nvim",
-      lazy = false,
-      priority = 1000,
-      config = config("which_key"),
-    },
     {
       -- "tomasr/molokai",
       "rebelot/kanagawa.nvim",
       lazy = false, -- make sure we load this during startup if it is your main colorscheme
       priority = 1000, -- make sure to load this before all the other start plugins
       config = config("kanagawa"),
+    },
+    -- Key mappings
+    {
+      "folke/which-key.nvim",
+      lazy = false,
+      config = config("which_key"),
     },
     {
       "christoomey/vim-tmux-navigator", -- tmux & split window navigation
@@ -109,7 +108,7 @@ function M.setup()
       event = "VimEnter",
       dependencies = {
         "rafamadriz/friendly-snippets", -- useful snippets
-        "giuxtaposition/blink-cmp-copilot",
+        "fang2hou/blink-copilot",
         "saghen/blink.compat",
         "xzbdmw/colorful-menu.nvim",
       },
@@ -148,6 +147,7 @@ function M.setup()
       "zbirenbaum/copilot.lua",
       cmd = "Copilot",
       event = { "BufReadPre", "BufNewFile" },
+      -- event = "InsertEnter",
       config = config("copilot"),
     },
     {
@@ -383,6 +383,12 @@ function M.setup()
       event = "VeryLazy",
       config = config("treesitter"),
     },
+    {
+      "luukvbaal/statuscol.nvim",
+      priority = 100,
+      lazy = false,
+      config = config("statuscol"),
+    },
     -- WARN: Neovide has something wrong with nvim-ufo plugin,
     -- it doesn't work well when click on folds can't open.
     -- see https://github.com/neovide/neovide/issues/2815
@@ -392,10 +398,7 @@ function M.setup()
       dependencies = {
         "neovim/nvim-lspconfig",
         "kevinhwang91/promise-async",
-        {
-          "luukvbaal/statuscol.nvim",
-          config = config("statuscol"),
-        },
+        "luukvbaal/statuscol.nvim",
       },
       config = config("ufo"),
     },
@@ -430,6 +433,14 @@ function M.setup()
         },
       },
       config = config("codecompanion"),
+    },
+    {
+      "folke/noice.nvim",
+      dependencies = {
+        "MunifTanjim/nui.nvim",
+        "rcarriga/nvim-notify",
+      },
+      config = config("noice"),
     },
   })
 end

@@ -8,13 +8,15 @@ function M.setup()
   crates.setup({
     autoupdate_throttle = 50,
     max_parallel_requests = 32,
+    popup = {
+      border = "rounded",
+    },
     completion = {
       crates = {
         enabled = true,
         max_results = 30,
       },
-      cmp = {
-        enabled = true,
+      blink = {
         use_custom_kind = true,
       },
     },

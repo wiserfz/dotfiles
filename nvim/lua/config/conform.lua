@@ -29,6 +29,7 @@ function M.setup()
       erlang = { "erlfmt" },
       markdown = { "injected" },
       query = { "format-queries" },
+      just = { "just" },
       ["_"] = { "trim_whitespace", "trim_newlines" },
     },
     formatters = {

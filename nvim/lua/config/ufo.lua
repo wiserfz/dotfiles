@@ -69,13 +69,18 @@ local function customizeSelector(bufnr)
     end)
 end
 
+local treesitter_provider = {
+  "erlang",
+  "sagaoutline",
+}
+
 local M = {}
 
 function M.setup()
   local opts = {
     -- lsp -> treesitter -> indent
     provider_selector = function(bufnr, filetype, buftype)
-      if filetype == "erlang" then
+      if vim.list_contains(treesitter_provider, filetype) then
         return { "treesitter", "indent" }
       end
       customizeSelector(bufnr)
@@ -98,24 +103,14 @@ function M.setup()
     { "<leader>z", group = "Fold" },
 
     {
-      "<leader>zR",
+      "<leader>zr",
       ufo.openAllFolds,
       desc = "Open all folds",
     },
     {
-      "<leader>zM",
+      "<leader>zm",
       ufo.closeAllFolds,
       desc = "Close all folds",
-    },
-    {
-      "<leader>zr",
-      ufo.openFoldsExceptKinds,
-      desc = "Open folds except specified kinds",
-    },
-    {
-      "<leader>zm",
-      ufo.closeFoldsWith,
-      desc = "Close the folds with a higher level",
     },
     {
       "<leader>zk",
@@ -134,11 +129,13 @@ function M.setup()
     hi FoldColumn guifg=gray
   ]])
 
+  -- NOTE: disable folding column in sagaoutline buffer
+  -- see: https://github.com/kevinhwang91/nvim-ufo/issues/33
   vim.api.nvim_create_autocmd("FileType", {
     pattern = { "sagaoutline" },
     callback = function()
-      ufo.detach()
-      vim.opt_local.foldenable = false
+      -- ufo.detach()
+      -- vim.opt_local.foldenable = false
       vim.opt_local.foldcolumn = "0"
     end,
   })

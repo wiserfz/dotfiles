@@ -25,6 +25,7 @@ function M.setup()
     notification = {
       window = {
         normal_hl = "Comment",
+        -- border = "rounded",
       },
     },
   })
