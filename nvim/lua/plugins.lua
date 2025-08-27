@@ -172,6 +172,13 @@ function M.setup()
       },
       config = config("dashboard"),
     },
+    {
+      "mason-org/mason.nvim",
+      dependencies = {
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+      },
+      config = config("mason"),
+    },
     -- LSP
     -- WARN: `LspRestart` or `LspStop` commands will throw error with no arguments
     -- see: https://github.com/neovim/nvim-lspconfig/issues/3975
@@ -179,18 +186,6 @@ function M.setup()
       "neovim/nvim-lspconfig",
       event = { "BufReadPre", "BufNewFile" },
       dependencies = {
-        {
-          "mason-org/mason.nvim",
-          opts = {
-            ui = {
-              icons = {
-                package_installed = "✓",
-                package_pending = "➜",
-                package_uninstalled = "✗",
-              },
-            },
-          },
-        },
         "mason-org/mason-lspconfig.nvim", -- Integration with nvim-lspconfig
         "b0o/schemastore.nvim", -- YAML/JSON schemas
         "saghen/blink.cmp", -- completion
@@ -213,23 +208,10 @@ function M.setup()
     },
     -- Linter
     {
-      "nvimtools/none-ls.nvim",
-      dependencies = {
-        "nvimtools/none-ls-extras.nvim",
-        "gbprod/none-ls-shellcheck.nvim",
-      },
-      config = config("none-ls"),
-    },
-    {
-      "jay-babu/mason-null-ls.nvim",
+      "mfussenegger/nvim-lint",
       event = { "BufReadPre", "BufNewFile" },
-      config = config("mason-null-ls"),
+      config = config("lint"),
     },
-    -- {
-    --   "mfussenegger/nvim-lint",
-    --   event = { "BufReadPre", "BufNewFile" },
-    --   config = config("lint"),
-    -- },
     -- Formatter
     {
       "stevearc/conform.nvim",

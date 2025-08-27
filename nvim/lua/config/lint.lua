@@ -1,16 +1,10 @@
 local lint = require("lint")
-local util = require("util")
 
 local M = {}
 
 local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
 function M.setup()
-  codespell = require("lint.util").wrap(codespell, function(diagnostic)
-    diagnostic.severity = vim.diagnostic.severity.WARN
-    return diagnostic
-  end)
-
   lint.linters.editorconfig_checker = {
     cmd = "editorconfig-checker",
     stdin = false,
@@ -29,34 +23,35 @@ function M.setup()
     ),
   }
 
+  -- local sqlfluff = lint.linters.sqlfluff
+  -- sqlfluff.args = {
+  --   "lint",
+  --   "--format=json",
+  --   -- note: users will have to replace the --dialect argument accordingly
+  --   "--dialect=mysql",
+  -- }
+
   lint.linters_by_ft = {
-    markdown = { "vale" },
-    proto = { "buf_lint" },
     fish = { "fish" },
     yaml = { "yamllint" },
-    sh = { "shellcheck" },
-    python = { "ruff" },
+    -- python = { "ruff" },
     lua = { "selene" },
-    dockerfile = { "hadolint" },
+    -- dockerfile = { "hadolint" },
     sql = { "sqlfluff" },
   }
 
-  vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter" }, {
+  vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave" }, {
     group = lint_augroup,
     callback = function()
-      local client = vim.lsp.get_clients({ bufnr = 0 })[1] or {}
-      lint.try_lint(
-        nil,
-        { cwd = client.root_dir or vim.fn.fnamemodify(vim.fn.finddir(".git", ".;"), ":h") }
-      )
-      -- WARN: This will lint all buffers(include NvimTree, help and so on), which is not a good idea
-      lint.try_lint("editorconfig_checker")
+      -- Only run the linter in buffers that you can modify in order to
+      -- avoid superfluous noise, notably within the handy LSP pop-ups that
+      -- describe the hovered symbol using Markdown.
+      if vim.opt_local.modifiable:get() then
+        lint.try_lint()
+        lint.try_lint("editorconfig_checker")
+      end
     end,
   })
-
-  -- util.map("n", "<leader>lc", function()
-  --   lint.try_lint()
-  -- end, { desc = "Trigger linting for current file" })
 end
 
 return M

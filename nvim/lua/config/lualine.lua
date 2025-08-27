@@ -57,6 +57,16 @@ function M.setup()
       },
       lualine_x = {
         {
+          function()
+            local linters = require("lint").get_running()
+            if #linters == 0 then
+              return "󰦕"
+            end
+            return "󱉶 " .. table.concat(linters, ", ")
+          end,
+          color = fg("DiagnosticWarn"),
+        },
+        {
           "diagnostics",
           symbols = {
             error = diagnostics_icon.ERROR,

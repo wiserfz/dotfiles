@@ -76,6 +76,7 @@ local server_configs = {
         diagnostics = {
           disable = {
             "missing-fields",
+            "unused-local",
           },
           globals = {
             "vim",
@@ -85,13 +86,13 @@ local server_configs = {
         },
         workspace = {
           checkThirdParty = false,
-          -- make language server aware of runtime files
-          library = {
-            vim.fn.expand("$VIMRUNTIME/lua"),
-            vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
-            vim.fn.stdpath("config") .. "/lua",
-            "${3rd}/luv/library",
-          },
+          -- NOTE:: library should now be handled by lazydev
+          -- library = {
+          --   vim.fn.expand("$VIMRUNTIME/lua"),
+          --   vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
+          --   vim.fn.stdpath("config") .. "/lua",
+          --   "${3rd}/luv/library",
+          -- },
         },
         hint = {
           enable = true,

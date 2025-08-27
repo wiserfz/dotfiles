@@ -1,9 +1,20 @@
-local mason_none_ls = require("mason-null-ls")
+local mason = require("mason")
+local mason_tool_installer = require("mason-tool-installer")
 
 local M = {}
 
 function M.setup()
-  mason_none_ls.setup({
+  mason.setup({
+    ui = {
+      icons = {
+        package_installed = "✓",
+        package_pending = "➜",
+        package_uninstalled = "✗",
+      },
+    },
+  })
+
+  mason_tool_installer.setup({
     ensure_installed = {
       "ruff",
       "codelldb",
@@ -27,7 +38,14 @@ function M.setup()
       "yamlfmt",
       "yamllint",
     },
-    automatic_installation = false,
+    auto_update = false,
+    run_on_start = true,
+    start_delay = 3000, -- 3 second delay
+    integrations = {
+      ["mason-lspconfig"] = false,
+      ["mason-null-ls"] = false,
+      ["mason-nvim-dap"] = true,
+    },
   })
 end
 
