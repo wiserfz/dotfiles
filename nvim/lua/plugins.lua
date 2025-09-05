@@ -424,6 +424,11 @@ function M.setup()
       },
       config = config("noice"),
     },
+    {
+      "mcauley-penney/visual-whitespace.nvim",
+      event = "ModeChanged *:[vV\22]",
+      config = config("visual-whitespace"),
+    },
   })
 end
 
