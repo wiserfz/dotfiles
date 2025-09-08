@@ -19,7 +19,7 @@ function M.setup()
       "%s*(%d+): (.+)",
       { "lnum", "message" },
       nil,
-      { severity = vim.diagnostic.severity.WARN, source = "editorconfig_checker" }
+      { severity = vim.diagnostic.severity.WARN, source = "editorconfig-checker" }
     ),
   }
 
@@ -42,11 +42,12 @@ function M.setup()
 
   vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave" }, {
     group = lint_augroup,
-    callback = function()
-      -- Only run the linter in buffers that you can modify in order to
-      -- avoid superfluous noise, notably within the handy LSP pop-ups that
+    ---@param args table see `:h event-args`
+    callback = function(args)
+      -- Only run the linter in buffers that you can modify and filetype is not empty
+      -- in order to avoid superfluous noise, notably within the handy LSP pop-ups that
       -- describe the hovered symbol using Markdown.
-      if vim.opt_local.modifiable:get() then
+      if vim.opt_local.modifiable:get() and vim.bo.filetype ~= "" then
         lint.try_lint()
         lint.try_lint("editorconfig_checker")
       end

@@ -29,6 +29,7 @@ function M.setup()
       "markdown_inline",
       "bash",
       "lua",
+      "luap",
       "dockerfile",
       "git_config",
       "gitignore",
@@ -62,6 +63,8 @@ function M.setup()
       "editorconfig",
       "make",
       "promql",
+      "jinja",
+      "jinja_inline",
     },
     -- disable automatically install missing parsers when entering buffer
     auto_install = false,

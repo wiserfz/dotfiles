@@ -403,15 +403,6 @@ function M.setup()
       dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
-        "nvim-telescope/telescope.nvim", -- Optional
-        {
-          "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
-          opts = {
-            input = {
-              title_pos = "center",
-            },
-          },
-        },
       },
       config = config("codecompanion"),
     },
@@ -428,6 +419,7 @@ function M.setup()
       event = "ModeChanged *:[vV\22]",
       config = config("visual-whitespace"),
     },
+    "nextmn/vim-yaml-jinja", -- highlight yaml.j2 template files
   })
 end
 

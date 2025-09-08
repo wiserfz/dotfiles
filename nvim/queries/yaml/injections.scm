@@ -117,20 +117,15 @@
     (#offset! @injection.content 0 1 0 -1)
     (#set! injection.language "vrl")))
 
-; inject bash environment variables
+; bash injections inside yaml file
 (block_mapping_pair
   key: (_)
   value: (flow_node
-    (single_quote_scalar) @injection.content
-    (#match? @injection.content "^'.*\\$\\{?[^{}]+\\}?.*'$")
-    (#offset! @injection.content 0 1 0 -1)
-    (#set! injection.language "bash")))
-
-(block_mapping_pair
-  key: (_)
-  value: (flow_node
-    (double_quote_scalar) @injection.content
-    (#match? @injection.content "^\".*\\$\\{?[^{}]+\\}?.*\"$")
+    [
+      (double_quote_scalar)
+      (single_quote_scalar)
+    ] @injection.content
+    (#lua-match? @injection.content "%${?.*}?")
     (#offset! @injection.content 0 1 0 -1)
     (#set! injection.language "bash")))
 
@@ -139,7 +134,7 @@
   value: (flow_node
     (plain_scalar
       (string_scalar) @injection.content
-      (#match? @injection.content "^.*\\$\\{?[^{}]+\\}?.*$")
+      (#lua-match? @injection.content "%${?.*}?")
       (#set! injection.language "bash"))))
 
 (block_mapping_pair
@@ -150,7 +145,7 @@
         (flow_node
           (plain_scalar
             (string_scalar) @injection.content
-            (#match? @injection.content "^.*\\$\\{?[^{}]+\\}?.*$")
+            (#lua-match? @injection.content "%${?.*}?")
             (#set! injection.language "bash")))))))
 
 (block_mapping_pair
@@ -182,3 +177,29 @@
     (#match? @injection.content "^'\\{.+\\}'$")
     (#offset! @injection.content 0 1 0 -1)
     (#set! injection.language "json")))
+
+; jinja injections inside quoted yaml values
+(block_mapping_pair
+  value: (flow_node
+    [
+      (double_quote_scalar)
+      (single_quote_scalar)
+    ] @injection.content
+    (#lua-match? @injection.content "{[%%{].+[%%}]}")
+    (#set! injection.language "jinja")
+    (#offset! @injection.content 0 1 0 -1)))
+
+; jinja injections inside yaml unquoted string value
+(block_mapping_pair
+  value: (flow_node
+    (plain_scalar
+      (string_scalar) @injection.content
+      (#lua-match? @injection.content "{[%%{].+[%%}]}")
+      (#set! injection.language "jinja"))))
+
+; jinja injections inside yaml block string value
+(block_mapping_pair
+  value: (block_node
+    (block_scalar) @injection.content
+    (#lua-match? @injection.content "{[%%{].+[%%}]}")
+    (#set! injection.language "jinja")))

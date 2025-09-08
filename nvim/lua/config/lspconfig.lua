@@ -212,7 +212,7 @@ local server_configs = {
   ts_query_ls = {
     filetypes = { "query" },
     root_dir = vim.fs.root(0, { "queries" }),
-    init_options = {
+    settings = {
       parser_install_directories = {
         -- vim.fs.joinpath(vim.fn.stdpath("data"), "site", "parser"), -- nvim-treesitter main branch
         vim.fs.joinpath(vim.fn.stdpath("data"), "/lazy/nvim-treesitter/parser/"), -- nvim-treesitter master branch
