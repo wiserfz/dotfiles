@@ -21,6 +21,12 @@ local function prequire(name, setup)
   return mod
 end
 
+vim.g.llm_secret_files = {
+  ".env*",
+  "env*.sh",
+  ".secret.sh",
+}
+
 prequire("options")
 prequire("plugins")
 prequire("keymaps")

@@ -146,8 +146,7 @@ function M.setup()
     {
       "zbirenbaum/copilot.lua",
       cmd = "Copilot",
-      event = { "BufReadPre", "BufNewFile" },
-      -- event = "InsertEnter",
+      event = "InsertEnter",
       config = config("copilot"),
     },
     {
