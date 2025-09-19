@@ -31,7 +31,7 @@ function M.setup()
       -- See issue: https://github.com/williamboman/mason.nvim/issues/1693
       "selene",
       "shellcheck",
-      "shfmt",
+      "sleek",
       "sqlfmt",
       "sqlfluff",
       "stylua",

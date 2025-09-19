@@ -21,7 +21,7 @@ function M.setup()
       sh = { "shfmt" },
       lua = { "stylua" },
       fish = { "fish_indent" },
-      sql = { "sqlfmt" },
+      sql = { "sleek" },
       json = { "jq" },
       python = { "ruff_format" },
       go = { "goimports", "gofmt" },
@@ -40,11 +40,6 @@ function M.setup()
             bash = "sh",
           },
         },
-      },
-      sqlfmt = {
-        exe = "sqlfmt",
-        stdin = true,
-        args = { "-", "--fast", "--line-length", "100", "--quiet", "--no-progressbar" },
       },
       rustfmt = {
         options = {

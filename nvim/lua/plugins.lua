@@ -383,12 +383,12 @@ function M.setup()
       },
       config = config("ufo"),
     },
-    {
-      "sontungexpt/url-open",
-      event = "VeryLazy",
-      cmd = "URLOpenUnderCursor",
-      config = config("url"),
-    },
+    -- {
+    --   "sontungexpt/url-open",
+    --   event = "VeryLazy",
+    --   cmd = "URLOpenUnderCursor",
+    --   config = config("url"),
+    -- },
     {
       "MeanderingProgrammer/render-markdown.nvim",
       ft = { "markdown" },

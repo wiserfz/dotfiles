@@ -157,7 +157,7 @@ local server_configs = {
   buf_ls = {}, -- for protobuf
   just = {},
   elp = { -- erlang type checker
-    root_dir = vim.fs.root(0, { ".git" }),
+    root_dir = vim.fs.root(0, { "rebar.config", ".git" }),
   },
   harper_ls = { -- Grammar Checker
     on_attach = function(client, bufnr)
