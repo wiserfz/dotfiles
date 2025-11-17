@@ -58,6 +58,16 @@ function M.setup()
       lualine_x = {
         {
           function()
+            local status = require("sidekick.status").cli()
+            return " " .. (#status > 1 and #status or "")
+          end,
+          cond = function()
+            return #require("sidekick.status").cli() > 0
+          end,
+          color = fg("Special"),
+        },
+        {
+          function()
             local linters = require("lint").get_running()
             if #linters == 0 then
               return "󰦕"

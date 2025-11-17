@@ -399,12 +399,8 @@ function M.setup()
       config = config("markdown"),
     },
     {
-      "olimorris/codecompanion.nvim",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
-      },
-      config = config("codecompanion"),
+      "folke/sidekick.nvim", -- neovim AI sidekick
+      config = config("sidekick"),
     },
     {
       "folke/noice.nvim",
@@ -419,7 +415,6 @@ function M.setup()
       event = "ModeChanged *:[vV\22]",
       config = config("visual-whitespace"),
     },
-    "nextmn/vim-yaml-jinja", -- highlight yaml.j2 template files
   })
 end
 

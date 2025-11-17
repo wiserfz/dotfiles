@@ -1,1 +1,3 @@
 gitconfig filter=gitignore
+*.fish filter=gitignore
+*.lua filter=gitignore
