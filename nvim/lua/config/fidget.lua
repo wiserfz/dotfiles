@@ -1,14 +1,9 @@
 local fidget = require("fidget")
--- local notification = require("fidget.notification")
 
 local M = {}
 
 function M.setup()
-  -- local notification_configs = vim.tbl_extend("force", notification.default_config, {
-  --   warn_style = "Comment",
-  -- })
-
-  fidget.setup({
+  local opt = {
     progress = {
       display = {
         done_icon = "✔ ",
@@ -25,10 +20,16 @@ function M.setup()
     notification = {
       window = {
         normal_hl = "Comment",
-        -- border = "rounded",
+        winblend = 0,
       },
     },
-  })
+  }
+  -- WARN: temporary fix for fidget transparency issue in neovide
+  if vim.g.neovide ~= nil then
+    opt.notification.window.winblend = 100
+  end
+
+  fidget.setup(opt)
 end
 
 return M

@@ -20,6 +20,9 @@ local M = {}
 function M.setup()
   scheme.setup({
     keywordStyle = { italic = true, bold = true },
+    commentStyle = { italic = true },
+    variablebuiltinStyle = { italic = true },
+    transparent = true,
     colors = {
       theme = {
         all = {
@@ -54,15 +57,13 @@ function M.setup()
         PmenuSbar = { bg = theme.ui.bg_m1 },
         PmenuThumb = { bg = theme.ui.bg_p2 },
 
+        -- set visual mode bg to be more visible
         Visual = { bg = theme.ui.bg_p2 },
 
         TelescopeTitle = { fg = theme.ui.special, bold = true },
-        -- TelescopePromptNormal = { bg = theme.ui.bg_p1 },
-        -- TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
-        -- TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
-        -- TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
-        -- TelescopePreviewNormal = { bg = theme.ui.bg_dim },
-        -- TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+        TelescopePromptBorder = { fg = theme.ui.fg_dim, bg = "none" },
+        TelescopeResultsBorder = { fg = theme.ui.fg_dim, bg = "none" },
+        TelescopePreviewBorder = { fg = theme.ui.fg_dim, bg = "none" },
         DiagnosticVirtualTextError = blend_bg(theme.diag.error),
         DiagnosticVirtualTextWarn = blend_bg(theme.diag.warning),
         DiagnosticVirtualTextHint = blend_bg(theme.diag.hint),

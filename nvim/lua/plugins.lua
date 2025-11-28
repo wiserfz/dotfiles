@@ -34,6 +34,12 @@ function M.setup()
       priority = 1000, -- make sure to load this before all the other start plugins
       config = config("kanagawa"),
     },
+    -- setting status column
+    {
+      "luukvbaal/statuscol.nvim",
+      lazy = false,
+      config = config("statuscol"),
+    },
     -- Key mappings
     {
       "folke/which-key.nvim",
@@ -223,11 +229,8 @@ function M.setup()
       config = config("conform"),
     },
     -- Golang
-    -- WARN: go.nvim is not compatible with treesitter main branch, see:
-    -- https://github.com/ray-x/go.nvim/issues/576
     {
       "ray-x/go.nvim",
-      branch = "treesitter-main",
       dependencies = { -- optional packages
         "ray-x/guihua.lua",
         "neovim/nvim-lspconfig",
@@ -244,7 +247,7 @@ function M.setup()
       dependencies = {
         "neovim/nvim-lspconfig",
       },
-      version = "^6", -- Recommended
+      version = "^7", -- Recommended
       lazy = false, -- This plugin is already lazy
       ft = "rust",
       config = config("rust"),
@@ -323,8 +326,6 @@ function M.setup()
       event = { "BufReadPre", "BufNewFile" },
       config = true,
     },
-    -- NOTE: Due to nvim-treesitter incompatible rewrite, so the preview highlight of telescope plugin
-    -- doesn't work, see: https://github.com/nvim-telescope/telescope.nvim/issues/3474
     {
       "nvim-telescope/telescope.nvim", -- fuzzy finder
       branch = "master",
@@ -349,9 +350,6 @@ function M.setup()
     },
     {
       "nvim-treesitter/nvim-treesitter",
-      dependencies = {
-        -- "nvim-treesitter/nvim-treesitter-context",
-      },
       lazy = false, -- load treesitter at startup
       branch = "main",
       build = ":TSUpdate",
@@ -364,15 +362,23 @@ function M.setup()
         -- recognize only symbols in strings and comments (and not words like `for`
         -- or `end`)
         vim.g.matchup_delim_noskips = 1
-        vim.g.matchup_matchparen_offscreen = { method = "popup" } -- Don't display off-screen matches
+        -- WARN: when set the matchup offscreen feature with `method = "popup"` and
+        -- enable the matchup deferred feature have bug with `nvim-ufo` plugin
+        -- which makes `statuscolumn` attribute error and the relative number incorrent.
+        --
+        -- And there is an issue for the matachup offscreen feature with `method = "popup"`,
+        -- see: https://github.com/andymass/vim-matchup/issues/313
+        -- vim.g.matchup_matchparen_offscreen = { method = "popup", syntax_hl = 1 }
+        vim.g.matchup_matchparen_offscreen = {}
+        -- Enable delayed matching for better performance.
         vim.g.matchup_matchparen_deferred = 1
+        -- Disable considering quotes (single/double) as possible matches
+        vim.g.matchup_treesitter_enable_quotes = false
+        -- Disable show virtual text at virtual end of a block
+        vim.g.matchup_treesitter_disable_virtual_text = true
+        -- Disable double-click map to select the whole current scope (`va%` works well instead)
+        vim.g.matchup_mouse_enabled = 0
       end,
-    },
-    {
-      "luukvbaal/statuscol.nvim",
-      priority = 100,
-      lazy = false,
-      config = config("statuscol"),
     },
     -- WARN: Neovide has something wrong with nvim-ufo plugin,
     -- it doesn't work well when click on folds can't open.
@@ -382,6 +388,7 @@ function M.setup()
       event = "BufReadPost",
       dependencies = {
         "neovim/nvim-lspconfig",
+        "nvim-treesitter/nvim-treesitter",
         "kevinhwang91/promise-async",
         "luukvbaal/statuscol.nvim",
       },

@@ -5,12 +5,34 @@ local mason_lspconfig = require("mason-lspconfig")
 local schemastore = require("schemastore")
 local util = require("util")
 
-local disable = function() end
+local disable = function()
+  return true
+end
 -- Special server configurations
 local special_servers = {
   rust_analyzer = disable, -- Setup in rust.lua
   gopls = disable, -- Setup in go.lua
+  harper_ls = function()
+    if vim.fs.dirname(vim.fn.getcwd()) == os.getenv("HOME") .. "/Workspace" then
+      return true
+    end
+    return false
+  end,
 }
+
+local exclude_servers = {
+  -- NOTE: due to the ELP version management issue by mason, so exclude it from mason management
+  -- use mise instead to install and manage elp version.
+  -- see: https://github.com/mason-org/mason-registry/pull/10523
+  "elp",
+}
+
+local filter_servers = function(name)
+  if vim.tbl_contains(exclude_servers, name) then
+    return false
+  end
+  return true
+end
 
 local M = {}
 
@@ -160,17 +182,6 @@ local server_configs = {
     root_dir = vim.fs.root(0, { "rebar.config", ".git" }),
   },
   harper_ls = { -- Grammar Checker
-    on_attach = function(client, bufnr)
-      if vim.fs.dirname(vim.fn.getcwd()) == os.getenv("HOME") .. "/Workspace" then
-        vim.lsp.stop_client(client.id)
-        return
-      end
-      M.on_attach(client, bufnr)
-    end,
-    reuse_client = function(client, config)
-      -- reuse client if the name and root_dir matches
-      return client.name == config.name and client.config.root_dir == config.root_dir
-    end,
     settings = {
       ["harper-ls"] = {
         userDictPath = vim.fn.getcwd() .. "/.harper_dict.txt",
@@ -214,8 +225,8 @@ local server_configs = {
     root_dir = vim.fs.root(0, { "queries" }),
     settings = {
       parser_install_directories = {
-        -- vim.fs.joinpath(vim.fn.stdpath("data"), "site", "parser"), -- nvim-treesitter main branch
-        vim.fs.joinpath(vim.fn.stdpath("data"), "/lazy/nvim-treesitter/parser/"), -- nvim-treesitter master branch
+        -- treesitter parser install path that nvim-treesitter main branch
+        vim.fs.joinpath(vim.fn.stdpath("data"), "site", "parser"),
       },
     },
   },
@@ -245,8 +256,7 @@ function M.setup()
 
   local function setup(server_name)
     local special_server_setup = special_servers[server_name]
-    if special_server_setup then
-      special_server_setup()
+    if special_server_setup and special_server_setup() then
       return
     end
 
@@ -283,21 +293,21 @@ function M.setup()
     end
 
     vim.lsp.config(server_name, opts_with_capabilities)
+    -- Enable lsp server manually.
+    vim.lsp.enable(server_name, true)
   end
 
   -- Ensure that servers mentioned above get installed
   local special_servers_name = vim.tbl_keys(special_servers)
-  local ensure_installed = vim.list_extend(vim.tbl_keys(server_configs), special_servers_name)
-
-  for _, server_name in ipairs(ensure_installed) do
+  local installed_servers = vim.list_extend(vim.tbl_keys(server_configs), special_servers_name)
+  for _, server_name in ipairs(installed_servers) do
     setup(server_name)
   end
 
+  local ensure_installed = vim.tbl_filter(filter_servers, installed_servers)
   mason_lspconfig.setup({
     ensure_installed = ensure_installed,
-    automatic_enable = {
-      exclude = special_servers_name,
-    },
+    automatic_enable = false,
   })
 end
 

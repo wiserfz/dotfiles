@@ -9,36 +9,27 @@ function M.setup()
     relculright = true,
     segments = {
       {
+        sign = {
+          namespace = { "diagnostic" },
+          name = { ".*" },
+          colwidth = 2,
+          auto = true,
+          foldclosed = true,
+        },
+        click = "v:lua.ScSa",
+      },
+      {
+        text = { builtin.lnumfunc },
+        click = "v:lua.ScLa",
+      },
+      {
         text = { " ", builtin.foldfunc, " " },
         condition = { builtin.not_empty, true, builtin.not_empty },
         click = "v:lua.ScFa",
       },
       {
         sign = {
-          namespace = { "diagnostic" },
-          maxwidth = 1,
-          colwidth = 2,
-          auto = true,
-          foldclosed = true,
-        },
-        click = "v:lua.ScSa",
-      },
-      {
-        sign = {
-          name = { ".*" },
-          text = { ".*" },
-          maxwidth = 2,
-          colwidth = 2,
-          auto = true,
-          foldclosed = true,
-        },
-        click = "v:lua.ScSa",
-      },
-      { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
-      {
-        sign = {
           namespace = { "gitsigns" },
-          maxwidth = 2,
           colwidth = 1,
           wrap = true,
           foldclosed = true,
@@ -46,8 +37,9 @@ function M.setup()
         click = "v:lua.ScSa",
       },
     },
+    bt_ignore = { "quickfix", "prompt", "terminal" },
     ft_ignore = {
-      -- "sagaoutline",
+      "sagaoutline",
       "help",
       "vim",
       "dashboard",

@@ -13,6 +13,7 @@ function M.setup()
       enable = false,
     },
     finder = {
+      ref_opt = false,
       keys = {
         toggle_or_open = "<CR>",
       },

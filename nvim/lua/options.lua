@@ -101,11 +101,13 @@ function M.setup()
       ["gitconfig"] = "gitconfig",
       ["gitignore"] = "gitignore",
       ["rebar.config"] = "erlang",
+      ["elvis.config"] = "erlang",
     },
     pattern = {
       [".*/%.git/config"] = "gitconfig",
       [".*/%.git/info/exclude"] = "gitignore",
-      [".*/sys%..*%.config.*"] = "erlang",
+      [".*/sys.*%.config.*"] = "erlang",
+      [".*/.*%.app%.src"] = "erlang",
     },
   })
 

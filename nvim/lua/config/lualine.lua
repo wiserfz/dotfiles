@@ -125,6 +125,13 @@ function M.setup()
 
   -- configure lualine with modified theme
   lualine.setup(config)
+
+  -- NOTE: make statusline background transparent
+  -- see: https://github.com/nvim-lualine/lualine.nvim/issues/1411
+  local base_statusline_highlights = { "StatusLine", "StatusLineNC" }
+  for _, hl_group in pairs(base_statusline_highlights) do
+    vim.api.nvim_set_hl(0, hl_group, { bg = "none" })
+  end
 end
 
 return M

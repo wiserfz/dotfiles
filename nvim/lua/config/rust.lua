@@ -53,6 +53,12 @@ function M.setup()
         end,
         default_settings = {
           ["rust-analyzer"] = {
+            semanticHighlighting = {
+              -- use tree-sitter highlighting instead because of it's can inject other languages
+              strings = {
+                enable = false,
+              },
+            },
             imports = {
               granularity = {
                 group = "module",
