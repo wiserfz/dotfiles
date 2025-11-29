@@ -32,7 +32,6 @@ function M.setup()
       "selene",
       "shellcheck",
       "sleek",
-      "sqlfmt",
       "sqlfluff",
       "stylua",
       "yamlfmt",

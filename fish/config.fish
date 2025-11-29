@@ -21,6 +21,10 @@ if status is-interactive
     if test -d $HOME/.local/share/nvim/mason/bin
         fish_add_path $HOME/.local/share/nvim/mason/bin
     end
+
+    if test -d /opt/local/bin
+        fish_add_path /opt/local/bin
+    end
 end
 
 # delete welcome message of fish shell
@@ -38,13 +42,17 @@ if command -q -v brew >/dev/null 2>&1
     # setup homebrew mirror for install package
     # see: https://mirrors.ustc.edu.cn/help/brew.git.html#homebrew-linuxbrew
     set -x HOMEBREW_BREW_GIT_REMOTE "https://mirrors.ustc.edu.cn/brew.git"
-    set -x HOMEBREW_CORE_GIT_REMOTE "https://mirrors.ustc.edu.cn/homebrew-core.git"
     set -x HOMEBREW_BOTTLE_DOMAIN "https://mirrors.ustc.edu.cn/homebrew-bottles"
     set -x HOMEBREW_API_DOMAIN "https://mirrors.ustc.edu.cn/homebrew-bottles/api"
 
     set -x HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS 7
     # disable homebrew installed dependents check
     set -x HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK true
+end
+
+if command -q -v rustup >/dev/null 2>&1
+    set -x RUSTUP_UPDATE_ROOT "https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup"
+    set -x RUSTUP_DIST_SERVER "https://mirrors.tuna.tsinghua.edu.cn/rustup"
 end
 
 # # fzf
