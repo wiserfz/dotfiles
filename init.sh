@@ -260,6 +260,12 @@ function init_env() {
     rm -rf .config/hadolint.yaml
     ln -sfv "$PRJ_DIR/config/hadolint.yaml" .config/hadolint.yaml
 
+    cargo_dir="$HOME/.cargo"
+    if [[ -d "$cargo_dir" ]]; then
+        rm -f "$cargo_dir/config.toml"
+        ln -sfv "$PRJ_DIR/config/cargo/config.toml" "$cargo_dir/config.toml"
+    fi
+
     cd "$CURRENT_DIR" || return
 
     echo "${LightGreen}Init environment finished.${NC}"

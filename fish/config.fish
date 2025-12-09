@@ -50,9 +50,10 @@ if command -q -v brew >/dev/null 2>&1
     set -x HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK true
 end
 
+# rustup mirror, see: https://rsproxy.cn
 if command -q -v rustup >/dev/null 2>&1
-    set -x RUSTUP_UPDATE_ROOT "https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup"
-    set -x RUSTUP_DIST_SERVER "https://mirrors.tuna.tsinghua.edu.cn/rustup"
+    set -x RUSTUP_UPDATE_ROOT "https://rsproxy.cn/rustup"
+    set -x RUSTUP_DIST_SERVER "https://rsproxy.cn"
 end
 
 # # fzf
