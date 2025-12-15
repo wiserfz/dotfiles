@@ -37,12 +37,6 @@ function M.setup()
       },
     },
     extensions = {
-      media_files = {
-        -- filetypes whitelist
-        -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-        filetypes = { "png", "webp", "jpg", "jpeg", "ppm", "pdf" },
-        find_cmd = "rg", -- find command (defaults to `fd`)
-      },
       extensions = {
         fzf = {
           fuzzy = true, -- false will only do exact matching
@@ -57,9 +51,6 @@ function M.setup()
 
   -- configure telescope
   telescope.setup(opts)
-
-  -- load extension to support preview of media files
-  telescope.load_extension("media_files")
 
   -- Get fzf loaded and working with extension
   telescope.load_extension("fzf")

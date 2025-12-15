@@ -67,8 +67,10 @@ end
 #     --header 'Press CTRL-Y to copy command into clipboard'"
 # fzf --fish | source
 
-# setup with mise
-mise activate fish | source
+# if mise isn't installed by brew, activate it here
+if test (which mise) != /opt/homebrew/opt/mise/bin/mise
+    mise activate fish | source
+end
 
 # setup with zoxide
 zoxide init fish | source

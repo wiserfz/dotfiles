@@ -336,7 +336,6 @@ function M.setup()
           build = "make",
         },
         "nvim-tree/nvim-web-devicons",
-        "nvim-telescope/telescope-media-files.nvim", -- image files preview in telescope
         "folke/todo-comments.nvim",
         "nvim-telescope/telescope-dap.nvim",
       },
