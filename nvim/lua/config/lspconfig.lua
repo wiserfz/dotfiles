@@ -157,23 +157,7 @@ local server_configs = {
       },
     },
   },
-  pylsp = {
-    settings = {
-      pylsp = {
-        plugins = {
-          autopep8 = { enabled = false },
-          mccabe = { enabled = false },
-          preload = { enabled = false },
-          pycodestyle = { enabled = false },
-          pyflakes = { enabled = false },
-          ruff = {
-            enabled = true,
-            lineLength = 100,
-          },
-        },
-      },
-    },
-  },
+  ty = {}, -- python type checker and language server
   docker_language_server = {},
   fish_lsp = {},
   buf_ls = {}, -- for protobuf

@@ -17,7 +17,7 @@ function M.setup()
         return true
       end,
     },
-    copilot_model = "gpt-4o-copilot",
+    -- copilot_model = "gpt-41-copilot",
     should_attach = function(_, bufname)
       if not vim.bo.buflisted or not vim.opt_local.modifiable:get() or vim.bo.buftype ~= "" then
         return false

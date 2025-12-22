@@ -25,8 +25,8 @@ function M.setup()
       },
     },
     outline = {
-      win_width = 35,
-      auto_preview = true,
+      win_width = 40,
+      auto_preview = false,
       detail = false,
       keys = {
         jump = "<CR>",

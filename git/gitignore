@@ -8,4 +8,5 @@
 .pre-commit-config.yaml
 .harper_dict.txt
 .harper_dictionaries
+.harper-dictionary.txt
 buf.yaml

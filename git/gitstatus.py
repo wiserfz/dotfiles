@@ -27,7 +27,7 @@ try:
     to_str = str
 except SyntaxError as _e:
     python_version = 2
-    to_str = unicode
+    to_str = unicode  # ty:ignore[unresolved-reference]
     D = dict()
     try:
         exec("from __future__ import print_function\np=print", D)
@@ -141,7 +141,7 @@ if remote == "":
     remote = "."
 
 if python_version == 2:
-    remote = remote.decode("utf-8")
+    remote = remote.decode("utf-8")  # ty:ignore[unresolved-attribute]
 
 out = "\n".join(
     [
@@ -161,4 +161,3 @@ if python_version == 2:
     Print(out.encode("utf-8"))
 else:
     Print(out)
-
