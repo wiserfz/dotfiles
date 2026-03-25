@@ -395,17 +395,17 @@ function M.setup()
     -- },
     {
       "MeanderingProgrammer/render-markdown.nvim",
-      ft = { "markdown" },
+      ft = { "markdown", "codecompanion", "Avante" },
       dependencies = {
         "nvim-treesitter/nvim-treesitter",
         "nvim-tree/nvim-web-devicons",
       },
       config = config("markdown"),
     },
-    {
-      "folke/sidekick.nvim", -- neovim AI sidekick
-      config = config("sidekick"),
-    },
+    -- {
+    --   "folke/sidekick.nvim", -- neovim AI sidekick
+    --   config = config("sidekick"),
+    -- },
     {
       "folke/noice.nvim",
       dependencies = {
@@ -418,6 +418,43 @@ function M.setup()
       "mcauley-penney/visual-whitespace.nvim",
       event = "ModeChanged *:[vV\22]",
       config = config("visual-whitespace"),
+    },
+    -- {
+    --   "olimorris/codecompanion.nvim",
+    --   version = "^19.0.0",
+    --   dependencies = {
+    --     "nvim-lua/plenary.nvim",
+    --     "nvim-treesitter/nvim-treesitter",
+    --     "j-hui/fidget.nvim",
+    --     {
+    --       "ravitemer/mcphub.nvim",
+    --       build = "npm install -g mcp-hub@latest",
+    --       config = config("mcphub"),
+    --     },
+    --   },
+    --   config = config("codecompanion"),
+    -- },
+    {
+      "ravitemer/mcphub.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+      },
+      build = "npm install -g mcp-hub@latest",
+      config = config("mcphub"),
+    },
+    {
+      "yetone/avante.nvim",
+      build = "make",
+      event = "VeryLazy",
+      version = false, -- Never set this value to "*"! Never!
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+        "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+        "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+        "ravitemer/mcphub.nvim",
+      },
+      config = config("avante"),
     },
   })
 end

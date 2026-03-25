@@ -18,6 +18,7 @@
 [core]
 	pager = delta
 	excludesFile = ~/.gitignore
+	editor = nvim
 [interactive]
 	diffFilter = delta --color-only
 [delta]

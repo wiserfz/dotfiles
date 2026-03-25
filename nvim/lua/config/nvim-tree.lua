@@ -56,13 +56,17 @@ function M.setup()
     },
     sort_by = "case_sensitive",
     hijack_cursor = true,
-    system_open = {
-      cmd = "open",
-    },
     renderer = {
       group_empty = false,
       highlight_hidden = "name",
-      special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md", "go.mod" },
+      special_files = {
+        "Cargo.toml",
+        "Makefile",
+        "README.md",
+        "readme.md",
+        "go.mod",
+        "rebar.config",
+      },
       highlight_git = "name",
       icons = {
         show = {

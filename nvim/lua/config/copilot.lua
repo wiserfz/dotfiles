@@ -16,6 +16,8 @@ function M.setup()
         end
         return true
       end,
+      lua = false,
+      AvanteInput = false,
     },
     -- copilot_model = "gpt-41-copilot",
     should_attach = function(_, bufname)

@@ -3,10 +3,13 @@
 *.sublime-*
 .null-ls*
 .ecrc
-.mise.toml
+.mise.local.toml
 .venv
 .pre-commit-config.yaml
 .harper_dict.txt
 .harper_dictionaries
 .harper-dictionary.txt
 buf.yaml
+avante.md
+AGENTS.md
+CLAUDE.md

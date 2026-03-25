@@ -18,6 +18,7 @@ local disabled_message_pattern = {
   "Already at newest change", -- Redoing
   '"[^"]+" %d+L, %d+B', -- Saving
   "^Hunk %d+ of %d+", -- Git hunk messages
+  "Content is not an image.", -- Image clip warning
 }
 
 local disable_notfiy_info_pattern = {
