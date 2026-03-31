@@ -60,7 +60,7 @@ function M.setup()
   vim.opt.undofile = true -- bool: Save undo history
   vim.opt.encoding = "utf-8" -- str:  String encoding to use
   -- opt.ambiwidth = "double"
-  vim.opt.fileencoding = "utf-8" -- str:  File encoding to use
+  vim.opt.fileencodings = "utf-8,gb18030,gbk,gb2312,ucs-bom,cp936,latin1" -- str: Attempt to recognize file encoding to use
   vim.opt.fileformat = "unix" -- str:  Line breaks use unix
 
   -- Splits

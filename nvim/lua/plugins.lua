@@ -184,9 +184,6 @@ function M.setup()
       },
       config = config("mason"),
     },
-    -- LSP
-    -- WARN: `LspRestart` or `LspStop` commands will throw error with no arguments
-    -- see: https://github.com/neovim/nvim-lspconfig/issues/3975
     {
       "neovim/nvim-lspconfig",
       event = { "BufReadPre", "BufNewFile" },
@@ -379,9 +376,6 @@ function M.setup()
         vim.g.matchup_mouse_enabled = 0
       end,
     },
-    -- WARN: Neovide has something wrong with nvim-ufo plugin,
-    -- it doesn't work well when click on folds can't open.
-    -- see https://github.com/neovide/neovide/issues/2815
     {
       "kevinhwang91/nvim-ufo",
       event = "BufReadPost",

@@ -9,6 +9,9 @@ mouse-cursor-icon = "arrow"
 title-hidden = true
 vsync = true
 wsl = false
+# system-native-tabs feature is conflict with neovide_macos_simple_fullscreen feature
+# see: https://github.com/neovide/neovide/issues/2378#issuecomment-3591523690
+system-native-tabs = false
 
 [font]
 size = 12

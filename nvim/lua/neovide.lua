@@ -9,16 +9,13 @@ local change_transparency = function(delta)
   vim.g.neovide_opacity = vim.g.neovide_opacity + delta
 end
 
-local alpha = function()
-  return string.format("%x", math.floor(255 * vim.g.neovide_opacity or 0.8))
-end
-
 function M.setup()
   if vim.g.neovide == nil then
     return
   end
 
   vim.g.neovide_macos_simple_fullscreen = true
+  vim.g.neovide_highlight_matching_pair = true
 
   -- Change font size with ctrl + and ctrl -
   vim.g.neovide_scale_factor = 1.0
@@ -35,7 +32,6 @@ function M.setup()
   -- Set transparency and background color (title bar color)
   vim.g.neovide_opacity = 0.8
   vim.g.neovide_normal_opacity = 1.0
-  vim.g.neovide_background_color = "#OCOAOO" .. alpha()
   -- command + ] to increase transparency
   vim.keymap.set({ "n", "v", "o" }, "<D-]>", function()
     change_transparency(0.01)
@@ -68,6 +64,7 @@ function M.setup()
   vim.keymap.set("v", "<D-v>", '"+P') -- Paste visual mode
   vim.keymap.set("c", "<D-v>", "<C-R>+") -- Paste command mode
   vim.keymap.set("i", "<D-v>", '<ESC>l"+Pli') -- Paste insert mode
+  vim.keymap.set("n", "<X1Mouse>", "<Cmd>NeovideForceClick<CR>", { silent = true }) -- Force click
 
   -- Allow clipboard copy paste in neovim
   vim.api.nvim_set_keymap("", "<D-v>", "+p<CR>", { noremap = true, silent = true })
