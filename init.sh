@@ -228,6 +228,12 @@ function init_env() {
     rm -rf .tmux.conf
     ln -sfv "$PRJ_DIR/tmux.conf" .tmux.conf
 
+    local_bin_dir="$HOME/.local/bin"
+    if [[ ! -d "$local_bin_dir" ]]; then
+        mkdir -p "$local_bin_dir"
+    fi
+    ln -sfv "$PRJ_DIR/bin/attach-tmux-popup.sh" "$local_bin_dir/attach-tmux-popup"
+
     rm -rf .vimrc
     ln -sfv "$PRJ_DIR/vimrc" .vimrc
 

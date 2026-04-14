@@ -43,7 +43,7 @@ function M.setup()
     integrations = {
       ["mason-lspconfig"] = false,
       ["mason-null-ls"] = false,
-      ["mason-nvim-dap"] = true,
+      ["mason-nvim-dap"] = false,
     },
   })
 end
