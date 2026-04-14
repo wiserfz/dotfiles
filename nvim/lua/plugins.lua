@@ -456,6 +456,11 @@ function M.setup()
       },
       config = config("avante"),
     },
+    {
+      "sevenc-nanashi/neov-ime.nvim",
+      cond = vim.g.neovide ~= nil,
+      event = { "UIEnter" },
+    },
   })
 end
 

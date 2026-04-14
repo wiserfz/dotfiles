@@ -1,0 +1,15 @@
+[tools]
+elixir = "1.18.3-otp-26"
+go = "1.24"
+node = "24"
+python = "3.13"
+rebar = "3.24.0"
+usage = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = []
+experimental = true
+auto_install = false
+
+[settings.python]
+uv_venv_auto = true

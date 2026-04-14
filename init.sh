@@ -260,6 +260,9 @@ function init_env() {
     rm -rf .config/hadolint.yaml
     ln -sfv "$PRJ_DIR/config/hadolint.yaml" .config/hadolint.yaml
 
+    rm -rf .config/mise
+    ln -sfv "$PRJ_DIR/config/mise" .config/mise
+
     cargo_dir="$HOME/.cargo"
     if [[ -d "$cargo_dir" ]]; then
         rm -f "$cargo_dir/config.toml"
