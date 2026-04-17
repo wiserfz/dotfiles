@@ -1,3 +1,4 @@
+local api = vim.api
 local M = {}
 
 function M.setup()
@@ -111,19 +112,19 @@ function M.setup()
     },
   })
 
-  local group = vim.api.nvim_create_augroup("user.options", {})
+  local user_group = api.nvim_create_augroup("user.options", { clear = true })
 
   -- Highlight yanked text
-  vim.api.nvim_create_autocmd("TextYankPost", {
-    group = group,
+  api.nvim_create_autocmd("TextYankPost", {
+    group = user_group,
     callback = function()
       vim.highlight.on_yank({ on_visual = false, timeout = 150 })
     end,
   })
 
   -- Split help window to the right
-  vim.api.nvim_create_autocmd("FileType", {
-    group = group,
+  api.nvim_create_autocmd("FileType", {
+    group = user_group,
     pattern = "help",
     callback = function()
       vim.opt_local.bufhidden = "unload"
@@ -133,11 +134,36 @@ function M.setup()
   })
 
   -- Git commit spell checking
-  vim.api.nvim_create_autocmd("FileType", {
+  api.nvim_create_autocmd("FileType", {
     pattern = "gitcommit",
-    group = group,
+    group = user_group,
     callback = function()
       vim.opt_local.spell = true
+    end,
+  })
+
+  -- Toggle between relative/absolute line numbers
+  api.nvim_create_autocmd(
+    { "BufEnter", "FocusGained", "InsertLeave", "CmdlineLeave", "WinEnter" },
+    {
+      pattern = "*",
+      group = user_group,
+      callback = function()
+        if vim.o.nu and api.nvim_get_mode().mode ~= "i" then
+          vim.opt.relativenumber = true
+        end
+      end,
+    }
+  )
+
+  api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "CmdlineEnter", "WinLeave" }, {
+    pattern = "*",
+    group = user_group,
+    callback = function()
+      if vim.o.nu then
+        vim.opt.relativenumber = false
+        vim.cmd.redraw()
+      end
     end,
   })
 end

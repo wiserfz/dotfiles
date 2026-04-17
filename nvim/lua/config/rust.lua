@@ -49,6 +49,55 @@ function M.setup()
               end,
               desc = "Rustaceanvim hover actions",
             },
+            {
+              "J",
+              function()
+                vim.cmd.RustLsp("joinLines")
+              end,
+              desc = "Rustaceanvim join lines",
+            },
+            {
+              "<leader>re",
+              function()
+                vim.cmd.RustLsp("explainError")
+              end,
+              desc = "[r]ust: [e]xplain error",
+            },
+            {
+              "<leader>rd",
+              function()
+                vim.cmd.RustLsp("renderDiagnostic")
+              end,
+              desc = "rust: [r]ender [d]iagnostic",
+            },
+            -- {
+            --   "<leader>gd",
+            --   function()
+            --     vim.cmd.RustLsp("relatedDiagnostics")
+            --   end,
+            --   desc = "rust: [g]o to related [d]iagnostics",
+            -- },
+            {
+              "<leader>rk",
+              function()
+                vim.cmd.RustLsp({ "moveItem", "up" })
+              end,
+              desc = "[r]ust: move item up[k]",
+            },
+            {
+              "<leader>rj",
+              function()
+                vim.cmd.RustLsp({ "moveItem", "down" })
+              end,
+              desc = "[r]ust: move item down[j]",
+            },
+            {
+              "<leader>rm",
+              function()
+                vim.cmd.RustLsp("expandMacro")
+              end,
+              desc = "[r]ust: [m]acro expand",
+            },
           })
         end,
         default_settings = {

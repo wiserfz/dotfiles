@@ -244,7 +244,7 @@ function M.setup()
       dependencies = {
         "neovim/nvim-lspconfig",
       },
-      version = "^7", -- Recommended
+      version = "^9", -- Recommended
       lazy = false, -- This plugin is already lazy
       ft = "rust",
       config = config("rust"),
