@@ -1,4 +1,4 @@
--- local lspconfig = require("lspconfig")
+local lspconfig = require("lspconfig")
 local blink = require("blink.cmp")
 local wk = require("which-key")
 local mason_lspconfig = require("mason-lspconfig")
@@ -89,6 +89,7 @@ end
 -- list of servers for mason to install
 local server_configs = {
   lua_ls = {
+    ---@type lspconfig.settings.lua_ls
     settings = { -- custom settings for lua
       Lua = {
         runtime = {
@@ -108,13 +109,6 @@ local server_configs = {
         },
         workspace = {
           checkThirdParty = false,
-          -- NOTE:: library should now be handled by lazydev
-          -- library = {
-          --   vim.fn.expand("$VIMRUNTIME/lua"),
-          --   vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
-          --   vim.fn.stdpath("config") .. "/lua",
-          --   "${3rd}/luv/library",
-          -- },
         },
         hint = {
           enable = true,
@@ -124,6 +118,7 @@ local server_configs = {
   },
   -- YAML --
   yamlls = {
+    ---@type lspconfig.settings.yamlls
     settings = {
       yaml = {
         schemas = schemastore.yaml.schemas({
@@ -150,6 +145,7 @@ local server_configs = {
   },
   -- Json --
   jsonls = {
+    ---@type lspconfig.settings.jsonls
     settings = {
       json = {
         schemas = schemastore.json.schemas(),
@@ -219,7 +215,7 @@ local server_configs = {
 
 function M.setup()
   -- set lsp log level to error
-  vim.lsp.set_log_level("ERROR")
+  vim.lsp.log.set_level("ERROR")
 
   -- Change the Diagnostic symbols in the sign column (gutter)
   local diagnostics_text = {}

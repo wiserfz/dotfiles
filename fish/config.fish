@@ -67,6 +67,10 @@ end
 #     --header 'Press CTRL-Y to copy command into clipboard'"
 # fzf --fish | source
 
+# NOTE: if mise installed by homebrew,
+# setup MISE_FISH_AUTO_ACTIVATE=0 environment variable to disable mise auto activate
+mise activate fish | source
+
 # setup with zoxide
 zoxide init fish | source
 

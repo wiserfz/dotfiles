@@ -435,16 +435,9 @@ function M.setup()
     --   config = config("codecompanion"),
     -- },
     {
-      "ravitemer/mcphub.nvim",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-      },
-      build = "npm install -g mcp-hub@latest",
-      config = config("mcphub"),
-    },
-    {
       "yetone/avante.nvim",
       build = "make",
+      cond = os.getenv("AI_GATEWAY_BASE_URL") ~= nil,
       event = "VeryLazy",
       version = false, -- Never set this value to "*"! Never!
       dependencies = {
@@ -452,7 +445,11 @@ function M.setup()
         "MunifTanjim/nui.nvim",
         "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-        "ravitemer/mcphub.nvim",
+        {
+          "ravitemer/mcphub.nvim",
+          build = "npm install -g mcp-hub@latest",
+          config = config("mcphub"),
+        },
       },
       config = config("avante"),
     },
