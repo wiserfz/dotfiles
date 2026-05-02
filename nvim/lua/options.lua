@@ -78,7 +78,7 @@ function M.setup()
   vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
   vim.opt.foldlevelstart = 99
   vim.opt.foldenable = true
-  vim.opt.fillchars:append({
+  vim.opt.fillchars = {
     eob = " ",
     fold = " ",
     foldopen = "",
@@ -91,7 +91,7 @@ function M.setup()
     vertleft = "┫",
     vertright = "┣",
     verthoriz = "╋",
-  })
+  }
 
   vim.filetype.add({
     extension = {

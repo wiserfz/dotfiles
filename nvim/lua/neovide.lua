@@ -48,9 +48,6 @@ function M.setup()
   vim.g.neovide_scroll_animation_length = 0.5
   vim.g.neovide_scroll_animation_far_lines = 10
 
-  -- Set floating window transparency
-  vim.o.winblend = 45
-
   vim.g.neovide_floating_blur_amount_x = 10.0
   vim.g.neovide_floating_blur_amount_y = 10.0
 

@@ -1,7 +1,7 @@
 tmux
 fish
 yq
-tree
+lstr
 bat
 fd
 ripgrep
@@ -21,3 +21,5 @@ zola
 just
 atuin
 tree-sitter-cli
+rtk
+oha

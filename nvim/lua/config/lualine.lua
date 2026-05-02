@@ -2,6 +2,49 @@ local lualine = require("lualine")
 local diagnostics_icon = require("util").diagnostics
 local lazy_status = require("lazy.status")
 local devicons = require("nvim-web-devicons")
+local theme = require("kanagawa.colors").setup().theme
+local colorschema_config = require("kanagawa").config
+
+-- NOTE: due to the PR: https://github.com/rebelot/kanagawa.nvim/pull/264 not merged,
+-- so we have to define custom theme for lualine.
+local kanagawa = {}
+kanagawa.normal = {
+  a = { bg = theme.syn.fun, fg = theme.ui.bg_m3 },
+  b = { bg = theme.diff.change, fg = theme.syn.fun },
+  c = { bg = colorschema_config.transparent and "none" or theme.ui.bg_p1, fg = theme.ui.fg },
+}
+
+kanagawa.insert = {
+  a = { bg = theme.diag.ok, fg = theme.ui.bg },
+  b = { bg = theme.ui.bg, fg = theme.diag.ok },
+}
+
+kanagawa.command = {
+  a = { bg = theme.syn.operator, fg = theme.ui.bg },
+  b = { bg = theme.ui.bg, fg = theme.syn.operator },
+}
+
+kanagawa.visual = {
+  a = { bg = theme.syn.keyword, fg = theme.ui.bg },
+  b = { bg = theme.ui.bg, fg = theme.syn.keyword },
+}
+
+kanagawa.replace = {
+  a = { bg = theme.syn.constant, fg = theme.ui.bg },
+  b = { bg = theme.ui.bg, fg = theme.syn.constant },
+}
+
+kanagawa.inactive = {
+  a = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+  b = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim, gui = "bold" },
+  c = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+}
+
+if vim.g.kanagawa_lualine_bold then
+  for _, mode in pairs(kanagawa) do
+    mode.a.gui = "bold"
+  end
+end
 
 ---@param name string @The name of the highlight group
 ---@return function @A function that returns the foreground color of the highlight group
@@ -18,8 +61,9 @@ end
 local M = {}
 
 function M.setup()
-  local config = {
+  local opts = {
     options = {
+      theme = kanagawa,
       icons_enabled = true,
       component_separators = "",
       section_separators = { left = " ", right = "" },
@@ -155,7 +199,7 @@ function M.setup()
   }
 
   -- configure lualine with modified theme
-  lualine.setup(config)
+  lualine.setup(opts)
 
   -- NOTE: make statusline background transparent
   -- see: https://github.com/nvim-lualine/lualine.nvim/issues/1411

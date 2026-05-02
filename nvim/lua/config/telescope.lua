@@ -35,6 +35,15 @@ function M.setup()
         "LICENSE*",
         "node_modules",
       },
+      layout_config = {
+        horizontal = { preview_width = 125 },
+      },
+      winblend = function()
+        if vim.g.neovide ~= nil then
+          return 45
+        end
+        return vim.o.winblend
+      end,
     },
     extensions = {
       extensions = {

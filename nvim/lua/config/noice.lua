@@ -1,5 +1,6 @@
 local noice = require("noice")
 local wk = require("which-key")
+local notify = require("notify")
 
 local function create_skip_filter(pattern)
   return {
@@ -36,6 +37,7 @@ local other_routes = function(event)
       { view = "notify", filter = { event = event, kind = "info" } },
     }
   else
+    -- always route any messages with more than 20 lines to the split view
     return {
       { view = "split", filter = { event = event, min_height = 20 } },
     }
@@ -45,6 +47,14 @@ end
 local M = {}
 
 function M.setup()
+  notify.setup({
+    on_open = function(win)
+      if vim.g.neovide ~= nil then
+        vim.wo[win].winblend = 100
+      end
+    end,
+  })
+
   noice.setup({
     cmdline = {
       format = {
@@ -76,6 +86,13 @@ function M.setup()
     },
     presets = {
       lsp_doc_border = true,
+    },
+    views = {
+      cmdline_popup = {
+        win_options = {
+          winblend = 100,
+        },
+      },
     },
   })
 

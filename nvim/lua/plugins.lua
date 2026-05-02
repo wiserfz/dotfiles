@@ -415,6 +415,10 @@ function M.setup()
       config = config("noice"),
     },
     {
+      "folke/zen-mode.nvim",
+      config = config("zen-mode"),
+    },
+    {
       "mcauley-penney/visual-whitespace.nvim",
       event = "ModeChanged *:[vV\22]",
       config = config("visual-whitespace"),
