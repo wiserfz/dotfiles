@@ -124,10 +124,10 @@ local server_configs = {
         schemas = schemastore.yaml.schemas({
           replace = {
             ["gitlab-ci"] = {
-              description = "GitLab CI Schema before version v15.0.0",
+              description = "GitLab CI Schema before version v16.7.10",
               fileMatch = ".gitlab-ci.yml",
               name = "gitlab-ci",
-              url = "https://gitlab.com/gitlab-org/gitlab/-/raw/v14.10.5-ee/app/assets/javascripts/editor/schema/ci.json",
+              url = "https://gitlab.com/gitlab-org/gitlab/-/raw/v16.7.10-ee/app/assets/javascripts/editor/schema/ci.json",
             },
           },
         }),

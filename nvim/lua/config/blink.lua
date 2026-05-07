@@ -3,9 +3,17 @@ local blink_type = require("blink.cmp.types")
 local util = require("util")
 local colorful_menu = require("colorful-menu")
 
+local blink_winblend = function()
+  if vim.g.neovide_multigrid then
+    return 70
+  end
+  return vim.o.winblend
+end
+
 local M = {}
 
 function M.setup()
+  local winblend = blink_winblend()
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   local opts = {
@@ -86,10 +94,11 @@ function M.setup()
         border = "rounded",
         winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder",
         scrollbar = false,
+        winblend = winblend,
       },
       documentation = {
         auto_show = true,
-        window = { border = "rounded", scrollbar = false },
+        window = { border = "rounded", scrollbar = false, winblend = winblend },
       },
       trigger = {
         -- these are annoying
@@ -101,7 +110,7 @@ function M.setup()
     },
     signature = {
       enabled = true, -- experimental, can also be provided by `noice` plugin
-      window = { border = "rounded" },
+      window = { show_documentation = false, border = "rounded", winblend = winblend },
     },
     appearance = {
       -- Sets the fallback highlight groups to nvim-cmp's highlight groups

@@ -28,6 +28,6 @@ vim.g.llm_secret_files = {
 }
 
 prequire("options")
+prequire("neovide")
 prequire("plugins")
 prequire("keymaps")
-prequire("neovide")

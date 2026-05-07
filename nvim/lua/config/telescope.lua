@@ -3,6 +3,13 @@ local actions = require("telescope.actions")
 local telescope_builtin = require("telescope.builtin")
 local wk = require("which-key")
 
+local telescope_winblend = function()
+  if vim.g.neovide_multigrid then
+    return 40
+  end
+  return vim.o.winblend
+end
+
 local function find_files(opts)
   return function()
     local fd_cmd = { "fd", "--type", "f", "--exclude", ".git", "--hidden" }
@@ -38,12 +45,7 @@ function M.setup()
       layout_config = {
         horizontal = { preview_width = 125 },
       },
-      winblend = function()
-        if vim.g.neovide ~= nil then
-          return 45
-        end
-        return vim.o.winblend
-      end,
+      winblend = telescope_winblend(),
     },
     extensions = {
       extensions = {

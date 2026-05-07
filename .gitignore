@@ -4,3 +4,4 @@ docker.fish
 kubectl.fish
 orbctl.fish
 env.fish
+fish/completions

@@ -1,8 +1,17 @@
 local fidget = require("fidget")
 
+local fidget_winblend = function()
+  if vim.g.neovide_multigrid then
+    return 80
+  end
+  return vim.o.winblend
+end
+
 local M = {}
 
 function M.setup()
+  local winblend = fidget_winblend()
+
   local opt = {
     progress = {
       display = {
@@ -20,14 +29,10 @@ function M.setup()
     notification = {
       window = {
         normal_hl = "Comment",
-        winblend = 0,
+        winblend = winblend,
       },
     },
   }
-  -- WARN: temporary fix for fidget transparency issue in neovide
-  if vim.g.neovide ~= nil then
-    opt.notification.window.winblend = 100
-  end
 
   fidget.setup(opt)
 end

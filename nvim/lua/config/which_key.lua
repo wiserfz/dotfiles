@@ -1,13 +1,26 @@
 local wk = require("which-key")
 
+local wk_winblend = function()
+  if vim.g.neovide_multigrid then
+    return 70
+  end
+  return vim.o.winblend
+end
+
 local M = {}
 
 function M.setup()
   vim.opt.timeoutlen = 1000
+  local winblend = wk_winblend()
 
   wk.setup({
     preset = "modern",
     delay = 1000,
+    win = {
+      wo = {
+        winblend = winblend,
+      },
+    },
     icons = {
       breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
       separator = "➜", -- symbol used between a key and it's label

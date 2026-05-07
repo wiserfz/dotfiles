@@ -23,6 +23,8 @@ function M.setup()
       tools = {
         float_win_config = {
           border = "rounded",
+          max_width = 100,
+          max_height = 50,
         },
       },
       server = {

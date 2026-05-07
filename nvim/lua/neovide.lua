@@ -9,10 +9,24 @@ local change_transparency = function(delta)
   vim.g.neovide_opacity = vim.g.neovide_opacity + delta
 end
 
+-- Determine multigrid feature is enable or not
+local multigrid_ui = function()
+  for _, ui in ipairs(vim.api.nvim_list_uis()) do
+    if ui.ext_multigrid then
+      vim.api.nvim_set_var("neovide_multigrid", true)
+      return
+    end
+  end
+
+  vim.api.nvim_set_var("neovide_multigrid", false)
+end
+
 function M.setup()
   if vim.g.neovide == nil then
     return
   end
+
+  multigrid_ui()
 
   vim.g.neovide_macos_simple_fullscreen = true
   vim.g.neovide_highlight_matching_pair = true
@@ -50,6 +64,11 @@ function M.setup()
 
   vim.g.neovide_floating_blur_amount_x = 10.0
   vim.g.neovide_floating_blur_amount_y = 10.0
+
+  -- setup for plugins with not export the winblend options
+  if vim.g.neovide_multigrid then
+    vim.o.winblend = 45
+  end
 
   -- vim.g.neovide_fullscreen = true
   vim.g.neovide_input_macos_option_key_is_meta = "both"

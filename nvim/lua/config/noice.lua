@@ -44,13 +44,22 @@ local other_routes = function(event)
   end
 end
 
+local cmdline_popup_winblend = function()
+  if vim.g.neovide_multigrid then
+    return 80
+  end
+  return vim.o.winblend
+end
+
 local M = {}
 
 function M.setup()
+  local cmdline_winblend = cmdline_popup_winblend()
+
   notify.setup({
     on_open = function(win)
-      if vim.g.neovide ~= nil then
-        vim.wo[win].winblend = 100
+      if vim.g.neovide_multigrid then
+        vim.wo[win].winblend = 60
       end
     end,
   })
@@ -90,7 +99,7 @@ function M.setup()
     views = {
       cmdline_popup = {
         win_options = {
-          winblend = 100,
+          winblend = cmdline_winblend,
         },
       },
     },
