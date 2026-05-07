@@ -21,7 +21,7 @@ function M.setup()
     on_open = function(win)
       -- NOTE: Due to zen-mode plugin reset the fillchars option, so setup option here
       -- when trigger the zen mode, see: https://github.com/folke/zen-mode.nvim/issues/55
-      vim.wo[win].fillchars = "eob: ,fold: ,foldopen:,foldsep: ,foldclose:"
+      vim.wo[win].fillchars = "eob: ,fold: ,foldopen:,foldsep: ,foldclose:,foldinner: "
       if vim.g.neovide ~= nil then
         vim.g.neovide_opacity = 1.0
       end

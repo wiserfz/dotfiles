@@ -71,6 +71,10 @@ function M.setup()
   -- Clipboard
   vim.opt.clipboard:append("unnamedplus")
 
+  -- Undercurl
+  vim.cmd([[let &t_Cs = "\e[4:3m"]])
+  vim.cmd([[let &t_Ce = "\e[4:0m"]])
+
   -- Folding by ufo
   -- Hide foldcolumn for transparency
   -- See https://github.com/kevinhwang91/nvim-ufo/issues/4
@@ -84,6 +88,7 @@ function M.setup()
     foldopen = "",
     foldsep = " ",
     foldclose = "",
+    foldinner = " ",
     horiz = "━",
     horizup = "┻",
     horizdown = "┳",
