@@ -56,15 +56,20 @@ local M = {}
 function M.setup()
   local cmdline_winblend = cmdline_popup_winblend()
 
-  notify.setup({
+  ---@module "notify"
+  ---@type notify.Config
+  local notify_opts = {
     on_open = function(win)
       if vim.g.neovide_multigrid then
         vim.wo[win].winblend = 60
       end
     end,
-  })
+  }
+  notify.setup(notify_opts)
 
-  noice.setup({
+  ---@module "noice"
+  ---@type NoiceConfig
+  local noice_opts = {
     cmdline = {
       format = {
         cmdline = {
@@ -103,7 +108,9 @@ function M.setup()
         },
       },
     },
-  })
+  }
+
+  noice.setup(noice_opts)
 
   wk.add({
     noremap = false,

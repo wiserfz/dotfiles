@@ -5,7 +5,9 @@ local wk = require("which-key")
 local M = {}
 
 function M.setup()
-  sidekick.setup({
+  ---@module "sidekick"
+  ---@type sidekick.Config
+  local opts = {
     -- add any options here
     cli = {
       mux = {
@@ -14,7 +16,9 @@ function M.setup()
       },
     },
     nes = { enabled = false },
-  })
+  }
+
+  sidekick.setup(opts)
 
   wk.add({
     { "<leader>a", group = "AI Sidekick" },

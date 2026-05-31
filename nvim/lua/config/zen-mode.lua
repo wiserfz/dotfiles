@@ -4,6 +4,7 @@ local wk = require("which-key")
 local M = {}
 
 function M.setup()
+  ---@module "zen-mode"
   ---@type ZenOptions
   local opts = {
     window = {
@@ -32,6 +33,7 @@ function M.setup()
       end
     end,
   }
+
   zen_mode.setup(opts)
 
   wk.add({

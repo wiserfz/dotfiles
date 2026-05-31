@@ -77,6 +77,8 @@ local treesitter_provider = {
 local M = {}
 
 function M.setup()
+  ---@module "ufo"
+  ---@type UfoConfig
   local opts = {
     -- lsp -> treesitter -> indent
     provider_selector = function(bufnr, filetype, buftype)

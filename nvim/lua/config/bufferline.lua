@@ -4,7 +4,9 @@ local wk = require("which-key")
 local M = {}
 
 function M.setup()
-  bufferline.setup({
+  ---@module "bufferline"
+  ---@type bufferline.UserConfig
+  local opts = {
     options = {
       separator_style = { "", "" },
       indicator = {
@@ -15,9 +17,15 @@ function M.setup()
       offsets = {
         {
           filetype = "NvimTree",
-          text = "File Explorer",
+          text = function()
+            local cwd = vim.uv.cwd()
+            if cwd ~= nil then
+              return vim.fn.fnamemodify(cwd, ":t")
+            end
+            return "File Explorer"
+          end,
           text_align = "center",
-          highlight = "Directory",
+          highlight = "NvimTreeRootFolder",
           separator = true, -- use a "true" to enable the default, or set your own character
         },
       },
@@ -51,7 +59,9 @@ function M.setup()
     --   duplicate_selected = { bg = theme.ui.bg_p1 },
     --   indicator_selected = { bg = theme.ui.bg_p1 },
     -- },
-  })
+  }
+
+  bufferline.setup(opts)
 
   -- transparent bufferline
   local base_bufferline_highlights =

@@ -423,25 +423,30 @@ function M.setup()
       event = "ModeChanged *:[vV\22]",
       config = config("visual-whitespace"),
     },
-    -- {
-    --   "olimorris/codecompanion.nvim",
-    --   version = "^19.0.0",
-    --   dependencies = {
-    --     "nvim-lua/plenary.nvim",
-    --     "nvim-treesitter/nvim-treesitter",
-    --     "j-hui/fidget.nvim",
-    --     {
-    --       "ravitemer/mcphub.nvim",
-    --       build = "npm install -g mcp-hub@latest",
-    --       config = config("mcphub"),
-    --     },
-    --   },
-    --   config = config("codecompanion"),
-    -- },
+    {
+      "olimorris/codecompanion.nvim",
+      version = "^19.0.0",
+      cond = function()
+        return vim.g.ai_plugin == "codecompanion" and os.getenv("AI_GATEWAY_BASE_URL") ~= nil
+      end,
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        "j-hui/fidget.nvim",
+        {
+          "ravitemer/mcphub.nvim",
+          build = "npm install -g mcp-hub@latest",
+          config = config("mcphub"),
+        },
+      },
+      config = config("codecompanion"),
+    },
     {
       "yetone/avante.nvim",
       build = "make",
-      cond = os.getenv("AI_GATEWAY_BASE_URL") ~= nil,
+      cond = function()
+        return vim.g.ai_plugin == "avante" and os.getenv("AI_GATEWAY_BASE_URL") ~= nil
+      end,
       event = "VeryLazy",
       version = false, -- Never set this value to "*"! Never!
       dependencies = {

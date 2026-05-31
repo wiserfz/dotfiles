@@ -5,7 +5,9 @@ local wk = require("which-key")
 local M = {}
 
 function M.setup()
-  crates.setup({
+  ---@module "crates"
+  ---@type crates.UserConfig
+  local opts = {
     autoupdate_throttle = 50,
     max_parallel_requests = 32,
     popup = {
@@ -27,7 +29,9 @@ function M.setup()
       completion = true,
       hover = true,
     },
-  })
+  }
+
+  crates.setup(opts)
 
   wk.add({
     { "<leader>c", group = "Crates" },

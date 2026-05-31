@@ -11,7 +11,9 @@ function string:suffix(ending)
 end
 
 function M.setup()
-  conform.setup({
+  ---@type "conform"
+  ---@type conform.setupOpts
+  local opts = {
     default_format_opts = {
       lsp_format = "fallback",
     },
@@ -78,7 +80,9 @@ function M.setup()
 
       return { timeout_ms = 5000, lsp_format = "fallback" }
     end,
-  })
+  }
+
+  conform.setup(opts)
 
   -- crate commands to enable/disable autoformat
   vim.api.nvim_create_user_command("FormatDisable", function(args)

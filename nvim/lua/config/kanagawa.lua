@@ -18,7 +18,9 @@ local M = {}
 
 -- monokai theme
 function M.setup()
-  scheme.setup({
+  ---@module "kanagawa"
+  ---@type KanagawaConfig
+  local opts = {
     keywordStyle = { italic = true, bold = true },
     commentStyle = { italic = true },
     variablebuiltinStyle = { italic = true },
@@ -71,7 +73,9 @@ function M.setup()
         DiagnosticVirtualTextOk = blend_bg(theme.diag.ok),
       }
     end,
-  })
+  }
+
+  scheme.setup(opts)
 
   vim.cmd("colorscheme kanagawa-wave")
 

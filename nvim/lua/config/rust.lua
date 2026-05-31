@@ -16,8 +16,10 @@ local disable_features_project = {
 local M = {}
 
 function M.setup()
+  ---@module "rustaceanvim"
   ---@return rustaceanvim.Opts
   vim.g.rustaceanvim = function()
+    ---@module "rustaceanvim"
     ---@type rustaceanvim.Opts
     local opts = {
       tools = {
@@ -28,6 +30,7 @@ function M.setup()
         },
       },
       server = {
+        -- cmd = { "/Users/wiser/.cargo/bin/rust-analyzer" },
         capabilities = lsp.get_capabilities(),
         on_attach = function(client, bufnr)
           lsp.on_attach(client, bufnr)

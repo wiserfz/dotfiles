@@ -72,7 +72,7 @@ function M.setup()
       },
     },
     instructions_file = "avante.md",
-    auto_suggestions_provider = "openai",
+    auto_suggestions_provider = false,
     provider = "openai",
     providers = {
       ---@type AvanteSupportedProvider
@@ -87,7 +87,7 @@ function M.setup()
           reasoning = {
             effort = "high", -- Converted from reasoning_effort
           },
-          max_output_tokens = 65535,
+          max_output_tokens = 102400,
           background = true,
         },
       },

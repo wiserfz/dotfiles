@@ -4,7 +4,9 @@ local wk = require("which-key")
 local M = {}
 
 function M.setup()
-  leetcode.setup({
+  ---@module "leetcode"
+  ---@type lc.UserConfig
+  local opts = {
     arg = "leetcode.nvim",
     lang = "golang",
     cn = { -- leetcode.cn
@@ -30,7 +32,9 @@ function M.setup()
     picker = {
       provider = "telescope",
     },
-  })
+  }
+
+  leetcode.setup(opts)
 
   wk.add({
     noremap = false,

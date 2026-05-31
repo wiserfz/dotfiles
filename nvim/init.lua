@@ -26,6 +26,7 @@ vim.g.llm_secret_files = {
   "env*.sh",
   ".secret.sh",
 }
+vim.g.ai_plugin = "avante"
 
 prequire("options")
 prequire("neovide")

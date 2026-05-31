@@ -3,6 +3,8 @@ local wk = require("which-key")
 
 local M = {}
 
+---@module "render-markdown"
+---@type render.md.UserConfig
 local opts = {
   enabled = false,
   file_types = { "markdown", "codecompanion", "Avante" },

@@ -18,20 +18,6 @@ local function open_nvim_tree(data)
   require("nvim-tree.api").tree.open()
 end
 
----@param bufnr number @The client buffer number
-local function _on_attach(bufnr)
-  local function opts(desc)
-    return {
-      desc = "nvim-tree: " .. desc,
-    }
-  end
-
-  api.config.mappings.default_on_attach(bufnr)
-
-  -- your removals and mappings go here
-  vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
-end
-
 local M = {}
 
 function M.setup()
@@ -49,14 +35,19 @@ function M.setup()
 
   vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
-  tree.setup({
+  ---@module "nvim-tree"
+  ---@type nvim_tree.config
+  local opts = {
     view = {
       width = 40,
       -- relativenumber = true,
     },
-    sort_by = "case_sensitive",
+    sort = {
+      sorter = "case_sensitive",
+    },
     hijack_cursor = true,
     renderer = {
+      root_folder_label = false,
       group_empty = false,
       highlight_hidden = "name",
       special_files = {
@@ -79,15 +70,6 @@ function M.setup()
         git_placement = "after",
         glyphs = {
           bookmark = "🔖",
-          git = {
-            unstaged = "✗",
-            staged = "✓",
-            unmerged = "",
-            renamed = "➜",
-            untracked = "★",
-            deleted = "⊖",
-            ignored = "◌",
-          },
         },
       },
     },
@@ -106,7 +88,9 @@ function M.setup()
       enable = true,
       ignore = false,
     },
-  })
+  }
+
+  tree.setup(opts)
 
   -- Toggle nvim-tree
   wk.add({

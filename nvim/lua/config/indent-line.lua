@@ -3,7 +3,9 @@ local indent_line = require("ibl")
 local M = {}
 
 function M.setup()
-  indent_line.setup({
+  ---@module "ibl"
+  ---@type ibl.config
+  local opts = {
     indent = {
       char = "┊",
       priority = 2,
@@ -23,7 +25,9 @@ function M.setup()
         "dashboard",
       },
     },
-  })
+  }
+
+  indent_line.setup(opts)
 end
 
 return M

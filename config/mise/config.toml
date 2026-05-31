@@ -1,9 +1,7 @@
 [tools]
-elixir = "1.18.3-otp-27"
-go = "1.24"
+go = "1.26"
 node = "24"
 python = "3.14"
-rebar = "3.24.0"
 
 [settings]
 idiomatic_version_file_enable_tools = []

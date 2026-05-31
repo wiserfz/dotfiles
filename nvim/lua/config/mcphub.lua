@@ -3,7 +3,9 @@ local mcp = require("mcphub")
 local M = {}
 
 function M.setup()
-  mcp.setup({
+  ---@module "mcphub"
+  ---@type MCPHub.Config
+  local opts = {
     auto_approve = true, -- Auto approve mcp tool calls
     auto_toggle_mcp_servers = true,
     extensions = {
@@ -16,7 +18,9 @@ function M.setup()
       to_file = true,
       prefix = "MCPHub",
     },
-  })
+  }
+
+  mcp.setup(opts)
 end
 
 return M

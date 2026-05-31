@@ -46,8 +46,6 @@ if command -q -v brew >/dev/null 2>&1
     set -x HOMEBREW_API_DOMAIN "https://mirrors.ustc.edu.cn/homebrew-bottles/api"
 
     set -x HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS 7
-    # disable homebrew installed dependents check
-    set -x HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK true
 end
 
 # rustup mirror, see: https://rsproxy.cn

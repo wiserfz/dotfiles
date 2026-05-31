@@ -13,7 +13,9 @@ function M.setup()
   vim.opt.timeoutlen = 1000
   local winblend = wk_winblend()
 
-  wk.setup({
+  ---@module "which-key"
+  ---@type wk.Opts
+  local opts = {
     preset = "modern",
     delay = 1000,
     win = {
@@ -118,7 +120,9 @@ function M.setup()
         { pattern = "right", icon = "󰜴 ", hl = "Type" },
       },
     },
-  })
+  }
+
+  wk.setup(opts)
 
   wk.add({
     { "<leader>k", "<cmd>WhichKey<cr>", desc = "Which-key?" },

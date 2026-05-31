@@ -4,7 +4,9 @@ local mason_tool_installer = require("mason-tool-installer")
 local M = {}
 
 function M.setup()
-  mason.setup({
+  ---@module "mason"
+  ---@type MasonSettings
+  local mason_opts = {
     ui = {
       icons = {
         package_installed = "✓",
@@ -12,9 +14,13 @@ function M.setup()
         package_uninstalled = "✗",
       },
     },
-  })
+  }
 
-  mason_tool_installer.setup({
+  mason.setup(mason_opts)
+
+  ---@module "mason-tool-installer"
+  ---@type MasonToolInstallerSettings
+  local installer_opts = {
     ensure_installed = {
       "ruff",
       "codelldb",
@@ -45,7 +51,9 @@ function M.setup()
       ["mason-null-ls"] = false,
       ["mason-nvim-dap"] = false,
     },
-  })
+  }
+
+  mason_tool_installer.setup(installer_opts)
 end
 
 return M

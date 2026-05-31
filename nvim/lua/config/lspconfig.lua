@@ -124,18 +124,20 @@ local server_configs = {
         schemas = schemastore.yaml.schemas({
           replace = {
             ["gitlab-ci"] = {
-              description = "GitLab CI Schema before version v16.7.10",
+              description = "GitLab CI Schema for version v17.8.7",
               fileMatch = ".gitlab-ci.yml",
               name = "gitlab-ci",
-              url = "https://gitlab.com/gitlab-org/gitlab/-/raw/v16.7.10-ee/app/assets/javascripts/editor/schema/ci.json",
+              url = "https://gitlab.com/gitlab-org/gitlab/-/raw/v17.8.7-ee/app/assets/javascripts/editor/schema/ci.json",
             },
           },
         }),
         schemaStore = {
           enable = false,
           -- url = "https://www.schemastore.org/api/json/catalog.json",
-          url = "",
         },
+      },
+      http = {
+        proxy = "http://127.0.0.1:10800",
       },
     },
   },
