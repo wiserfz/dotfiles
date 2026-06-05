@@ -203,7 +203,6 @@ function M.setup()
       "nvimdev/lspsaga.nvim",
       event = "LspAttach",
       dependencies = {
-        "nvim-treesitter/nvim-treesitter", -- optional
         "nvim-tree/nvim-web-devicons", -- optional
       },
       config = config("lspsaga"),
@@ -217,7 +216,7 @@ function M.setup()
     -- Formatter
     {
       "stevearc/conform.nvim",
-      event = { "BufWritePre" },
+      event = { "BufReadPre" },
       cmd = { "ConformInfo" },
       init = function()
         -- If you want the formatexpr, here is the place to set it
@@ -231,7 +230,6 @@ function M.setup()
       dependencies = { -- optional packages
         "ray-x/guihua.lua",
         "neovim/nvim-lspconfig",
-        "nvim-treesitter/nvim-treesitter",
       },
       -- event = { "CmdlineEnter" },
       ft = { "go", "gomod" },
@@ -294,7 +292,6 @@ function M.setup()
         -- "ibhagwan/fzf-lua",
         "nvim-lua/plenary.nvim", -- required by telescope
         "MunifTanjim/nui.nvim",
-        "nvim-treesitter/nvim-treesitter",
         "nvim-tree/nvim-web-devicons",
       },
       lazy = "leetcode.nvim" ~= vim.fn.argv()[1],
@@ -344,6 +341,8 @@ function M.setup()
       dependencies = { "nvim-lua/plenary.nvim" },
       config = config("todo-comment"),
     },
+    -- WARN: treesitter plugin was archived, need to manager the treesitter parser by vim API.
+    -- see: https://samuellawrentz.com/blog/nvim-treesitter-archived-neovim-0-12-migration
     {
       "nvim-treesitter/nvim-treesitter",
       lazy = false, -- load treesitter at startup
@@ -381,7 +380,6 @@ function M.setup()
       event = "BufReadPost",
       dependencies = {
         "neovim/nvim-lspconfig",
-        "nvim-treesitter/nvim-treesitter",
         "kevinhwang91/promise-async",
         "luukvbaal/statuscol.nvim",
       },
@@ -397,6 +395,7 @@ function M.setup()
       "MeanderingProgrammer/render-markdown.nvim",
       ft = { "markdown", "codecompanion", "Avante" },
       dependencies = {
+        -- WARN: https://github.com/MeanderingProgrammer/render-markdown.nvim/issues/663
         "nvim-treesitter/nvim-treesitter",
         "nvim-tree/nvim-web-devicons",
       },
@@ -424,20 +423,24 @@ function M.setup()
       config = config("visual-whitespace"),
     },
     {
+      "ravitemer/mcphub.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+      },
+      build = "npm install -g mcp-hub@latest",
+      config = config("mcphub"),
+    },
+    {
       "olimorris/codecompanion.nvim",
       version = "^19.0.0",
       cond = function()
-        return vim.g.ai_plugin == "codecompanion" and os.getenv("AI_GATEWAY_BASE_URL") ~= nil
+        return vim.g.ai_plugin == "codecompanion"
       end,
       dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
         "j-hui/fidget.nvim",
-        {
-          "ravitemer/mcphub.nvim",
-          build = "npm install -g mcp-hub@latest",
-          config = config("mcphub"),
-        },
+        -- "ravitemer/mcphub.nvim",
       },
       config = config("codecompanion"),
     },
@@ -445,7 +448,7 @@ function M.setup()
       "yetone/avante.nvim",
       build = "make",
       cond = function()
-        return vim.g.ai_plugin == "avante" and os.getenv("AI_GATEWAY_BASE_URL") ~= nil
+        return vim.g.ai_plugin == "avante"
       end,
       event = "VeryLazy",
       version = false, -- Never set this value to "*"! Never!
@@ -454,11 +457,7 @@ function M.setup()
         "MunifTanjim/nui.nvim",
         "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-        {
-          "ravitemer/mcphub.nvim",
-          build = "npm install -g mcp-hub@latest",
-          config = config("mcphub"),
-        },
+        -- "ravitemer/mcphub.nvim",
       },
       config = config("avante"),
     },

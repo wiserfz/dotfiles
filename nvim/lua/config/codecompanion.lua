@@ -74,39 +74,6 @@ function M.setup()
   local auth_token = os.getenv("AI_AUTH_TOKEN")
 
   local opts = {
-    interactions = {
-      chat = {
-        -- adapter = {
-        --   name = "claude_code",
-        --   model = "claude-sonnet-4-6",
-        -- },
-        adapter = "openai_responses",
-        opts = {
-          completion_provider = "blink",
-        },
-      },
-      inline = {
-        adapter = "openai_responses",
-      },
-      cmd = {
-        adapter = "openai_responses",
-      },
-      background = {
-        adapter = "openai_responses",
-      },
-    },
-    display = {
-      action_palette = {
-        provider = "telescope",
-      },
-      diff = {
-        enabled = true,
-        word_highlights = {
-          additions = true,
-          deletions = true,
-        },
-      },
-    },
     adapters = {
       http = {
         opts = {
@@ -120,6 +87,12 @@ function M.setup()
             url = base_url,
             env = {
               api_key = auth_token,
+            },
+            schema = {
+              default = "claude-opus-4-7",
+            },
+            opts = {
+              compaction = false,
             },
           })
         end,
@@ -136,7 +109,12 @@ function M.setup()
                 choices = {
                   ["gpt-5.5"] = {
                     formatted_name = "GPT-5.5",
-                    opts = { has_function_calling = true, has_vision = true, can_reason = false },
+                    opts = {
+                      can_manage_context = true,
+                      has_function_calling = true,
+                      has_vision = true,
+                      can_reason = true,
+                    },
                   },
                 },
               },
@@ -144,10 +122,72 @@ function M.setup()
                 default = "high",
               },
             },
+            opts = {
+              compaction = false,
+            },
           })
         end,
       },
     },
+    interactions = {
+      chat = {
+        -- adapter = {
+        --   name = "claude_code",
+        --   model = "claude-sonnet-4-6",
+        -- },
+        adapter = "anthropic",
+        opts = {
+          completion_provider = "blink",
+        },
+      },
+      inline = {
+        adapter = "openai_responses",
+      },
+      background = {
+        adapter = "openai_responses",
+      },
+      cli = {
+        agent = "claude_code",
+        agents = {
+          claude_code = {
+            cmd = "claude",
+            description = "Claude Code CLI",
+          },
+          codex = {
+            cmd = "codex",
+            description = "OpenAI Codex CLI",
+          },
+        },
+      },
+    },
+    display = {
+      action_palette = {
+        provider = "telescope",
+      },
+      diff = {
+        enabled = true,
+        word_highlights = {
+          additions = true,
+          deletions = true,
+        },
+      },
+    },
+    -- extensions = {
+    --   mcphub = {
+    --     callback = "mcphub.extensions.codecompanion",
+    --     opts = {
+    --       -- MCP Tools
+    --       make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers
+    --       show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true)
+    --       add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`)
+    --       show_result_in_chat = true, -- Show tool results directly in chat buffer
+    --       -- MCP Resources
+    --       make_vars = true, -- Convert MCP resources to #variables for prompts
+    --       -- MCP Prompts
+    --       make_slash_commands = true, -- Add MCP prompts as /slash commands
+    --     },
+    --   },
+    -- },
   }
 
   codecompanion_spinner()

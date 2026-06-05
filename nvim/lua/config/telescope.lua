@@ -34,18 +34,47 @@ function M.setup()
           ["<C-k>"] = actions.move_selection_previous, -- move to prev result
           ["<C-j>"] = actions.move_selection_next, -- move to next result
           ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist, -- send selected to quickfixlist
+          ["CR"] = actions.select_default + actions.center,
         },
       },
       file_ignore_patterns = {
         ".git/",
         "target/",
         "LICENSE*",
-        "node_modules",
+        "node_modules/",
+        "_build/",
+        "%.lock",
       },
       layout_config = {
-        horizontal = { preview_width = 125 },
+        horizontal = {
+          prompt_position = "top",
+          preview_width = 0.55,
+          results_width = 0.8,
+        },
+        vertical = {
+          mirror = false,
+        },
+        width = 0.87,
+        height = 0.80,
+        preview_cutoff = 130,
       },
       winblend = telescope_winblend(),
+    },
+    pickers = {
+      live_grep = {
+        additional_args = function(_)
+          return { "--hidden" }
+        end,
+      },
+      buffers = {
+        show_all_buffers = true,
+        sort_mru = true,
+        mappings = {
+          n = {
+            ["dd"] = "delete_buffer",
+          },
+        },
+      },
     },
     extensions = {
       extensions = {
@@ -74,7 +103,7 @@ function M.setup()
     { "<leader>f", group = "Find" },
 
     { "<leader>ff", find_files({ no_ignore = false }), desc = "Files" },
-    { "<leader>fF", find_files({ no_ignore = true }), desc = "Ignored Files" },
+    { "<leader>fF", find_files({ no_ignore = true }), desc = "Ignored files" },
     { "<leader>fw", telescope_builtin.live_grep, desc = "Live grep" },
     { "<leader>fb", telescope_builtin.buffers, desc = "Buffers" },
     { "<leader>fh", telescope_builtin.help_tags, desc = "Help" },

@@ -1,11 +1,12 @@
 local avante = require("avante")
-local mcp = require("mcphub")
+-- local mcp = require("mcphub")
 
 local M = {}
 
 function M.setup()
   local base_url = os.getenv("AI_GATEWAY_BASE_URL")
   local ai_auth_token = os.getenv("AI_AUTH_TOKEN")
+  local claude_code_oauth_token = os.getenv("CLAUDE_CODE_TOKEN")
 
   ---@module 'avante'
   ---@type avante.Config
@@ -72,8 +73,7 @@ function M.setup()
       },
     },
     instructions_file = "avante.md",
-    auto_suggestions_provider = false,
-    provider = "openai",
+    provider = "claude-code",
     providers = {
       ---@type AvanteSupportedProvider
       openai = {
@@ -96,6 +96,14 @@ function M.setup()
       ["claude-code"] = {
         command = "npx",
         args = { "@agentclientprotocol/claude-agent-acp" },
+        env = {
+          -- NOTE: for anthropic office endpoint
+          CLAUDE_CODE_OAUTH_TOKEN = claude_code_oauth_token,
+          -- NOTE: for AI gateway
+          -- ANTHROPIC_AUTH_TOKEN = ai_auth_token,
+          -- ANTHROPIC_CUSTOM_HEADERS = "api-key: " .. ai_auth_token,
+          -- ANTHROPIC_BASE_URL = base_url,
+        },
       },
       ["codex"] = {
         command = "codex-acp",
@@ -108,44 +116,42 @@ function M.setup()
     behaviour = {
       auto_suggestions = false,
       allow_access_to_git_ignored_files = true,
+      acp_follow_agent_locations = false,
     },
     hints = { enabled = true },
-    session_recovery = {
-      enabled = false,
-    },
-    disabled_tools = {
-      "bash",
-      "create_dir",
-      "create_file",
-      "create",
-      "delete_dir",
-      "delete_file",
-      "edit_file",
-      "insert",
-      "list_files",
-      "read_file",
-      "rename_dir",
-      "rename_file",
-      "replace_in_file",
-      "search_files",
-      "str_replace",
-      "undo_edit",
-      "view",
-      "write_to_file",
-      "ls",
-    },
+    -- disabled_tools = {
+    --   "bash",
+    --   "create_dir",
+    --   "create_file",
+    --   "create",
+    --   "delete_dir",
+    --   "delete_file",
+    --   "edit_file",
+    --   "insert",
+    --   "list_files",
+    --   "read_file",
+    --   "rename_dir",
+    --   "rename_file",
+    --   "replace_in_file",
+    --   "search_files",
+    --   "str_replace",
+    --   "undo_edit",
+    --   "view",
+    --   "write_to_file",
+    --   "ls",
+    -- },
     -- system_prompt as function ensures LLM always has latest MCP server state
     -- This is evaluated for every message, even in existing chats
-    system_prompt = function()
-      local hub = mcp.get_hub_instance()
-      return hub and hub:get_active_servers_prompt() or ""
-    end,
-    -- Using function prevents requiring mcphub before it's loaded
-    custom_tools = function()
-      return {
-        require("mcphub.extensions.avante").mcp_tool(),
-      }
-    end,
+    -- system_prompt = function()
+    --   local hub = mcp.get_hub_instance()
+    --   return hub and hub:get_active_servers_prompt() or ""
+    -- end,
+    -- -- Using function prevents requiring mcphub before it's loaded
+    -- custom_tools = function()
+    --   return {
+    --     require("mcphub.extensions.avante").mcp_tool(),
+    --   }
+    -- end,
   }
 
   avante.setup(opts)
