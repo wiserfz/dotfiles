@@ -213,6 +213,7 @@ local server_configs = {
     },
   },
   asm_lsp = {},
+  gitlab_ci_ls = {},
 }
 
 function M.setup()

@@ -114,6 +114,7 @@ function M.setup()
       [".*/%.git/info/exclude"] = "gitignore",
       [".*/sys.*%.config.*"] = "erlang",
       [".*/.*%.app%.src"] = "erlang",
+      ["%.gitlab%-ci%.ya?ml"] = "yaml.gitlab", -- for attach gitlab_ci_ls lsp
     },
   })
 
