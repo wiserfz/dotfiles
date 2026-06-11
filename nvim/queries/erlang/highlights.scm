@@ -1,4 +1,3 @@
-; NOTE: Copy form nvim-treesitter/runtime/queries/erlang/highlights.scm
 ((atom) @constant
   (#set! priority "90"))
 
@@ -10,8 +9,7 @@
 
 (float) @number.float
 
-; disable highlight for comment node and use syntax highlighting instead
-;
+;disable highlight for comment node and use syntax highlighting instead
 ; (comment) @comment @spell
 ;
 ; ((comment) @comment.documentation

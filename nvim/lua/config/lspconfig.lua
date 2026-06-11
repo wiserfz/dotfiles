@@ -213,6 +213,12 @@ local server_configs = {
     },
   },
   asm_lsp = {},
+  gitlab_ci_ls = {
+    init_options = {
+      cache_path = vim.uv.os_homedir() .. "/.cache/gitlab-ci-ls/",
+      log_path = "/dev/null",
+    },
+  },
 }
 
 function M.setup()

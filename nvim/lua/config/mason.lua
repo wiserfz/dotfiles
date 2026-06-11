@@ -42,6 +42,7 @@ function M.setup()
       "stylua",
       "yamlfmt",
       "yamllint",
+      "tree-sitter-cli",
     },
     auto_update = false,
     run_on_start = true,

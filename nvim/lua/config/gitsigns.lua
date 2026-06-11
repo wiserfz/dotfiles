@@ -64,9 +64,9 @@ function M.setup()
         {
           "<leader>hB",
           function()
-            gitsigns.blame_line({ full = true })
+            gitsigns.blame({ ignore_whitespace = true })
           end,
-          desc = "Toggle buffer blame line",
+          desc = "Toggle buffer blame",
         },
         {
           "<leader>hb",
